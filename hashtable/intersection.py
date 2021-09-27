@@ -2,7 +2,8 @@
 # 输出结果中的每个元素一定是唯一的。我们可以不考虑输出结果的顺序。
 
 
-# 1. Use hashtable: 时间复杂度 O(min(m, n))，空间复杂度 O(m+n)
+# 1. Use hashtable: 遍历消耗时间 O(min(m, n))，但构造 table 需要 O(m+n)，所以总共 O(m+n)
+# 因为使用了两个 hash table，所以空间复杂度为 O(m+n)
 def intersection_with_set(nums1: list, nums2: list) -> list:
     set1, set2 = set(nums1), set(nums2)
     res = []
