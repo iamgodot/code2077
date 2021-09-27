@@ -8,8 +8,6 @@
 | 归并 | O(nlogn)       | O(nlogn) | O(nlogn) | O(n)       | 稳定   |
 | 快速 | O(nlogn)       | O(nlogn) | O(n^2)   | O(logn)    | 不稳定 |
 
-
-
 ## 1. Bubble Sort
 
 冒泡排序是一种简单直接的排序方法，主要思路就是不断地遍历序列，比较相邻的元素并通过交换排序。
@@ -24,8 +22,6 @@
 2. 在每一次遍历的过程中，可以记录下最后交换的位置，作为下次循环的终点。
 3. 对于 `[2, 3, 4, 5, 6, 7, 1, 8]` 这种序列，从右往左冒泡会简单很多，基于这个逻辑就可以升级到鸡尾酒排序，即在冒泡的过程中交替切换左右方向。
 
-
-
 ## 2. Insertion Sort
 
 插入排序是一种逻辑非常直观的排序算法，思路如下：
@@ -36,8 +32,6 @@
 ### 复杂度分析
 
 时间复杂度为 O(n^2)，空间复杂度为 O(1).
-
-
 
 ## 3. Selection Sort
 
@@ -55,8 +49,6 @@
 
 时间复杂度为 O(n^2)，空间复杂度为 O(1).
 
-
-
 ## 4. Shell Sort
 
 希尔排序是由插入排序进化而来，插入排序对于有序、规模小的序列的排序是效率很高的，所以希尔排序的主要思路就是对数据不断地进行预处理，最后执行的还是直接插入排序的逻辑。
@@ -72,8 +64,6 @@
 希尔排序的复杂度和增量的选择相关，对于 Hibbard 增量时间复杂度可以达到 O(n^3/2)，而最坏情况下的时间复杂度仍然会是 O(n^2).
 
 空间复杂度为 O(1).
-
-
 
 ## 5. Merge Sort
 
@@ -92,8 +82,6 @@ Python 中使用的一种叫 Timsort 的排序方法就是基于归并和插入�
 - [Timsort](https://en.wikipedia.org/wiki/Timsort)
 
 - [Sorting Algorithms in Python](https://realpython.com/sorting-algorithms-python/#the-merge-sort-algorithm-in-python)
-
-
 
 ## 6. Quick Sort
 
