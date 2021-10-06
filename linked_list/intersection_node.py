@@ -3,6 +3,9 @@
 from linked_list import ListNode, make_linked_list
 
 
+# 如果相交，假设相交的部分长度为 c，不相交的部分分别为 a 和 b，那么有 a + c + b = b + c + a
+# 如果不相交，那么有 a + b = b + a
+# 所以循环到最后，一定会有两个节点重合的时候，就看是有效节点（即相交起始节点）还是空节点（说明不相交）
 def get_intersection_node(head_a: ListNode, head_b: ListNode) -> ListNode:
     cur_a, cur_b = head_a, head_b
 
