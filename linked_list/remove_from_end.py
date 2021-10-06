@@ -4,28 +4,26 @@
 from linked_list import ListNode, make_linked_list, traverse_linked_list
 
 
+# 注意 n 应当为正数并且不大于 linked_list 的 size，否则要做更多判断
 def remove_nth_from_end(head: ListNode, n: int) -> ListNode:
     dummy = ListNode(next=head)
     slow = fast = dummy
-    n += 1
 
-    while fast and n:
+    while n:
         fast = fast.next
         n -= 1
 
-    while slow and fast:
+    while fast.next:
         slow = slow.next
         fast = fast.next
-
-    if slow and slow.next:
-        slow.next = slow.next.next
+    slow.next = slow.next.next
 
     return dummy.next
 
 
 if __name__ == '__main__':
-    for data, num, res in ([], 0, []), ([1], 1, []), ([1, 2], 1,
-                                                      [1]), ([1, 2, 3, 4, 5],
-                                                             2, [1, 2, 3, 5]):
+    for data, num, res in ([1], 1, []), ([1,
+                                          2], 1, [1]), ([1, 2, 3, 4,
+                                                         5], 2, [1, 2, 3, 5]):
         head = make_linked_list(data)
         assert traverse_linked_list(remove_nth_from_end(head, num)) == res
