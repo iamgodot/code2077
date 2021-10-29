@@ -18,6 +18,9 @@ class MyStack:
             self.q2.insert(0, self.q1.pop())
         self.q1, self.q2 = self.q2, self.q1
 
+    def empty(self) -> bool:
+        return not self.q1
+
     def pop(self) -> int:
         if self.empty():
             return None
@@ -25,12 +28,11 @@ class MyStack:
         return self.q1.pop()
 
     def top(self) -> int:
-        # 相当于调用了队列的 peek 方法
+        '''相当于调用了队列的 peek 方法'''
+        if self.empty():
+            return None
 
-        return self.q1[-1] if self.q1 else None
-
-    def empty(self) -> bool:
-        return not self.q1 and not self.q2
+        return self.q1[-1]
 
 
 # 也可以用一个队列实现，更好理解，复杂度同上
@@ -44,6 +46,9 @@ class MyStackV2:
         for _ in range(len(self.q) - 1):
             self.q.insert(0, self.q.pop())
 
+    def empty(self) -> bool:
+        return not self.q
+
     def pop(self) -> int:
         if self.empty():
             return None
@@ -51,10 +56,10 @@ class MyStackV2:
         return self.q.pop()
 
     def top(self) -> int:
-        return self.q[-1] if self.q else None
+        if self.empty():
+            return None
 
-    def empty(self) -> bool:
-        return not self.q
+        return self.q[-1]
 
 
 if __name__ == '__main__':
