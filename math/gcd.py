@@ -26,7 +26,7 @@ def gcd(m: int, n: int) -> int:
     multi = 1
     while n != 0:
         if m & 1 == 0 and n & 1 == 0:
-            multi *= 2
+            multi <<= 1
             m >>= 1
             n >>= 1
         elif m & 1 == 0:
