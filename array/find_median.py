@@ -49,6 +49,38 @@ def find_median(nums1: list, nums2: list) -> float:
         ) / 2
 
 
+# 将此题目泛化为寻找第 k 大的数字，不断比较两个数列 k/2 的位置的元素，然后排除掉较小的元素及其之前的部分
+# 时间复杂度为 O(m+n)，虽然不是最优解，但是一个更普适的方案
+def find_median(nums1, nums2):
+    def find_kth_element(k, nums1, nums2):
+        m, n = len(nums1), len(nums2)
+        start1, start2 = 0, 0
+        while True:
+            if start1 == m:
+                return nums2[start2 + k - 1]
+            if start2 == n:
+                return nums1[start1 + k - 1]
+            if k == 1:
+                return min(nums1[start1], nums2[start2])
+            i = min(start1 + k // 2 - 1, m - 1)
+            j = min(start2 + k // 2 - 1, n - 1)
+            if nums1[i] <= nums2[j]:
+                k -= i - start1 + 1
+                start1 = i + 1
+            else:
+                k -= j - start2 + 1
+                start2 = j + 1
+
+    length = len(nums1) + len(nums2)
+    if length % 2 == 1:
+        return find_kth_element(length // 2 + 1, nums1, nums2)
+    else:
+        return (
+            find_kth_element(length // 2, nums1, nums2)
+            + find_kth_element(length // 2 + 1, nums1, nums2)
+        ) / 2
+
+
 if __name__ == "__main__":
     assert find_median([1, 3], [2]) == 2
     assert find_median([1, 2], [3, 4]) == 2.5
