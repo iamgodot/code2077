@@ -6,14 +6,20 @@
 # void put(int key, int value) 如果关键字已经存在，则变更其数据值；如果关键字不存在，则插入该组「关键字-值」。当缓存容量达到上限时，它应该在写入新数据之前删除最久未使用的数据值，从而为新的数据值留出空间。
 
 # 进阶：你是否可以在 O(1) 时间复杂度内完成这两种操作？
+from collections import OrderedDict
 
 
 class DoubleLinkedListNode:
-    def __init__(self, key=None, value=None):
+    def __init__(self, key=None, value=None, previous=None, next=None):
         self.key = key
         self.value = value
+        self.previous = previous
+        self.next = next
 
 
+# most recently used item: head
+# least recently used item: tail
+# hashtable: key -> node(key, value)
 class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
@@ -23,15 +29,15 @@ class LRUCache:
         self.head.next = self.tail
         self.tail.previous = self.head
 
+    def add_to_head(self, node) -> None:
+        node.previous = self.head
+        node.next = self.head.next
+        self.head.next.previous = node
+        self.head.next = node
+
     def remove_node(self, node) -> None:
         node.previous.next = node.next
         node.next.previous = node.previous
-
-    def add_to_head(self, node) -> None:
-        node.next = self.head.next
-        node.previous = self.head
-        self.head.next.previous = node
-        self.head.next = node
 
     def move_to_head(self, node) -> None:
         self.remove_node(node)
@@ -62,6 +68,25 @@ class LRUCache:
             if len(self.hashtable) > self.capacity:
                 node_least_used = self.remove_from_tail()
                 self.hashtable.pop(node_least_used.key)
+
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.hashtable = OrderedDict()
+
+    def get(self, key: int) -> int:
+        if key in self.hashtable:
+            self.hashtable.move_to_end(key, last=False)
+            return self.hashtable[key]
+
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        self.hashtable[key] = value
+        self.hashtable.move_to_end(key, last=False)
+        if len(self.hashtable) > self.capacity:
+            self.hashtable.popitem()
 
 
 if __name__ == "__main__":
