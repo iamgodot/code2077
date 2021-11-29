@@ -39,17 +39,14 @@ def find_kth_largest(nums: list, k: int) -> int:
     hq = []
     for num in nums:
         if len(hq) == k:
-            if num > hq[0]:
-                heapq.heappop(hq)
-                heapq.heappush(hq, num)
-        else:
-            heapq.heappush(hq, num)
+            heapq.heappushpop(hq, num)
+            continue
+        heapq.heappush(hq, num)
 
     return heapq.heappop(hq)
 
 
 if __name__ == "__main__":
-    a = find_kth_largest([3, 2, 1, 5, 6, 4], 2)
-    print(a)
+    assert find_kth_largest([3, 2, 1, 5, 6, 4], 2) == 5
     assert find_kth_largest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4) == 4
     assert find_kth_largest([1], 1) == 1
