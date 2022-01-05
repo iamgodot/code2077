@@ -1,21 +1,18 @@
 # 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
 
-# BruteForce: 两层遍历，时间复杂度 O(n^2)
-# 借助哈希表记录之前出现过的字符可以使用滑动窗口
-# 时间复杂度 O(n) 空间复杂度 O(m) 其中 m 为所有字符的长度，可以假设 ASCII 那么 m 为 128
+# 1. BruteForce: 两层遍历，时间复杂度 O(n^2)
+# 2. 应用滑动窗口，不含有重复字符则右指针右移，否则左指针右移，使用集合来判断是否含有重复字符
+# 时间复杂度 O(n) 空间复杂度 O(m) 其中 m 为所有字符的数量
 def longest_substr(s: str) -> int:
-    hashtable = {}
-    res = length = left = right = 0
-    while right < len(s):
-        char = s[right]
-        while char in hashtable:
-            hashtable.pop(s[left])
-            length -= 1
+    chars = set()
+    res = left = right = 0
+    for right, char in enumerate(s):
+        while char in chars:
+            chars.remove(s[left])
             left += 1
-        right += 1
-        length += 1
-        res = max(res, length)
-        hashtable[char] = 1
+        if (right - left + 1) > res:
+            res = right - left + 1
+        chars.add(char)
 
     return res
 
