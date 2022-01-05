@@ -10,8 +10,8 @@ def min_subarray_len(target: int, nums: list) -> int:
     res = length + 1
     total = left = right = 0
 
-    while right < length:
-        total += nums[right]
+    for right, num in enumerate(nums):
+        total += num
         while total >= target:
             res = min(res, right - left + 1)
             total -= nums[left]
