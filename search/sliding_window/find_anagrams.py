@@ -27,6 +27,40 @@ def find_anagrams(s: str, p: str) -> list:
     return res
 
 
+# 因为固定窗口大小每次都只是删除一个字符再添加一个字符，所以比较异位词的时候只需要
+# 参考两个字符的变化就够了，通过 diff 来记录子串与异位词的差异数
+def find_anagrams2(s: str, p: str) -> list:
+    res = []
+    len_s, len_p = len(s), len(p)
+    counter, diff = Counter(p), len_p
+
+    for char in s[:len_p]:
+        if counter[char] > 0:
+            diff -= 1
+        counter[char] -= 1
+
+    if diff == 0:
+        res.append(0)
+
+    for i in range(len_s - len_p):
+        char_del, char_add = s[i], s[i + len_p]
+
+        counter[char_del] += 1
+        if counter[char_del] > 0:
+            diff += 1
+
+        if counter[char_add] > 0:
+            diff -= 1
+        counter[char_add] -= 1
+
+        if diff == 0:
+            res.append(i + 1)
+
+    return res
+
+
 if __name__ == "__main__":
     assert find_anagrams("cbaebabacd", "abc") == [0, 6]
     assert find_anagrams("abab", "ab") == [0, 1, 2]
+    assert find_anagrams2("cbaebabacd", "abc") == [0, 6]
+    assert find_anagrams2("abab", "ab") == [0, 1, 2]
