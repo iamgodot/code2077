@@ -1,6 +1,15 @@
-# 实现一个栈，这个栈的 push/pop/min 方法都可以达到 O(1) 的时间复杂度
+# 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+
+# push(x) —— 将元素 x 推入栈中。
+# pop() —— 删除栈顶的元素。
+# top() —— 获取栈顶元素。
+# getMin() —— 检索栈中的最小元素。
+
+# pop、top 和 getMin 操作总是在 非空栈 上调用。
 
 
+# 1. 使用辅助栈保存当前最小值
+# 空间复杂度 O(n)
 class MinStack:
     def __init__(self):
         self.s1 = []
@@ -26,6 +35,43 @@ class MinStack:
         if self.empty():
             return
         return self.s2[-1]
+
+
+# 2. 使用变量保存当前最小值，栈中保存元素与最小值的差值 diff
+# 空间复杂度 O(1)
+class MinStack2:
+    def __init__(self):
+        self.s = []
+        self.min_val = None
+
+    def push(self, val: int) -> None:
+        # 注意这里不要根据 min_val is None 来做判断条件
+        # 因为过程中 min_val 可能会被置为非空值，即使栈中已经没有元素
+        # 除非在 pop 中判断如果栈空则重置 min_val
+        if not self.s:
+            self.s.append(0)
+            self.min_val = val
+        else:
+            self.s.append(val - self.min_val)
+            if val <= self.min_val:
+                self.min_val = val
+
+    def pop(self) -> None:
+        val = self.s.pop()
+        if val < 0:
+            # res = self.min_val
+            self.min_val -= val
+        # else:
+        # res = val + self.min_val
+
+    def top(self) -> int:
+        if self.s[-1] < 0:
+            return self.min_val
+        else:
+            return self.min_val + self.s[-1]
+
+    def min(self) -> int:
+        return self.min_val
 
 
 if __name__ == "__main__":
