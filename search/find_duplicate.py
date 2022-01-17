@@ -19,8 +19,8 @@ def find_duplicate1(nums: list) -> int:
             left = mid + 1
         else:
             right = mid - 1
-            dup = mid
-    return dup
+
+    return left
 
 
 # 从 0 开始，把数组模拟成 n -> nums[n] 的链表，重复数字会在链表中制造环
