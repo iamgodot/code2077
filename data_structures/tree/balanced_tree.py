@@ -2,7 +2,7 @@
 # 本题中，一棵高度平衡二叉树定义为：
 # 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
 
-from tree import TreeNode
+from data_structures.tree import TreeNode
 
 
 # 后序遍历

@@ -4,7 +4,7 @@
 # 对于深度优先来说，时间复杂度为 O(n)，而空间复杂度为 O(h)，树的高度可能为 O(n) 也可能为 O(logn)
 # 对于广度优先来说，时间复杂度为 O(n)，递归实现的空间复杂度为 O(h)，而非递归版本空间复杂度为 O(n)
 # 因为非递归版本使用的队列会保存每一层的元素，而这里的元素数量也是指数增长的
-from tree import TreeNode
+from data_structures.tree import TreeNode
 
 
 def preorder(root: TreeNode, values: list):

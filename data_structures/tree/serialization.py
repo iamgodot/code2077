@@ -1,6 +1,6 @@
 from collections import deque
 
-from tree import TreeNode, levelorder
+from data_structures.tree import TreeNode, levelorder
 
 # Q: 二叉树的序列化与反序列化
 

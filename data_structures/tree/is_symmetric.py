@@ -1,5 +1,5 @@
 # 给定一个二叉树，检查它是否是镜像对称的。
-from tree import TreeNode
+from data_structures.tree import TreeNode
 
 
 # 两种实现的时间和空间复杂度都是 O(n)

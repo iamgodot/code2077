@@ -1,5 +1,5 @@
 # 翻转一棵二叉树。
-from tree import TreeNode, levelorder
+from data_structures.tree import TreeNode, levelorder
 
 
 # 注意需要返回 root 节点

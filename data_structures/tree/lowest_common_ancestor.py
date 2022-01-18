@@ -1,6 +1,6 @@
 # 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
 
-from tree import TreeNode
+from data_structures.tree import TreeNode
 
 
 # 需要自底向上回溯，因此通过递归调用的时候获取返回值，再对其进行判断

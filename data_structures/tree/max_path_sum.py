@@ -4,7 +4,7 @@
 # 路径和 是路径中各节点值的总和。
 # 给你一个二叉树的根节点 root ，返回其 最大路径和 。
 
-from tree import TreeNode
+from data_structures.tree import TreeNode
 
 
 # 先看对任意一个节点，如何从两边的长度选择更长的一条
