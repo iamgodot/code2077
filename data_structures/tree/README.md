@@ -16,6 +16,7 @@
   - [相同的树]()
   - [判断子结构](is_substructure.py)
   - [BST 的最近公共祖先](lowest_common_ancestor.py)
+  - [二叉树的合并](merge_trees.py)
 - 后序
   - [二叉树最大深度](depth.py)
   - [二叉树最小深度](depth.py)
@@ -23,6 +24,7 @@
   - [平衡二叉树](balanced_tree.py)
   - [二叉树的最近公共祖先](lowest_common_ancestor.py)
   - [验证后序遍历](verify_postorder.py)
+  - [二叉树的直径长度（类似求最大深度）](diameter.py)
 - 前序
   - [二叉树的所有路径]()
   - [路径总和 I/II/III](binary_tree_path.py)
@@ -30,6 +32,8 @@
 - 中序
   - [BST 的第 k 大节点](kth_largest.py)
   - [BST 与双向链表](tree_to_doubly_list.py)
+  - [BST 有效性判断](valid_bst.py)
+  - [BST 的恢复](recover_bst.py)
 - 构造
   - [前序遍历和中序遍历构造二叉树](build_tree.py)
   - [后序遍历和中序遍历构造二叉树](build_tree.py)
