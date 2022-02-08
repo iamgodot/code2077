@@ -9,6 +9,8 @@
 def _pow_helper(x: float, n: int):
     if n == 1:
         return x
+    # 注意如果写成 multi = _pow_helper(x, n // 2) ** 2 会导致 OverflowError
+    # 奇怪的是对于 float 会这样，int 则不会
     multi = _pow_helper(x, n // 2)
     if n % 2 == 1:
         return multi * multi * x
@@ -31,12 +33,10 @@ def pow(x: float, n: int) -> float:
 
 
 # 3. 使用迭代实现分治法求幂，时间复杂度 O(logn)，空间复杂度 O(1)
-def pow(x: float, n: int) -> float:
+def pow2(x: float, n: int) -> float:
     """
-    这里的迭代思路可以理解为
-    初始状态：x^n = x^n * 1
-    最终状态：x^n = x^0 * res = res
-    每当 n 为奇数的时候就把多出来的 x 纳入 res。因为 count 总会抵达 1，所以最终 res 会结合不断平方的 x
+    这里的迭代思路可以理解为利用位运算实现快速幂：
+    比如对于 2^11, 11 的二进制为 1011, 那么只有在位数为 1 时把最新的 x 加入到 res 中
     """
     if x == 0 or x == 1:
         return 1
@@ -51,10 +51,12 @@ def pow(x: float, n: int) -> float:
 
 
 if __name__ == "__main__":
-    assert pow(0, 1) == 1
-    assert pow(1, 2) == 1
-    assert pow(2, 0) == 1
-    assert pow(2, 10) == 1024
-    # 这里的精度不一致，如果不 round 的话会得到 9.261000000000001
-    assert round(pow(2.1, 3), 3) == 9.261
-    assert pow(2, -2) == 0.25
+    for method in [pow, pow2]:
+        assert method(0, 1) == 1
+        assert method(1, 2) == 1
+        assert method(2, 0) == 1
+        assert method(2, 10) == 1024
+        # 这里的精度不一致，如果不 round 的话会得到 9.261000000000001
+        assert round(method(2.1, 3), 3) == 9.261
+        assert method(2, -2) == 0.25
+        method(2.0, -2147483648)
