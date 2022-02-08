@@ -40,6 +40,8 @@ def bs(nums: list, target: int) -> int:
 
 另外对于没有等号的情况，比如 `value > target`，实际上是找左侧边界，实现上等价于上面右侧外界的情况，此时 left 为左侧内界，而 right 为左侧外界。
 
+也可以这么理解：找左界就是 target <= nums[mid]，此时 right - 1 取左半，最后 right 为左侧外界，left 为左侧内界（内界就是满足条件，即 target == nums[mid] 或者 nums[mid] 正好是第一个大于 target 的元素）。
+
 ```python
 def search(nums: list, target: int) -> int:
     left, right = 0, len(nums) - 1
