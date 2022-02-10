@@ -34,6 +34,15 @@ def spiral_order(matrix: list) -> list:
     return res
 
 
+# 一种很简洁的 Python 写法
+def spiral_order2(self, matrix: List[List[int]]) -> List[int]:
+    res = []
+    while matrix:
+        res += matrix.pop(0)
+        matrix = list(zip(*matrix))[::-1]
+    return res
+
+
 # 给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。
 # 思路类似，时间复杂度 O(n^2)
 def generate_matrix(n: int):
