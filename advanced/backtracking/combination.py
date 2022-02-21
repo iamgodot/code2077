@@ -7,14 +7,13 @@
 # 空间复杂度：O(n)
 def combination_sum1(candidates: list, target: int) -> list:
     def bt(candidates, target, start) -> None:
-        total = sum(path)
-        if total == target:
-            path_s = sorted(path)
-            if path_s not in res:
-                res.append(path_s)
+        sum_ = sum(path)
+        if sum_ == target:
+            if path not in res:
+                res.append(path[:])
             return
         for i in range(start, len(candidates)):
-            if candidates[i] > target - total:
+            if candidates[i] > target - sum_:
                 return
             path.append(candidates[i])
             bt(candidates, target, i)  # 因为可以重复选取，所以这里递归时仍然用 i 而不是 i+1
