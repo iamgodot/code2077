@@ -10,13 +10,16 @@ def get_intersection_node(head_a: ListNode, head_b: ListNode) -> ListNode:
     cur_a, cur_b = head_a, head_b
 
     while cur_a != cur_b:
+        # 需要 cur_a/cur_b 走到空节点来判断不相交的情况
+        # 所以不能写成 cur_a = cur_a.next or head_b
+        # 而且那么写如果 cur_a 一开始就是 None 也会遇到问题
         cur_a = cur_a.next if cur_a else head_b
         cur_b = cur_b.next if cur_b else head_a
 
     return cur_a
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     a, b = ListNode(), ListNode()
     assert get_intersection_node(a, b) is None
     head_a = make_linked_list([i for i in range(1, 6)])
