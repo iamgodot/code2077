@@ -1,6 +1,6 @@
 # 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
 
-from linked_list import ListNode, make_linked_list
+from data_structures.linked_list import ListNode, make_linked_list
 
 
 # 如果相交，假设相交的部分长度为 c，不相交的部分分别为 a 和 b，那么有 a + c + b = b + c + a

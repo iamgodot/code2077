@@ -2,7 +2,8 @@
 # 请你将两个数相加，并以相同形式返回一个表示和的链表。
 # 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
 
-from linked_list import ListNode, make_linked_list, traverse_linked_list
+from data_structures.linked_list import (ListNode, make_linked_list,
+                                         traverse_linked_list)
 
 
 def add_two_numbers(l1: ListNode, l2: ListNode) -> ListNode:

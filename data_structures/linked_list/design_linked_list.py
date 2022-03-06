@@ -1,4 +1,4 @@
-from linked_list import ListNode, traverse_linked_list
+from data_structures.linked_list import ListNode, traverse_linked_list
 
 
 # 非常考验链表的基础认识
@@ -62,7 +62,7 @@ class MyLinkedList:
         self.size -= 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ll = MyLinkedList()
     ll.addAtHead(4)
     ll.addAtHead(3)

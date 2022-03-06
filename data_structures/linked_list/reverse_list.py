@@ -1,6 +1,7 @@
 # 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
 
-from linked_list import ListNode, make_linked_list, traverse_linked_list
+from data_structures.linked_list import (ListNode, make_linked_list,
+                                         traverse_linked_list)
 
 
 # 1. 循环法，时间复杂度 O(n)，空间复杂度 O(1)
