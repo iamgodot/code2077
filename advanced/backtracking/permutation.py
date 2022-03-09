@@ -2,51 +2,53 @@
 
 
 # 时间复杂度：O(n*n!)
-# 空间复杂度：O(n*n!)
+# 空间复杂度：O(n)
 def permute(nums: list) -> list:
-    length = len(nums)
-
-    def bt(used):
+    def bt():
         if len(path) == length:
-            res.append(path[:])
+            res.append(path.copy())
             return
         for i in range(length):
             if used[i]:
                 continue
             path.append(nums[i])
-            used[i] = True
-            bt(used)
-            used[i] = False
+            used[i] = 1
+            bt()
+            used[i] = 0
             path.pop()
 
+    length = len(nums)
     res, path = [], []
-    bt([False] * length)
+    used = [0 for _ in range(length)]
+    bt()
     return res
 
 
 # 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
 
 
+# 时间复杂度：O(n*n!)
+# 空间复杂度：O(n)
 def permute_unique(nums: list) -> list:
-    length = len(nums)
-
-    def bt(used):
+    def bt():
         if len(path) == length:
-            res.append(path[:])
+            res.append(path.copy())
             return
         for i in range(length):
             if not used[i]:
                 if i > 0 and nums[i] == nums[i - 1] and not used[i - 1]:
                     continue
                 path.append(nums[i])
-                used[i] = True
-                bt(used)
-                used[i] = False
+                used[i] = 1
+                bt()
+                used[i] = 0
                 path.pop()
 
-    nums.sort()  # 因为要对重复数字进行剪枝所以排序
+    length = len(nums)
     res, path = [], []
-    bt([False] * length)
+    used = [0 for _ in range(length)]
+    nums.sort()  # 因为要对重复数字进行剪枝所以排序
+    bt()
     return res
 
 

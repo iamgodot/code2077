@@ -6,23 +6,23 @@
 # 时间复杂度：O(n*2^n) 其中 n 作为 candidates 的长度，对每个元素来说，都面临 n 次选或不选的判断，所以这是一个比较宽松的上界
 # 空间复杂度：O(n)
 def combination_sum1(candidates: list, target: int) -> list:
-    def bt(candidates, target, start) -> None:
+    def bt(start) -> None:
         sum_ = sum(path)
         if sum_ == target:
-            if path not in res:
-                res.append(path[:])
+            res.append(path.copy())
             return
         for i in range(start, len(candidates)):
-            if candidates[i] > target - sum_:
+            num = candidates[i]
+            if num > target - sum_:
                 return
-            path.append(candidates[i])
-            bt(candidates, target, i)  # 因为可以重复选取，所以这里递归时仍然用 i 而不是 i+1
+            path.append(num)
+            bt(i)  # 因为可以重复选取，所以这里递归时仍然用 i 而不是 i+1
             path.pop()
 
     # 这里必须排序，因为如果值小的元素在后面，会造成答案丢失，因为遍历时只会考虑当前元素及后面的元素
     candidates.sort()
     res, path = [], []
-    bt(candidates, target, 0)
+    bt(0)
     return res
 
 
@@ -34,26 +34,28 @@ def combination_sum1(candidates: list, target: int) -> list:
 # 时间复杂度：O(n*2^n) 其中 n 作为 candidates 的长度，对每个元素来说，都面临 n 次选或不选的判断，所以这是一个比较宽松的上界
 # 空间复杂度：O(n)
 def combination_sum2(candidates: list, target: int) -> list:
-    def bt(candidates, target, start) -> None:
-        total = sum(path)
-        if total == target:
-            path_s = sorted(path)
-            if path_s not in res:
-                res.append(path_s)
+    def bt(start) -> None:
+        sum_ = sum(path)
+        if sum_ == target:
+            res.append(path.copy())
             return
         for i in range(start, len(candidates)):
-            if candidates[i] > target - total:
+            num = candidates[i]
+            # 剪枝
+            if num > target - sum_:
                 return
-            if i > start and candidates[i] == candidates[i - 1]:
-                continue  # 注意这里是 continue 而不是 return，因为是要跳过继续往后找
-            path.append(candidates[i])
-            bt(candidates, target, i + 1)  # 每个数字只能使用一次，所以递归时 i 要 +1
+            # 注意是 start
+            if i > start and num == candidates[i - 1]:
+                continue
+            # 回溯三部曲：操作 -> 递归 -> 撤销
+            path.append(num)
+            bt(i + 1)  # 每个数字只能使用一次，所以递归时 i 要 +1
             path.pop()
 
     # 这里必须排序，因为如果值小的元素在后面，会造成答案丢失，因为遍历时只会考虑当前元素及后面的元素
     candidates.sort()
     res, path = [], []
-    bt(candidates, target, 0)
+    bt(0)
     return res
 
 
@@ -71,7 +73,7 @@ def combination_sum3(k: int, n: int) -> list:
         if total > n:
             return
         if total == n and length == k:
-            res.append(path[:])
+            res.append(path.copy())
             return
         for i in range(start, 9 - (k - length) + 1):
             path.append(i + 1)
