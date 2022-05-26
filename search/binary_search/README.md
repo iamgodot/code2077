@@ -1,6 +1,6 @@
 # 二分查找
 
-二分查找的前提是有序序列，通过每次折半可以达到 O(logn) 的时间复杂度。
+二分查找的前提是有序序列，可以达到 O(logn) 的时间复杂度。
 
 大体上可以分为两种类型：三分和两分。
 
@@ -33,25 +33,20 @@ def bs(nums: list, target: int) -> int:
 
 ## 两分
 
-这种情况针对的是寻找边界元素，而不是特定值的元素的位置。
+参考 https://leetcode-cn.com/problems/binary-search/solution/er-fen-cha-zhao-xiang-jie-by-labuladong/
 
-- 右侧边界：使用 `value <= target` 条件搜索，因为 target 在右边，所以是右界，搜索结束后，left 是右侧外界，也就是 `nums[left] > target`，right 在 left 左边，也就是右侧内界
-- 左侧边界：同右侧边界正好相反，搜索结束后，right 是左侧外界
+- bisect left
+  - left 依然取 0，但是 right 要取 len(nums) 而不是 len(nums) - 1。
+  - while 条件没有等于号，因为用的是左闭右开的区间。
+  - left = mid + 1，right = mid，这跟 bisect left 还是 right 没有关系，是由遵循左开右闭决定的。
+  - 因为 bisect left 所以 nums[mid] == target 时要 right = mid 继续往左查看。
+  - 找到的结果 i 是多个 target 最左边那个的下标。[1,1,2] 如果找 1 的话结果为 0，相当于左边的闭边界。
+  - 如果不存在，则找应当插入的位置。[1,1,2] 如果 bisect_left 0 的话结果为 0，3 的话结果为 3。
+- bisect right
+  - nums[mid] == target 时要 left = mid + 1 继续向右查看。
+  - 找到的结果 i 是多个 target 最右边那个的下标 + 1。[1,1,2] 如果找 1 的话结果为 2，相当于右边的开边界。
+  - 如果不存在，也是找应当插入的位置。[1,1,2] 如果找 0 的话结果为 0，3 的话结果为 3。
 
-另外对于没有等号的情况，比如 `value > target`，实际上是找左侧边界，实现上等价于上面右侧外界的情况，此时 left 为左侧内界，而 right 为左侧外界。
+bisect right 的话 python 的实现版本是返回 index + 1，也就是 return left，如果要 index 的话就应当是 return left - 1。
 
-也可以这么理解：找左界就是 target <= nums[mid]，此时 right - 1 取左半，最后 right 为左侧外界，left 为左侧内界（内界就是满足条件，即 target == nums[mid] 或者 nums[mid] 正好是第一个大于 target 的元素）。
-
-```python
-def search(nums: list, target: int) -> int:
-    left, right = 0, len(nums) - 1
-
-    while left <= right:
-        mid = (left + right) // 2
-        if nums[mid] <= target:
-            left = mid + 1
-        else:
-            right = mid - 1
-
-    return left
-```
+重点就是左开右闭，所以 right 取值 + while 条件 + left/right 更新 + return 结果都要对应。

@@ -9,37 +9,37 @@ def search(nums: list, target: int) -> list:
     通过 x <= target 查找右侧外界
     通过 x >= target 查找左侧外界
     """
-    if not nums:
-        return [-1, -1]
 
+    def bisect_left(nums, target) -> int:
+        i, j = 0, len(nums)
+        while i < j:
+            mid = (i + j) // 2
+            if target <= nums[mid]:
+                j = mid
+            else:
+                i = mid + 1
+        return i
+
+    def bisect_right(nums, target) -> int:
+        i, j = 0, len(nums)
+        while i < j:
+            mid = (i + j) // 2
+            if target >= nums[mid]:
+                i = mid + 1
+            else:
+                j = mid
+        return i - 1
+
+    bound_left = bisect_left(nums, target)
     length = len(nums)
-    i = j = 0  # 这里初始化值不会影响结果
-    left, right = 0, length - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if nums[mid] <= target:
-            left = mid + 1
-        else:
-            right = mid - 1
-
-    j = left
-    # 如果不满足条件则提前返回
-    if j < 0 or nums[j - 1] != target:
+    if bound_left > length - 1 or nums[bound_left] != target:
         return [-1, -1]
-
-    left = 0  # right 此时已经是右侧内界了，不用更新，还缩小了查询范围
-    while left <= right:
-        mid = (left + right) // 2
-        if nums[mid] >= target:
-            right = mid - 1
-        else:
-            left = mid + 1
-    i = right
-
-    return [i + 1, j - 1]
+    bound_right = bisect_right(nums, target)
+    return [bound_left, bound_right]
 
 
 if __name__ == "__main__":
     assert search([5, 7, 7, 8, 8, 10], 8) == [3, 4]
     assert search([1], 1) == [0, 0]
+    assert search([1], 2) == [-1, -1]
     assert search([], 0) == [-1, -1]

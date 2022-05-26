@@ -1,3 +1,28 @@
+# 编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：
+# 每行中的整数从左到右按升序排列。
+# 每行的第一个整数大于前一行的最后一个整数。
+
+from bisect import bisect_left
+from typing import List
+
+
+# 先对第一列进行二分查找，注意对结果进行边界判断
+# 然后再对特定行进行二分查找
+def search_matrix(matrix: List[List[int]], target: int) -> bool:
+    row = bisect_left([row[0] for row in matrix], target)
+    if row < len(matrix) and matrix[row][0] == target:
+        return True
+    if row == 0:
+        return False
+    row -= 1
+
+    column = bisect_left(matrix[row], target)
+    if column == len(matrix[0]) or matrix[row][column] != target:
+        return False
+
+    return True
+
+
 # 在一个 n * m 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 
 
