@@ -16,6 +16,6 @@ def merge(root1: TreeNode, root2: TreeNode) -> TreeNode:
     if not root1 or not root2:
         return root1 or root2
     root1.val += root2.val
-    merge(root1.left, root2.left)
-    merge(root1.right, root2.right)
+    root1.left = merge(root1.left, root2.left)
+    root1.right = merge(root1.right, root2.right)
     return root1
