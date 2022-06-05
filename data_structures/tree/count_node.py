@@ -5,28 +5,34 @@
 from data_structures.tree import TreeNode
 
 
-# 对于满二叉树，节点数量等于 2^h - 1
-# 迭代的逻辑就是基于对树是否已满的判断：
-# 1. 如果满足，则按照公式直接计算
-# 2. 否则分别计算左子树和右子树，因为到一定深度肯定会满足条件（单个节点也可以看作满二叉树）
-# 难点在于想到分别计算左右两边的深度来做判断，这样既判断出了结果又得到了深度大小。
-# 因为递归，所以空间复杂度为 O(logn)，而每次递归判断深度也会循环 logn 的次数，所以时间复杂度为 O(logn*logn)
-# 而普通的二叉树遍历方式的时间和空间复杂度都是 O(n)
 def count(root: TreeNode) -> int:
+    """
+    对于满二叉树，节点数量等于 2^h - 1
+    迭代的逻辑就是基于对树是否已满的判断：
+    1. 如果满足，则按照公式直接计算
+    2. 否则分别计算左子树和右子树，因为到一定深度肯定会满足条件（单个节点也可以看作满二叉树）
+
+    因为递归，所以空间复杂度为 O(logn)，而每次递归判断深度也会循环 logn 的次数，所以时间复杂度为 O(logn*logn)，空间复杂度为 O(logn)，可以用二分法优化为 O(1)
+
+    普通的二叉树遍历方式的时间和空间复杂度都是 O(n)
+    """
     if not root:
         return 0
-    depth_left = depth_right = 1
-    left, right = root.left, root.right
-    while left:
-        depth_left += 1
-        left = left.left
-    while right:
-        depth_right += 1
-        right = right.right
-    if depth_left == depth_right:
-        return 2 ** depth_left - 1
+
+    def count_level(node):
+        level = 0
+        while node:
+            level += 1
+            node = node.left
+        return level
+
+    left = count_level(root.left)
+    right = count_level(root.right)
+
+    if left == right:
+        return 2 ** left + count(root.right)
     else:
-        return count(root.left) + count(root.right) + 1
+        return 2 ** right + count(root.left)
 
 
 if __name__ == "__main__":
