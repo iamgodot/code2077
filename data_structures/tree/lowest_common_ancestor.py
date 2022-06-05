@@ -16,18 +16,14 @@ def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode
     ancestor_left = lowest_common_ancestor(root.left, p, q)
     ancestor_right = lowest_common_ancestor(root.right, p, q)
 
-    # if ancestor_left and ancestor_right:
-    # return root
-    # elif ancestor_left:
-    # return ancestor_left
-    # elif ancestor_right:
-    # return ancestor_right
-    if not ancestor_left:
-        return ancestor_right
-    elif not ancestor_right:
+    if ancestor_left and ancestor_right:
+        return root
+    elif ancestor_left:
         return ancestor_left
-
-    return root
+    elif ancestor_right:
+        return ancestor_right
+    else:
+        return None
 
 
 # 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
@@ -38,10 +34,11 @@ def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode
 # 空间复杂度 O(logn) 最坏情况下 O(n)
 def lowest_common_ancestor2(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
     if root.val > p.val and root.val > q.val:
-        return self.lowestCommonAncestor(root.left, p, q)
-    if root.val < p.val and root.val < q.val:
-        return self.lowestCommonAncestor(root.right, p, q)
-    return root
+        return lowest_common_ancestor2(root.left, p, q)
+    elif root.val < p.val and root.val < q.val:
+        return lowest_common_ancestor2(root.right, p, q)
+    else:
+        return root
 
 
 if __name__ == "__main__":
