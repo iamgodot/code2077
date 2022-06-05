@@ -22,6 +22,20 @@ def kth_largest(root: TreeNode, k: int) -> int:
     return res
 
 
+def kth_largest(root, k) -> int:
+    cur, stack = root, []
+    while cur or stack:
+        if cur:
+            stack.append(cur)
+            cur = cur.right
+        else:
+            cur = stack.pop()
+            k -= 1
+            if k == 0:
+                return cur.val
+            cur = cur.left
+
+
 if __name__ == "__main__":
     root = TreeNode(3, left=TreeNode(1, right=TreeNode(2)), right=TreeNode(4))
     assert kth_largest(root, 1) == 4
