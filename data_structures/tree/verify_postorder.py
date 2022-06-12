@@ -1,22 +1,25 @@
 # 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 true，否则返回 false。假设输入的数组的任意两个数字都互不相同。
 
+from typing import List
 
-# 最后一个元素是根节点，前面应当可以分为两部分，前半部分小于根节点，后半部分大于根节点
-# 时间复杂度 O(n^2) 空间复杂度最坏情况下 O(n)
+
 def verify_postorder(postorder: List[int]) -> bool:
-    def verify(left, right) -> bool:
-        if left >= right:
-            return True
-        val = postorder[right]
-        i = left
-        while postorder[i] < val:
-            i += 1
-        for num in postorder[i:right]:
-            if num < val:
-                return False
+    """
+    根据后序遍历重建 BST，因为倒序遍历数组，所以是根 -> 右 -> 左的顺序。
+    如果是验证前序遍历，那么就正序遍历数组，以 根 -> 左 -> 右的顺序。
+    时间复杂度 O(n)
+    空间复杂度 O(n)
+    """
 
-        return verify(left, i - 1) and verify(i, right - 1)
+    def verify(postorder, min, max) -> None:
+        if not postorder:
+            return
+        val = postorder[-1]
+        if not min < val < max:
+            return
+        postorder.pop()
+        verify(postorder, val, max)
+        verify(postorder, min, val)
 
-    if not postorder:
-        return True
-    return verify(0, len(postorder) - 1)
+    verify(postorder, -float("inf"), float("inf"))
+    return not postorder
