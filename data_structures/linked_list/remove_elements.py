@@ -17,6 +17,36 @@ def remove_elements(head: ListNode, val: int) -> ListNode:
     return dummy.next
 
 
+# 给定一个已排序的链表的头 head ， 删除所有重复的元素，使每个元素只出现一次 。返回 已排序的链表 。
+
+
+def delete_duplicates(head: ListNode) -> ListNode:
+    dummy = cur = ListNode(next=head)
+    while cur.next:
+        node = cur.next
+        if node and node.next and node.val == node.next.val:
+            node.next = node.next.next
+        else:
+            cur = cur.next
+    return dummy.next
+
+
+# 给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表 。
+
+
+def delete_duplicates2(head: ListNode) -> ListNode:
+    """注意如果整个链表都是重复的，那么要返回空节点"""
+    dummy = cur = ListNode(next=head)
+    while cur.next:
+        node = cur.next
+        if node and node.next and node.val == node.next.val:
+            while cur.next and cur.next.val == node.val:
+                cur.next = cur.next.next
+        else:
+            cur = cur.next
+    return dummy.next
+
+
 if __name__ == "__main__":
     for data, val, res in (
         ([1, 2, 6, 3, 4, 5, 6], 6, [1, 2, 3, 4, 5]),
