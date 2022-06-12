@@ -31,14 +31,17 @@ def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode
 
 # 前序遍历，从上到下即可
 # 时间复杂度 O(logn) 最坏情况下 O(n)
-# 空间复杂度 O(logn) 最坏情况下 O(n)
+# 空间复杂度 O(1)
 def lowest_common_ancestor2(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-    if root.val > p.val and root.val > q.val:
-        return lowest_common_ancestor2(root.left, p, q)
-    elif root.val < p.val and root.val < q.val:
-        return lowest_common_ancestor2(root.right, p, q)
-    else:
-        return root
+    ancestor = root
+    while ancestor:
+        if p.val < ancestor.val and q.val < ancestor.val:
+            ancestor = ancestor.left
+        elif p.val > ancestor.val and q.val > ancestor.val:
+            ancestor = ancestor.right
+        else:
+            break
+    return ancestor
 
 
 if __name__ == "__main__":
