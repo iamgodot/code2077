@@ -31,23 +31,22 @@ def sorted_array_to_bst(nums: list) -> TreeNode:
 def linked_list_to_bst(head: ListNode) -> TreeNode:
     """
     时间复杂度 O(n*logn) 相当于每次递归中去找 mid 的成本是 O(n)
-    空间复杂度 O(logn)
+    空间复杂度 O(logn) 注意是平衡二叉树
     """
 
-    def find_mid(left: ListNode, right: ListNode) -> ListNode:
-        slow = fast = left
+    def build(left: ListNode, right: ListNode):
+        # 注意 base case
+        if left is right:
+            return None
+
+        slow, fast = left, left.next
         while fast is not right and fast.next is not right:
             slow = slow.next
             fast = fast.next.next
-        return slow
 
-    def build(left: ListNode, right: ListNode):
-        if left is right:
-            return None
-        mid = find_mid(left, right)
-        root = TreeNode(mid.val)
-        root.left = build(head, mid)
-        root.right = build(mid.next, right)
+        root = TreeNode(slow.val)
+        root.left = build(left, slow)
+        root.right = build(slow.next, right)
         return root
 
     return build(head, None)
@@ -57,7 +56,7 @@ def linked_list_to_bst(head: ListNode) -> TreeNode:
     """
     利用中序遍历来构建 BST，这样可以直接使用 head 节点而不需要每次都找中间节点了
     时间复杂度 O(n)
-    空间复杂度 O(logn)
+    空间复杂度 O(logn) 注意是平衡二叉树
     """
 
     def build(left, right):
