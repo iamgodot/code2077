@@ -119,6 +119,32 @@ def levelorder_rec(root):
     return res
 
 
+# 给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
+
+
+def zigzag_levelorder(root: TreeNode) -> List[List[int]]:
+    res = []
+    if not root:
+        return res
+    from collections import deque
+
+    dq = deque([root])
+    while dq:
+        level = []
+        for _ in range(len(dq)):
+            node = dq.pop()
+            if len(res) % 2 == 0:
+                level.append(node.val)
+            else:
+                level.insert(0, node.val)
+            if node.left:
+                dq.appendleft(node.left)
+            if node.right:
+                dq.appendleft(node.right)
+        res.append(level)
+    return res
+
+
 # 给你一个二叉树的根结点，返回其结点按 垂直方向（从上到下，逐列）遍历的结果。
 # 如果两个结点在同一行和列，那么顺序则为 从左到右。
 
@@ -173,4 +199,5 @@ if __name__ == "__main__":
 
     assert levelorder(tree) == [[1], [2, 3], [4, 5, 6, 7]]
     assert levelorder_rec(tree) == [[1], [2, 3], [4, 5, 6, 7]]
+    assert zigzag_levelorder(tree) == [[1], [3, 2], [4, 5, 6, 7]]
     assert vertical_order(tree) == [[4], [2], [1, 5, 6], [3], [7]]
