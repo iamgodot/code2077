@@ -1,9 +1,15 @@
-# 二叉树的遍历主要分为两种：
-# 深度优先：前序/中序/后序
-# 广度优先：层序
+# DFS
+# - 前序遍历（递归法、迭代法）：中左右，从上到下，求深度，真正体现回溯
+# - 中序遍历（递归法、迭代法）：左中右，体现了 BST 的排序特点
+# - 后序遍历（递归法、迭代法）：左右中，自底向上，求高度
+# BFS
+# - 层序遍历（迭代法、队列）
+
 # 对于深度优先来说，时间复杂度为 O(n)，而空间复杂度为 O(h)，树的高度可能为 O(n) 也可能为 O(logn)
 # 对于广度优先来说，时间复杂度为 O(n)，递归实现的空间复杂度为 O(h)，而非递归版本空间复杂度为 O(n)
-# 因为非递归版本使用的队列会保存每一层的元素，而这里的元素数量也是指数增长的
+
+from typing import List, Optional
+
 from data_structures.tree import TreeNode
 
 
@@ -113,8 +119,32 @@ def levelorder_rec(root):
     return res
 
 
+# 给你一个二叉树的根结点，返回其结点按 垂直方向（从上到下，逐列）遍历的结果。
+# 如果两个结点在同一行和列，那么顺序则为 从左到右。
+
+
+def vertical_order(root: Optional[TreeNode]) -> List[List[int]]:
+    if not root:
+        return []
+    res = []
+    from collections import defaultdict, deque
+
+    dq = deque([[root, 0]])  # [node, key]
+    key_to_vals = defaultdict(list)
+    while dq:
+        node, key = dq.pop()
+        key_to_vals[key].append(node.val)
+        if node.left:
+            dq.appendleft([node.left, key - 1])
+        if node.right:
+            dq.appendleft([node.right, key + 1])
+    for k in sorted(key_to_vals):
+        res.append(key_to_vals[k])
+    return res
+
+
 if __name__ == "__main__":
-    root = TreeNode(
+    tree = TreeNode(
         val=1,
         left=TreeNode(val=2, left=TreeNode(4), right=TreeNode(5)),
         right=TreeNode(val=3, left=TreeNode(6), right=TreeNode(7)),
@@ -131,7 +161,7 @@ if __name__ == "__main__":
         (postorder, [4, 5, 2, 6, 7, 3, 1]),
     ]:
         res = []
-        traversal(root, res)
+        traversal(tree, res)
         assert res == nums
 
     for traversal, nums in [
@@ -139,7 +169,8 @@ if __name__ == "__main__":
         (inorder_it, [4, 2, 5, 1, 6, 3, 7]),
         (postorder_it, [4, 5, 2, 6, 7, 3, 1]),
     ]:
-        assert traversal(root) == nums
+        assert traversal(tree) == nums
 
-    assert levelorder(root) == [[1], [2, 3], [4, 5, 6, 7]]
-    assert levelorder_rec(root) == [[1], [2, 3], [4, 5, 6, 7]]
+    assert levelorder(tree) == [[1], [2, 3], [4, 5, 6, 7]]
+    assert levelorder_rec(tree) == [[1], [2, 3], [4, 5, 6, 7]]
+    assert vertical_order(tree) == [[4], [2], [1, 5, 6], [3], [7]]
