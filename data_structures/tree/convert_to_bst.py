@@ -34,7 +34,7 @@ def linked_list_to_bst(head: ListNode) -> TreeNode:
     空间复杂度 O(logn) 注意是平衡二叉树
     """
 
-    def build(left: ListNode, right: ListNode):
+    def build(left: ListNode, right: ListNode) -> TreeNode:
         # 注意 base case
         if left is right:
             return None
