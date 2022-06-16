@@ -84,6 +84,4 @@ def path_sum2(root: TreeNode, target_sum: int) -> int:
     if not root:
         return 0
     res = dfs(root, target_sum)
-    return (
-        res + self.pathSum(root.left, target_sum) + self.pathSum(root.right, target_sum)
-    )
+    return res + path_sum2(root.left, target_sum) + path_sum2(root.right, target_sum)
