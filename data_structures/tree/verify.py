@@ -11,15 +11,37 @@ def verify_postorder(postorder: List[int]) -> bool:
     空间复杂度 O(n)
     """
 
-    def verify(postorder, min, max) -> None:
+    def verify(postorder, low, high) -> None:
         if not postorder:
             return
         val = postorder[-1]
-        if not min < val < max:
+        if not low < val < high:
             return
         postorder.pop()
-        verify(postorder, val, max)
-        verify(postorder, min, val)
+        verify(postorder, val, high)
+        verify(postorder, low, val)
 
     verify(postorder, -float("inf"), float("inf"))
     return not postorder
+
+
+# 给定一个 无重复元素 的整数数组 preorder ， 如果它是以二叉搜索树的先序遍历排列 ，返回 true 。
+
+
+def verify_preorder(preorder: List[int]) -> bool:
+    def build(low, high):
+        if not vals:
+            return
+        if not low < vals[-1] < high:
+            return
+        val = vals.pop()
+        build(low, val)
+        build(val, high)
+
+    # 使用倒序来避免 pop(0) 的高成本
+    vals = preorder[::-1]
+    build(-float("inf"), float("inf"))
+    return vals == []
+
+
+# TODO: 单调栈解法
