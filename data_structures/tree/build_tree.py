@@ -40,3 +40,29 @@ def build_tree(inorder: List[int], postorder: List[int]) -> TreeNode:
         return root
 
     return build(len(postorder) - 1, 0, len(inorder) - 1)
+
+
+# 给定两个整数数组，preorder 和 postorder ，其中 preorder 是一个具有 无重复 值的二叉树的前序遍历，postorder 是同一棵树的后序遍历，重构并返回二叉树。
+# 如果存在多个答案，您可以返回其中 任何 一个。
+
+
+def build_tree(preorder: List[int], postorder: List[int]) -> TreeNode:
+    """
+    前序遍历的第一个元素为 root，第二个元素为 root.left，
+    根据 left 找出其在后序遍历中的位置，从而区分左右子树两部分。
+    """
+
+    def build(index, left, right) -> TreeNode:
+        if index > len(preorder) - 1 or left > right:
+            return None
+        val = preorder[index]
+        root = TreeNode(val)
+        # 注意这里要再次判断，防止 index 越界或者 left, right 没有及时收敛
+        if index == len(preorder) - 1 or left == right:
+            return root
+        i = postorder.index(preorder[index + 1])
+        root.left = build(index + 1, left, i)
+        root.right = build(index + 1 + i - left + 1, i + 1, right - 1)
+        return root
+
+    return build(0, 0, len(postorder) - 1)
