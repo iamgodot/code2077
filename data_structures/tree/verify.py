@@ -11,37 +11,40 @@ def verify_postorder(postorder: List[int]) -> bool:
     空间复杂度 O(n)
     """
 
-    def verify(postorder, low, high) -> None:
-        if not postorder:
+    def verify(lower, upper) -> None:
+        nonlocal index
+        if index < 0:
             return
-        val = postorder[-1]
-        if not low < val < high:
+        val = postorder[index]
+        if not lower < val < upper:
             return
-        postorder.pop()
-        verify(postorder, val, high)
-        verify(postorder, low, val)
+        index -= 1
+        verify(val, upper)
+        verify(lower, val)
 
-    verify(postorder, -float("inf"), float("inf"))
-    return not postorder
+    index = len(postorder) - 1
+    verify(-float("inf"), float("inf"))
+    return index == -1
 
 
 # 给定一个 无重复元素 的整数数组 preorder ， 如果它是以二叉搜索树的先序遍历排列 ，返回 true 。
 
 
 def verify_preorder(preorder: List[int]) -> bool:
-    def build(low, high):
-        if not vals:
+    def build(lower, upper):
+        nonlocal index
+        if index > len(preorder) - 1:
             return
-        if not low < vals[-1] < high:
+        val = preorder[index]
+        if not lower < val < upper:
             return
-        val = vals.pop()
-        build(low, val)
-        build(val, high)
+        index += 1
+        build(lower, val)
+        build(val, upper)
 
-    # 使用倒序来避免 pop(0) 的高成本
-    vals = preorder[::-1]
+    index = 0
     build(-float("inf"), float("inf"))
-    return vals == []
+    return index == len(preorder)
 
 
-# TODO: 单调栈解法
+# NOTES: 前序/后序遍历 BST 也是一样的思路，只是要实际构造出 TreeNode
