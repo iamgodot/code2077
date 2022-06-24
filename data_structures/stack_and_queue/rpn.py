@@ -9,24 +9,25 @@
 # 2. 除法的处理上面，需要保留整数部分
 # 3. 最好确认参数为空的话要返回什么，None 还是 0
 def eval_rpn(tokens: list) -> int:
-    stack = list()
+    stack = []
 
     for token in tokens:
-        if token in '+-*/':
+        if token in "+-*/":
             num2 = stack.pop()
             num1 = stack.pop()
             # 注意除法的处理，// 对于负数的情况是不正确的，比如 6//-132
-            stack.append(int(eval(f'{num1}{token}{num2}')))
+            stack.append(int(eval(f"{num1}{token}{num2}")))
         else:
             stack.append(int(token))
 
     return stack.pop()
 
 
-if __name__ == '__main__':
-    for tokens, res in (['18'], 18), (['2', '1', '+', '3', '*'],
-                                      9), (['4', '13', '5', '/', '+'], 6), ([
-                                          '10', '6', '9', '3', '+', '-11', '*',
-                                          '/', '*', '17', '+', '5', '+'
-                                      ], 22):
+if __name__ == "__main__":
+    for tokens, res in (
+        (["18"], 18),
+        (["2", "1", "+", "3", "*"], 9),
+        (["4", "13", "5", "/", "+"], 6),
+        (["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"], 22),
+    ):
         assert eval_rpn(tokens) == res
