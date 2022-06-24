@@ -15,25 +15,18 @@ class MinStack:
         self.s1 = []
         self.s2 = []
 
-    def empty(self) -> bool:
-        return len(self.s1) == 0
-
     def push(self, val):
         self.s1.append(val)
         if not self.s2 or val <= self.s2[-1]:
             self.s2.append(val)
 
     def pop(self):
-        if self.empty():
-            return
         val = self.s1.pop()
         if self.s2 and val == self.s2[-1]:
             self.s2.pop()
         return val
 
     def min(self):
-        if self.empty():
-            return
         return self.s2[-1]
 
 
@@ -47,22 +40,22 @@ class MinStack2:
     def push(self, val: int) -> None:
         # 注意这里不要根据 min_val is None 来做判断条件
         # 因为过程中 min_val 可能会被置为非空值，即使栈中已经没有元素
-        # 除非在 pop 中判断如果栈空则重置 min_val
         if not self.s:
             self.s.append(0)
             self.min_val = val
         else:
             self.s.append(val - self.min_val)
-            if val <= self.min_val:
+            if val < self.min_val:
                 self.min_val = val
 
     def pop(self) -> None:
         val = self.s.pop()
         if val < 0:
-            # res = self.min_val
+            res = self.min_val
             self.min_val -= val
-        # else:
-        # res = val + self.min_val
+            return res
+        else:
+            return val + self.min_val
 
     def top(self) -> int:
         if self.s[-1] < 0:
@@ -75,14 +68,12 @@ class MinStack2:
 
 
 if __name__ == "__main__":
-    min_stack = MinStack()
-    assert min_stack.empty()
-    assert min_stack.pop() is None
-    assert min_stack.min() is None
-    for i in [2, 1, 3]:
-        min_stack.push(i)
-    assert min_stack.min() == 1
-    assert min_stack.pop() == 3
-    assert min_stack.min() == 1
-    assert min_stack.pop() == 1
-    assert min_stack.min() == 2
+    for cls in MinStack, MinStack2:
+        min_stack = cls()
+        for i in [2, 1, 3]:
+            min_stack.push(i)
+        assert min_stack.min() == 1
+        assert min_stack.pop() == 3
+        assert min_stack.min() == 1
+        assert min_stack.pop() == 1
+        assert min_stack.min() == 2
