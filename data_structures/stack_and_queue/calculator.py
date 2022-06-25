@@ -18,32 +18,29 @@ def calculate(s: str) -> int:
     通过栈来维护当前括号层级的正负状态，初始化为 [1]
     因为 op 会通过栈顶元素来更新当前的正负操作
     """
-    op, stack = 1, [1]
-    res = index = 0
-    length = len(s)
-    while index < length:
-        char = s[index]
+    res = num = 0
+    sign = 1
+    stack = []
+    for char in s:
         if char == " ":
-            index += 1
-        elif char == "+":
-            op = stack[-1]
-            index += 1
-        elif char == "-":
-            op = -stack[-1]
-            index += 1
-        elif char == "(":
-            stack.append(op)
-            index += 1
-        elif char == ")":
-            stack.pop()
-            index += 1
-        else:
+            continue
+        if "0" <= char <= "9":
+            num = num * 10 + int(char)
+        if char in "+-":
+            res += num * sign
             num = 0
-            while index < length and "0" <= s[index] <= "9":
-                num = num * 10 + int(s[index])
-                index += 1
-            res += num * op
-
+            sign = -1 if char == "-" else 1
+        if char == "(":
+            stack.append(res)
+            stack.append(sign)
+            res = 0
+            sign = 1
+        if char == ")":
+            res += num * sign
+            num = res
+            sign = stack.pop()
+            res = stack.pop()
+    res += num * sign
     return res
 
 
