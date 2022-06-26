@@ -1,19 +1,33 @@
 # code2077
 
-> If it was 2077, I would be 86. If I was 86, I would still like to code a bit.
+This repo maintains a minimal collection of data structure and algorithm interview questions.
 
-## About
+## Data Structures
 
-This repo intends to restore python code for interview questions(algorithms and such) in terms of classical types of data structures or solutions.
+- Linear
+  - Array
+  - Hash table
+  - Linked list
+  - Linked hash table(LRU)
+  - Stack
+  - Queue
+  - String
+- Nolinear
+  - Tree
+    - Binary tree
+    - BST
+    - Trie
+  - Heap
+  - Graph
 
-All function code should be able to run through the available or any other reasonable test cases.
+## Algorithms
 
-## Usage
-
-Simply run python files as scripts.
-
-Python 3.9 are fully supported(actually it's the basis), while other 3.x version should also be compatible(not guaranteed).
-
-## Contributing
-
-There's always something to fix or improve, so [issues](https://github.com/iamgodot/code2077/issues) and pull requests are welcome.
+- Search
+  - Sorting
+  - Binary search
+  - Linear search
+  - DFS & BFS
+- Backtracking
+- Greedy algorithm
+- Dynamic programming
+- Bit operation
