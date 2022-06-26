@@ -19,12 +19,10 @@ def find_str(haystack: str, needle: str) -> int:
     res = -1
     len_h, len_n = len(haystack), len(needle)
     for i in range(len_h - len_n + 1):
-        flag = True
         for j in range(len_n):
             if haystack[i + j] != needle[j]:
-                flag = False
                 break
-        if flag:
+        else:
             return i
 
     return res
