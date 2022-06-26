@@ -2,27 +2,27 @@
 # 「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
 
 
-def find_next1(num: str) -> str:
+def find_next1(s: str) -> str:
     recorded = ""
-    cur, count = num[0], 1
-    for char in num[1:]:
+    cur, count = s[0], 1
+    for i in range(1, len(s)):
+        char = s[i]
         if char == cur:
             count += 1
-            continue
-        recorded += f"{count}{cur}"
-        cur = char
-        count = 1
+        else:
+            recorded += f"{count}{cur}"
+            cur, count = char, 1
     return f"{recorded}{count}{cur}"
 
 
-def find_next2(num: str) -> str:
+def find_next2(s: str) -> str:
     recorded = ""
     start = cur = 0
-    size = len(num)
+    size = len(s)
     while cur < size:
-        while cur < size and num[start] == num[cur]:
+        while cur < size and s[start] == s[cur]:
             cur += 1
-        recorded += str(cur - start) + num[start]
+        recorded += str(cur - start) + s[start]
         start = cur
     return recorded
 
