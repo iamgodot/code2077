@@ -5,6 +5,7 @@
 # 1. 根据人脑思考过程可以联想到在 1 和 x 之间通过二分法查找
 # 因为结果只需要返回整数，所以在出现小数时就可以停止
 # 时间复杂度为 O(logn)，空间复杂度 O(1)
+# 注意 x 的取值是 0 <= x <= 2^31 - 1 所以要考虑 x=0 和 x=1 的情况
 def sqrt(x: int) -> int:
     """
     因为 x 为非负整数，所以要考虑到 x 为 0，还有 x 为 1 的情况
@@ -19,7 +20,7 @@ def sqrt(x: int) -> int:
             low = mid + 1
         else:
             high = mid - 1
-    return int(high)
+    return low if low * low <= x else low - 1
 
 
 # 2. 还有一种牛顿迭代法的解法，类似二分，时间复杂度也是 O(logn)，不过效率要更高
