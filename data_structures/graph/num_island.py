@@ -44,7 +44,7 @@ def num_of_islands_by_dfs(grid) -> int:
 
 # 思路同上，只是用 bfs 代替 dfs
 # 时间复杂度：O(m*n)
-# 空间复杂度：O(min(m, n)) 最坏情况下（所有都是陆地）
+# 空间复杂度：O(m*n) 最坏情况下（所有都是陆地）
 def _bfs(grid, i, j) -> None:
     dq = deque([(i, j)])
     while dq:
