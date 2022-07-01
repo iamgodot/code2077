@@ -23,6 +23,7 @@ Python 的 list 可以很方便地模拟栈和队列的操作，然而，collect
 1. [每日温度](daily_temperatures.py)
 2. [下一个更大元素](next_greater_element.py)
 3. [柱状图中最大的矩形](largest_rectangle.py)
+4. [接雨水](algorithms/dynamic_programming/trapping_rain_water.py)
 
 ### Next greater element
 
