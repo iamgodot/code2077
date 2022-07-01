@@ -1,5 +1,21 @@
 # 图
 
+- 遍历
+  - 树的路径类题目 -> dfs
+  - [岛屿数量](num_island.py)
+  - [最大岛屿面积](max_area.py)
+  - [岛屿周长](perimeter.py)
+  - [最大人工岛](largest_island.py)
+  - [被围绕的区域](surrounded_regions.py)
+  - [克隆图](clone_graph.py)
+  - [所有可能的路径](all_paths.py)
+  - BFS
+    - [墙与门](walls_and_gates.py)
+    - [腐烂的橘子](rotting_oranges.py)
+    - [判断二分图](bipartite.py)
+- 拓扑排序
+  - [课程表](courses.py)
+
 ## 概念
 
 - 顶点 Vertex
@@ -94,23 +110,3 @@ def bfs(node, visited):
                     visited[nb] = True
         step += 1
 ```
-
-## 拓扑排序
-
-## 题目
-
-- 遍历
-  - 树的路径类题目 -> dfs
-  - [岛屿数量](num_island.py)
-  - [最大岛屿面积](max_area.py)
-  - [岛屿周长](perimeter.py)
-  - [最大人工岛](largest_island.py)
-  - [被围绕的区域](surrounded_regions.py)
-  - [克隆图](clone_graph.py)
-  - [所有可能的路径](all_paths.py)
-  - BFS
-    - [墙与门](walls_and_gates.py)
-    - [腐烂的橘子](rotting_oranges.py)
-    - [判断二分图](bipartite.py)
-- 拓扑排序
-  - [课程表](courses.py)
