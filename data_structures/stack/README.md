@@ -7,23 +7,24 @@
 Python 的 list 可以很方便地模拟栈和队列的操作，然而，collections.deque 模块的 appendleft/popleft 要比 list 的 insert(0, val)/pop(0) 效率高很多，前者为 O(1)，后者为 O(n)，参考 [Stackoverflow](https://stackoverflow.com/questions/23487307/python-deque-vs-list-performance-comparison)。
 
 1. [利用栈实现队列](stacks_for_queue.py)
-2. [利用队列实现栈](queues_for_stack.py)
-3. [最小栈](min_stack.py)
-4. [有效的括号](valid_parentheses.py)
-5. [删除字符串中所有相邻重复项](remove_duplicates.py)
-6. [逆波兰表达式求值](rpn.py)
-7. [栈的推入、弹出序列](validate_stack_seq.py)
-8. [车队](car_fleet.py)
-9. [基本计算器](calculator.py)
+1. [实现循环队列](design_circular_queue.py)
+1. [利用队列实现栈](queues_for_stack.py)
+1. [最小栈](min_stack.py)
+1. [有效的括号](valid_parentheses.py)
+1. [删除字符串中所有相邻重复项](remove_duplicates.py)
+1. [逆波兰表达式求值](rpn.py)
+1. [栈的推入、弹出序列](validate_stack_seq.py)
+1. [车队](car_fleet.py)
+1. [基本计算器](calculator.py)
 
 ## 单调栈
 
 单调栈主要用来在 O(n) 时间寻找上/下一个更小/大的元素。
 
 1. [每日温度](daily_temperatures.py)
-2. [下一个更大元素](next_greater_element.py)
-3. [柱状图中最大的矩形](largest_rectangle.py)
-4. [接雨水](algorithms/dynamic_programming/trapping_rain_water.py)
+1. [下一个更大元素](next_greater_element.py)
+1. [柱状图中最大的矩形](largest_rectangle.py)
+1. [接雨水](algorithms/dynamic_programming/trapping_rain_water.py)
 
 ### Next greater element
 
