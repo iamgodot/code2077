@@ -6,38 +6,33 @@
 
 # 1. BruteForce: 双层遍历，时间复杂度 O(n^2)，还需要哈希表来比较子串和 t
 # 2. 滑动窗口：在子串没有覆盖 t 的时候右指针右移，否则左指针右移。时间复杂度 O(n) 空间复杂度 O(m) m 最多为 26
-# 注意实现滑动窗口过程中可以优化的点：
-# - 使用 i j 来指定子串范围
-# - 使用 diff 数值来代替遍历哈希表判断是否覆盖
-# - 左指针在右移的时候直接判断哈希表中字符的数字是否小于 0 即可，因为 t 中的字符一开始初始化 value 肯定大于 0，
-#   其他字符默认为 0，所以在 while 中一旦碰到 value 为 0，说明一定是 t 中的字符并且恰好字符数量正好够用，
-#   相当于左指针右移到了最后能满足覆盖条件的位置。也因此，while 结束之后下面还要再右移一次，打破覆盖条件。
+
 
 def min_window(s: str, t: str) -> str:
     from collections import Counter
 
-    left = right = 0
+    left = 0
     diff = len(t)
     hashtable = Counter(t)
-    i, j = 0, len(s)
+    min_left, min_len = 0, float("inf")
     for right, char in enumerate(s):
-        if hashtable[char] > 0:
-            diff -= 1
-        hashtable[char] -= 1
+        # 只需要关心 hashtable 存在的 char
+        if char in hashtable:
+            if hashtable[char] > 0:
+                diff -= 1
+            hashtable[char] -= 1
 
-        if diff == 0:
-            while hashtable[s[left]] < 0:
-                hashtable[s[left]] += 1
-                left += 1
-
-            if right - left < j - i:
-                i, j = left, right
-
-            hashtable[s[left]] += 1
+        while diff == 0:
+            if right - left + 1 < min_len:
+                min_left = left
+                min_len = right - left + 1
+            char_left = s[left]
+            if char_left in hashtable:
+                hashtable[char_left] += 1
+                if hashtable[char_left] > 0:
+                    diff += 1
             left += 1
-            diff += 1
-
-    return "" if j == len(s) else s[i : j + 1]
+    return "" if min_len == float("inf") else s[min_left : min_left + min_len]
 
 
 if __name__ == "__main__":
