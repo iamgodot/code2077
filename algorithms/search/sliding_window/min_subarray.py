@@ -47,7 +47,7 @@ def min_subarray_len(target: int, nums: list) -> int:
 # 3. 同样因为数组中都是正数，所以可以应用滑动窗口，时间复杂度 O(n)
 def min_subarray_len(target: int, nums: list) -> int:
     res = float("inf")
-    total = left = right = 0
+    total = left = 0
 
     for right, num in enumerate(nums):
         total += num
