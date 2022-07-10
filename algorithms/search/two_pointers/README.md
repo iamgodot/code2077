@@ -1,15 +1,31 @@
 # 双指针
 
-一般都是用来达到线性的时间复杂度。
+## 对撞指针
 
-这里的双指针更倾向于双端指针向中间移动，相比于滑动窗口是同时从起点向终点移动。
+关键词：求和，翻转，回文。
 
-1. [两数之和](data_structures/hashtable/two_sum.py)
+1. [两数之和 II](data_structures/hashtable/two_sum.py)
 2. [三数之和](three_sum.py)
 3. [两数平方和](square_sum.py)
-4. [回文字符串](valid_palindrome.py)
-5. [判断链表是否有环](data_structures/linked_list/cycle.py)
+4. [有序数组的平方](sorted_squares.py)
+5. [移除元素](remove_element.py)
+6. [轮转数组](rotate_array.py)
+7. [回文字符串](valid_palindrome.py)
+8. [翻转字符串](reverse_words.py)
+9. 盛最多水的容器
 
-也有一种情况是两个序列，各使用一个指针从起点进行对比：
+## 快慢指针
 
-1. [最长子序列](longest_word.py)
+1. 在链表题目中常用
+2. [删除有序数组中的重复项 I/II](remove_duplicates_from_sorted_array.py)
+3. 移动零
+4. [颜色分类](sort_colors.py)
+
+## 分离指针
+
+1. 同样在链表题目中经常出现
+2. 两个数组的交集
+3. [字符串加法](data_structures/string/add_strings.py)
+4. [最长子序列](longest_word.py)
+5. 比较版本号
+6. 合并两个有序数组/替换字符串空格：都是同样的思路，扩展数组/字符串，然后从后向前填充
