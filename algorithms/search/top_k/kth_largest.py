@@ -3,10 +3,12 @@
 from random import randint
 
 
-# 使用快速排序的思路来实现快速选择
-# 时间复杂度：最差情况下为 O(n^2)，平均水平为 O(n)（可以看作是 n->n/2->n/4... 这个等比数列的和）
-# 空间复杂度：递归的情况下为 O(logn)，如果改成迭代实现则是 O(1)
 def quick_sort(nums: list, left: int, right: int, k: int) -> int:
+    """
+    使用快速排序的思路来实现快速选择。
+    Time: O(n) 最坏情况下为 O(n^2)
+    Space: O(logn) 最坏情况下为 O(n)
+    """
     if left >= right:
         return nums[left]
 
@@ -23,6 +25,7 @@ def quick_sort(nums: list, left: int, right: int, k: int) -> int:
         nums[i], nums[j] = nums[j], nums[i]
 
     nums[pivot], nums[i] = nums[i], nums[pivot]
+    # 如果是求第 k 小，则 index = k - 1
     index = len(nums) - k
     if i == index:
         return nums[i]
