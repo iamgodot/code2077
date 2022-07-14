@@ -1,13 +1,15 @@
-def merge(l1: list, l2: list) -> list:
+def merge(nums1: list, nums2: list) -> list:
     res = []
-
-    while l1 and l2:
-        if l1[0] <= l2[0]:
-            res.append(l1.pop(0))
+    i = j = 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] <= nums2[j]:
+            res.append(nums1[i])
+            i += 1
         else:
-            res.append(l2.pop(0))
+            res.append(nums2[j])
+            j += 1
 
-    res += l1 or l2
+    res += nums1[i:] or nums2[j:]
 
     return res
 
@@ -18,9 +20,11 @@ def merge_sort(nums: list) -> list:
     if length <= 1:
         return nums
 
-    return merge(merge_sort(nums[: length // 2]), merge_sort(nums[length // 2 :]))
+    mid = length // 2
+    nums1 = merge_sort(nums[:mid])
+    nums2 = merge_sort(nums[mid:])
+    return merge(nums1, nums2)
 
 
 if __name__ == "__main__":
-    nums = [5, 8, 6, 3, 9, 2, 1, 7, 4]
-    assert merge_sort(nums) == list(range(1, 10))
+    assert merge_sort([5, 8, 6, 3, 9, 2, 1, 7, 4]) == list(range(1, 10))
