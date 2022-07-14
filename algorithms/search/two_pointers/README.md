@@ -4,6 +4,8 @@
 
 关键词：求和，翻转，回文。
 
+注意对数字来说应当先给数组排序。
+
 1. [两数之和 II](data_structures/hashtable/two_sum.py)
 2. [三数之和](three_sum.py)
 3. [两数平方和](square_sum.py)
