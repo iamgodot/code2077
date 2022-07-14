@@ -2,7 +2,7 @@
 from random import randint
 
 
-def quick_sort(nums: list, left: int, right: int) -> list:
+def quick_sort(nums: list, left: int, right: int) -> None:
     """直接指定最左边下标为 pivot."""
 
     if left >= right:
@@ -32,9 +32,9 @@ def quick_sort(nums: list, left: int, right: int) -> list:
     quick_sort(nums, i + 1, right)
 
 
-def quick_sort_with_stack(nums: list, left: int, right: int) -> list:
+def quick_sort_with_stack(nums: list, left: int, right: int) -> None:
     """使用堆栈替代递归。"""
-    stack = list()
+    stack = []
 
     while left < right or stack:
         if left < right:
