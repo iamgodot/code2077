@@ -44,9 +44,9 @@ def top_k_frequent2(nums: List[int], k: int) -> List[int]:
     for num, freq in counter.items():
         num_freqs.append((freq, num))
 
-    def quick_select(nums, left, right, k) -> List[int]:
+    def quick_select(nums, left, right, k) -> None:
         if left >= right:
-            return nums[left:]
+            return
         pivot, i, j = left, left, right
         while i < j:
             while nums[j] >= nums[pivot] and i < j:
@@ -56,14 +56,14 @@ def top_k_frequent2(nums: List[int], k: int) -> List[int]:
             nums[i], nums[j] = nums[j], nums[i]
         nums[i], nums[pivot] = nums[pivot], nums[i]
         if i == k:
-            return nums[i:]
+            return
         elif i > k:
-            return quick_select(nums, left, i - 1, k)
+            quick_select(nums, left, i - 1, k)
         else:
-            return quick_select(nums, i + 1, right, k)
+            quick_select(nums, i + 1, right, k)
 
-    res = quick_select(num_freqs, 0, len(num_freqs) - 1, len(num_freqs) - k)
-    return [i[1] for i in res]
+    quick_select(num_freqs, 0, len(num_freqs) - 1, len(num_freqs) - k)
+    return [item[1] for item in num_freqs[len(num_freqs) - k :]]
 
 
 def top_k_frequent3(nums: list, k: int) -> list:

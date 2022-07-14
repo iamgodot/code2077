@@ -21,26 +21,26 @@ def get_least_nums(arr: List[int], k: int) -> List[int]:
 # 快速排序，迭代到前半部分满足 k 个元素之后即可以停止
 # 时间复杂度 O(n) 空间复杂度 O(logn) 递归占用
 def get_least_nums2(arr: List[int], k: int) -> List[int]:
-    def qs(l, r):
-        if l >= r:
+    def qs(nums, left, right, k):
+        if left >= right:
             return
-        i, j = l, r
+        i, j = left, right
         while i < j:
-            while i < j and arr[j] >= arr[l]:
+            while i < j and arr[j] >= arr[left]:
                 j -= 1
-            while i < j and arr[i] <= arr[l]:
+            while i < j and arr[i] <= arr[left]:
                 i += 1
             arr[i], arr[j] = arr[j], arr[i]
 
-        arr[l], arr[i] = arr[i], arr[l]
+        arr[left], arr[i] = arr[i], arr[left]
         if k < i:
-            qs(l, i - 1)
+            qs(nums, left, i - 1, k)
         elif k > i:
-            qs(i + 1, r)
+            qs(nums, i + 1, right, k)
         else:
             return
 
-    qs(0, len(arr) - 1)
+    qs(arr, 0, len(arr) - 1, k)
     return arr[:k]
 
 
