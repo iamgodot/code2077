@@ -9,6 +9,9 @@ def partition_labels(s: str) -> List[int]:
     Count the largest index of each char in s.
     Iterate the string:
         If current index equals to the largest index of appeared chars, then slice it up
+
+    Time: O(n)
+    Space: O(1) limited to 26 chars
     """
     length = len(s)
     hashtable = {}
@@ -16,12 +19,13 @@ def partition_labels(s: str) -> List[int]:
         hashtable[s[i]] = i
 
     res = []
-    left = right = 0
-    for i in range(length):
-        right = max(right, hashtable[s[i]])
-        if i == right:
-            res.append(right - left + 1)
-            left = right = i + 1
+    end = size = 0
+    for i, char in enumerate(s):
+        size += 1
+        end = max(end, hashtable[char])
+        if i == end:
+            res.append(size)
+            size = 0
 
     return res
 
