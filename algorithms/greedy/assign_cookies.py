@@ -9,17 +9,19 @@ def assign(g: List[int], s: List[int]) -> int:
     """
     从最小尺寸的饼干开始，尽量满足胃口最小的孩子，以此类推。
     需要对两个列表排序，并且遍历饼干列表，过程中从胃口最小的孩子开始查找
-    时间复杂度 O(m+n) 空间复杂度 O(1)
+
+    Time: O(mlogm + nlogn)
+    Space: O(logm + logn)
     """
     g.sort()
     s.sort()
-    index = 0
-    num_of_kids = len(g)
-    for cookie in s:
-        if index < num_of_kids and cookie >= g[index]:
-            index += 1
+    i = j = 0
+    while i < len(g) and j < len(s):
+        if s[j] >= g[i]:
+            i += 1
+        j += 1
 
-    return index
+    return i
 
 
 if __name__ == "__main__":
