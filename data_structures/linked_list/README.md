@@ -40,4 +40,4 @@
   1. [奇偶链表](odd_even.py)
 6. 其他
   1. [复制带随机指针的链表](copy_random_list.py)
-  1. LRU 缓存
+  1. [LRU 缓存](lru.py)
