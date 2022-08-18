@@ -4,30 +4,24 @@
 # 计算并返回 grid 中最大的岛屿面积。如果没有岛屿，则返回面积为 0 。
 
 
-# 时间复杂度：O(m*n)
-# 空间复杂度：O(m*n) 最坏情况（都是陆地）
-def _dfs(grid, i, j) -> int:
-    if i < 0 or i > len(grid) - 1 or j < 0 or j > len(grid[0]) - 1:
-        return 0
-    if grid[i][j] != 1:
-        return 0
-    grid[i][j] = 2
-    return (
-        1
-        + _dfs(grid, i - 1, j)
-        + _dfs(grid, i + 1, j)
-        + _dfs(grid, i, j - 1)
-        + _dfs(grid, i, j + 1)
-    )
-
-
 def max_area(grid) -> int:
+    """
+    时间复杂度：O(m*n)
+    空间复杂度：O(m*n) 最坏情况（都是陆地）
+    """
+
+    def dfs(i, j) -> int:
+        if not 0 <= i < m or not 0 <= j < n or grid[i][j] != 1:
+            return 0
+        grid[i][j] = 2
+        return 1 + dfs(i - 1, j) + dfs(i + 1, j) + dfs(i, j - 1) + dfs(i, j + 1)
+
     m, n = len(grid), len(grid[0])
     res = 0
     for i in range(m):
         for j in range(n):
             if grid[i][j] == 1:
-                res = max(res, _dfs(grid, i, j))
+                res = max(res, dfs(i, j))
 
     return res
 

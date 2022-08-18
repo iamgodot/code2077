@@ -25,20 +25,20 @@ def oranges_rotting(grid: List[List[int]]) -> int:
         for j in range(n):
             if grid[i][j] == 2:
                 dq.append((i, j, 0))
-    level = 0
+    res = 0
     while dq:
         for _ in range(len(dq)):
-            i, j, level = dq.pop()
+            i, j, res = dq.pop()
             for x, y in (i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1):
                 if 0 <= x < m and 0 <= y < n and grid[x][y] == 1:
-                    dq.appendleft((x, y, level + 1))
+                    dq.appendleft((x, y, res + 1))
                     grid[x][y] = 2
     from itertools import chain
 
     if any(i == 1 for i in chain(*grid)):
         return -1
     else:
-        return level
+        return res
 
 
 if __name__ == "__main__":

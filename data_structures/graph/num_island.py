@@ -10,64 +10,58 @@ from collections import deque
 # 3. 网格的值为字符串而不是数字
 # 4. 找到陆地之后标为 '2' 而不是 '0'，这样可以和原来的海洋做区分
 
-# 遍历每一个 cell，每次都通过 dfs 找到 '1' 并标记为 '2'
-# 这样对于一个 '1' 的 cell 就会把整个岛屿找出来，下次遇到直接跳过
-# 这类的 dfs 的总次数就是岛屿总数
-# 时间复杂度：O(m*n)
-# 空间复杂度：O(mn) 最坏情况下（所有都是陆地）
-def _dfs(grid, i, j) -> None:
-    if i < 0 or i > len(grid) - 1 or j < 0 or j > len(grid[0]) - 1:
-        return
-    if grid[i][j] != "1":
-        return
-
-    grid[i][j] = "2"
-
-    _dfs(grid, i - 1, j)
-    _dfs(grid, i + 1, j)
-    _dfs(grid, i, j - 1)
-    _dfs(grid, i, j + 1)
-
 
 def num_of_islands_by_dfs(grid) -> int:
+    """
+    遍历每一个 cell，每次都通过 dfs 找到 '1' 并标记为 '2'
+    这样对于一个 '1' 的 cell 就会把整个岛屿找出来，下次遇到直接跳过
+    这类的 dfs 的总次数就是岛屿总数
+    时间复杂度：O(m*n)
+    空间复杂度：O(mn) 最坏情况下（所有都是陆地）
+    """
+
+    def dfs(i, j) -> None:
+        if not 0 <= i < m or not 0 <= j < n or grid[i][j] != "1":
+            return
+        grid[i][j] = "2"
+        dfs(i - 1, j)
+        dfs(i + 1, j)
+        dfs(i, j - 1)
+        dfs(i, j + 1)
 
     m, n = len(grid), len(grid[0])
     res = 0
     for i in range(m):
         for j in range(n):
             if grid[i][j] == "1":
-                _dfs(grid, i, j)
+                dfs(i, j)
                 res += 1
 
     return res
 
 
-# 思路同上，只是用 bfs 代替 dfs
-# 时间复杂度：O(m*n)
-# 空间复杂度：O(m*n) 最坏情况下（所有都是陆地）
-def _bfs(grid, i, j) -> None:
-    dq = deque([(i, j)])
-    while dq:
-        x, y = dq.pop()
-        if x < 0 or x > len(grid) - 1 or y < 0 or y > len(grid[0]) - 1:
-            continue
-        if grid[x][y] != "1":
-            continue
-        grid[x][y] = "2"
-        dq.appendleft((x + 1, y))
-        dq.appendleft((x - 1, y))
-        dq.appendleft((x, y - 1))
-        dq.appendleft((x, y + 1))
-
-
 def num_of_islands_by_bfs(grid) -> int:
+    """
+    # 时间复杂度：O(m*n)
+    # 空间复杂度：O(m*n) 最坏情况下（所有都是陆地）
+    """
+
+    def bfs(i, j) -> None:
+        dq = deque([(i, j)])
+        grid[i][j] = "2"
+        while dq:
+            i, j = dq.pop()
+            for x, y in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+                if 0 <= x < m and 0 <= y < n and grid[x][y] == "1":
+                    grid[x][y] = "2"
+                    dq.appendleft((x, y))
 
     m, n = len(grid), len(grid[0])
     res = 0
     for i in range(m):
         for j in range(n):
             if grid[i][j] == "1":
-                _bfs(grid, i, j)
+                bfs(i, j)
                 res += 1
 
     return res
