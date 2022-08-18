@@ -12,7 +12,7 @@ from typing import List
 
 def is_bipartite(graph: List[List[int]]) -> bool:
     """
-    Time: O(n)
+    Time: O(n+m) 其中 nn 和 mm 分别是无向图中的点数和边数
     Space: O(n)
     """
     n = len(graph)
@@ -20,14 +20,15 @@ def is_bipartite(graph: List[List[int]]) -> bool:
 
     visited = [0] * n
 
+    # 可能不是连通图，所以要 for loop
     for i in range(n):
         if visited[i] == 0:
             visited[i] = 1
             dq = deque([i])
             while dq:
-                index = dq.pop()
-                value = visited[index]
-                for nb in graph[index]:
+                node = dq.pop()
+                value = visited[node]
+                for nb in graph[node]:
                     if visited[nb] == 0:
                         dq.appendleft(nb)
                         visited[nb] = 2 if value == 1 else 1
