@@ -20,24 +20,24 @@
 还有就是对于比较复杂的处理最好先画图模拟好每一步的过程，确认步骤的逻辑之后再进行代码实现，比如经典的反转链表。
 
 1. 基础
-  1. [链表的基本操作](linked_list.design.py)
-  1. [移除链表元素](remove_elements.py)
+   1. [链表的基本操作](linked_list.design.py)
+   1. [移除链表元素](remove_elements.py)
 2. 反转
-  1. [反转链表](reverse_list.py)
-  1. [两两交换节点](swap_pairs.py)
-  1. [K 个一组翻转链表](reverse_k_group.py)
+   1. [反转链表](reverse_list.py)
+   1. [两两交换节点](swap_pairs.py)
+   1. [K 个一组翻转链表](reverse_k_group.py)
 3. 快慢指针
-  1. [删除倒数第 N 个节点](remove_from_end.py)
-  1. [链表相交](intersection_node.py)
-  1. [环形链表](cycle.py)
+   1. [删除倒数第 N 个节点](remove_from_end.py)
+   1. [链表相交](intersection_node.py)
+   1. [环形链表](cycle.py)
 4. 合并
-  1. [链表加法](add_two_numbers.py)
-  1. [K 路归并](merge_k_lists.py)
-  1. [链表排序](sort_list.py)
+   1. [链表加法](add_two_numbers.py)
+   1. [K 路归并](merge_k_lists.py)
+   1. [链表排序](sort_list.py)
 5. 重组
-  1. [重排链表](reorder.py)
-  1. [分隔链表](partition.py)
-  1. [奇偶链表](odd_even.py)
+   1. [重排链表](reorder.py)
+   1. [分隔链表](partition.py)
+   1. [奇偶链表](odd_even.py)
 6. 其他
-  1. [复制带随机指针的链表](copy_random_list.py)
-  1. [LRU 缓存](lru.py)
+   1. [复制带随机指针的链表](copy_random_list.py)
+   1. [LRU 缓存](lru.py)
