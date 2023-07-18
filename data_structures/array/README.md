@@ -14,7 +14,7 @@
 
 实现过程中要注意边界的问题，左右都不能超过界限，同时还要保证覆盖到所有的元素。假设实现中涉及到的所有的区间都是闭合的，即 `[a, b]`，那么就应当保留 `left=right` 的情况。
 
-1. [Binary search](binary_search.py)
+见: [二分查找](/algorithms/search/binary_search/README.md)
 
 ## 双指针法
 
@@ -22,8 +22,7 @@
 
 一般来说需要满足一定的规则才适合使用，比如数组已排序。另外双指针有很多变式，如首尾、快慢等。
 
-1. [移除元素](remove_element.py)
-2. [有序数组的平方](sorted_squares.py)
+见: [双指针](/algorithms/search/two_pointers/README.md)
 
 ## 滑动窗口
 
@@ -31,11 +30,12 @@
 
 > 滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置。从而将O(n^2)的暴力解法降为O(n)。
 
-1. [长度最小的子数组](min_subarray.py)
+见: [滑动窗口](/algorithms/search/sliding_window/README.md)
 
 ## 模拟行为
 
 主要考察对流程逻辑的掌握，比如循环的使用、边界条件的判定。如果实现得杂乱无章，那么很可能没有发现真正的规律，好的解决方案是可以写出符合原则的简洁代码的。
 
-1. [螺旋矩阵](spiral_order.py)
-2. [螺旋矩阵II](generate_matrix.py)
+1. [螺旋矩阵](/data_structures/array/matrix/spiral_order.py)
+2. [螺旋矩阵II](/data_structures/array/matrix/generate_matrix.py)
+3. [旋转矩阵](/data_structures/array/matrix/rotate_matrix.py)
