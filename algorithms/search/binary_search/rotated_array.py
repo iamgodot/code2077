@@ -16,9 +16,11 @@ def search(nums: List[int], target: int) -> int:
         mid = (low + high) // 2
         if nums[mid] == target:
             return mid
-        # NOTE: 这里是判断 low 到 mid-1 的部分是否有序
-        # 注意等号，因为 low 和 mid 可能相等
-        elif nums[low] <= nums[mid]:
+        # NOTE: 这里把相等的情况单独列出来更好理解
+        # 比如 [3, 1], 1 的情况
+        elif nums[low] == nums[mid]:
+            low = mid + 1
+        elif nums[low] < nums[mid]:
             if nums[low] <= target < nums[mid]:
                 high = mid - 1
             else:
@@ -42,18 +44,26 @@ def search(nums: List[int], target: int) -> int:
 
 def find_min(nums) -> int:
     """
-    类似 bisect right 的逻辑。
-    但是要注意 high 的取值，因为需要比较 nums[high]，
-    另外最后结果使用 nums[low]，此时 low 与 high 正好重合。
+    It's better to compare nums[right] with nums[mid] since the logic is identical
+    for both all-sorted case and half-sorted case, meaning should take left half
+    when mid < right whether for case like [0, 1, 2] or [4, 0, 1, 2, 3].
+
+    If use nums[left], we have to diff two cases because when nums[left] < nums[mid]:
+        for all-sorted case: take left half.
+        for half-sorted case: take right half.
+
+    It doesn't matter which condition adopts the equal case.
     """
-    low, high = 0, len(nums) - 1
-    while low < high:
-        mid = (low + high) // 2
-        if nums[mid] < nums[high]:
-            high = mid
+    res = nums[0]
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        res = min(res, nums[mid])
+        if nums[mid] <= nums[right]:
+            right = mid - 1
         else:
-            low = mid + 1
-    return nums[low]
+            left = mid + 1
+    return res
 
 
 if __name__ == "__main__":
