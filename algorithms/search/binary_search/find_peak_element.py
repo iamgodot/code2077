@@ -6,21 +6,21 @@
 
 def find_peak(nums) -> int:
     """
-    类似 bisect 二分，注意 high 的取值
-    同时要考虑越界的情况
+    Whichever side shows a larger value, we split and apply binary search.
+    Watch out for cases on both ends.
     """
     low, high = 0, len(nums) - 1
-    while low < high:
+    while low <= high:
         mid = (low + high) // 2
         if (mid == 0 or nums[mid - 1] < nums[mid]) and (
             mid == len(nums) - 1 or nums[mid] > nums[mid + 1]
         ):
             return mid
         elif mid > 0 and nums[mid - 1] > nums[mid]:
-            high = mid
+            high = mid - 1
         else:
             low = mid + 1
-    return low
+    return -1
 
 
 if __name__ == "__main__":
