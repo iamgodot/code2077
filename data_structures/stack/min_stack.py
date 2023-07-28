@@ -35,7 +35,7 @@ class MinStack:
 class MinStack2:
     def __init__(self):
         self.s = []
-        self.min_val = None
+        self.min_val = 0
 
     def push(self, val: int) -> None:
         # 注意这里不要根据 min_val is None 来做判断条件
@@ -48,14 +48,12 @@ class MinStack2:
             if val < self.min_val:
                 self.min_val = val
 
-    def pop(self) -> None:
-        val = self.s.pop()
-        if val < 0:
+    def pop(self) -> int:
+        if self.s[-1] < 0:
             res = self.min_val
-            self.min_val -= val
+            self.min_val -= self.s[-1]
             return res
-        else:
-            return val + self.min_val
+        return self.s.pop() + self.min_val
 
     def top(self) -> int:
         if self.s[-1] < 0:

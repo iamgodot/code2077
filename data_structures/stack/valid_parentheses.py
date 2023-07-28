@@ -10,7 +10,7 @@ def is_valid(s: str) -> bool:
     stack = []
 
     for char in s:
-        if char in "({[":
+        if char in mappings.values():
             stack.append(char)
         else:
             if not stack or stack.pop() != mappings[char]:
