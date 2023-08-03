@@ -1,19 +1,16 @@
 # 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
 
-from data_structures.linked_list import (ListNode, make_linked_list,
-                                         traverse_linked_list)
+from data_structures.linked_list import ListNode, make_linked_list, traverse_linked_list
 
 
 def remove_elements(head: ListNode, val: int) -> ListNode:
-    dummy = ListNode(next=head)
-    cur = dummy
+    dummy = cur = ListNode(next=head)
 
     while cur.next:
         if cur.next.val == val:
             cur.next = cur.next.next
         else:
             cur = cur.next
-
     return dummy.next
 
 
@@ -21,14 +18,13 @@ def remove_elements(head: ListNode, val: int) -> ListNode:
 
 
 def delete_duplicates(head: ListNode) -> ListNode:
-    dummy = cur = ListNode(next=head)
-    while cur.next:
-        node = cur.next
-        if node and node.next and node.val == node.next.val:
-            node.next = node.next.next
+    cur = head
+    while cur and cur.next:
+        if cur.val == cur.next.val:
+            cur.next = cur.next.next
         else:
             cur = cur.next
-    return dummy.next
+    return head
 
 
 # 给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表 。
@@ -39,11 +35,11 @@ def delete_duplicates2(head: ListNode) -> ListNode:
     dummy = cur = ListNode(next=head)
     while cur.next:
         node = cur.next
-        if node and node.next and node.val == node.next.val:
+        if node.next and node.val == node.next.val:
             while cur.next and cur.next.val == node.val:
                 cur.next = cur.next.next
         else:
-            cur = cur.next
+            cur = node
     return dummy.next
 
 
