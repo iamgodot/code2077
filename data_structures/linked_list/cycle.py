@@ -22,12 +22,8 @@ def detect_cycle(head: ListNode) -> ListNode:
         slow, fast = slow.next, fast.next.next
 
         if slow is fast:
-            m, n = head, slow
+            slow = head
 
-            while m != n:
-                m = m.next
-                n = n.next
-
-            return m
-
-    return None
+            while slow != fast:
+                slow, fast = slow.next, fast.next
+            return slow

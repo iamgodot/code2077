@@ -28,17 +28,16 @@ def find_duplicate1(nums: list) -> int:
 # 找重复数字相当于找出环的入口
 # 时间复杂度 O(n)
 def find_duplicate2(nums: list) -> int:
-    slow = fast = 0
-    while fast < len(nums):
-        slow = nums[slow]
-        fast = nums[nums[fast]]
+    slow = fast = nums[0]
+
+    while True:
+        slow, fast = nums[slow], nums[nums[fast]]
+
         if slow == fast:
-            m, n = 0, slow
-            while m != n:
-                m = nums[m]
-                n = nums[n]
-            return m
-    return 0
+            slow = nums[0]
+            while slow != fast:
+                slow, fast = nums[slow], nums[fast]
+            return slow
 
 
 if __name__ == "__main__":
