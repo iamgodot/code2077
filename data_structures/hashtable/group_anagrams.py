@@ -1,12 +1,12 @@
-# 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
-# 字母异位词 是由重新排列源单词的字母得到的一个新单词，所有源单词中的字母通常恰好只用一次。
-
-from typing import List
+# Group Anagrams
+# https://leetcode.com/problems/group-anagrams/description/
 
 
-def group_anagrams(strs: List[str]) -> List[List[str]]:
+def group_anagrams(strs: list[str]) -> list[list[str]]:
     """
-    Time: O(n*k*logk) k 为 strs 中字符串的最大长度
+    Sort the strings.
+
+    Time: O(n*k*logk) where k is the max length of strings
     Space: O(n*k)
     """
     from collections import defaultdict
@@ -18,10 +18,10 @@ def group_anagrams(strs: List[str]) -> List[List[str]]:
     return list(hashtable.values())
 
 
-def group_anagrams2(strs: List[str]) -> List[List[str]]:
+def group_anagrams2(strs: list[str]) -> list[list[str]]:
     """
-    Time: O(n*(k + c)) c 为字符集长度，用于生成 hash key
-    Space: O(n*(k + c))
+    Time: O(n*k)
+    Space: O(n*k)
     """
     from collections import defaultdict
 
