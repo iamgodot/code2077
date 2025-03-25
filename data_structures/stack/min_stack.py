@@ -1,45 +1,48 @@
-# 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
-
-# push(x) —— 将元素 x 推入栈中。
-# pop() —— 删除栈顶的元素。
-# top() —— 获取栈顶元素。
-# getMin() —— 检索栈中的最小元素。
-
-# pop、top 和 getMin 操作总是在 非空栈 上调用。
+# Min Stack
+# https://leetcode.com/problems/min-stack/description/
 
 
-# 1. 使用辅助栈保存当前最小值
-# 空间复杂度 O(n)
 class MinStack:
+    """
+    Use a subsidiary stack to keep track of the minimum value.
+
+    Time: O(1)
+    Space: O(n)
+    """
+
     def __init__(self):
-        self.s1 = []
-        self.s2 = []
+        self.stack = []
+        self.stack_min = []
 
     def push(self, val):
-        self.s1.append(val)
-        if not self.s2 or val <= self.s2[-1]:
-            self.s2.append(val)
+        self.stack.append(val)
+        if not self.stack_min or val <= self.stack_min[-1]:
+            self.stack_min.append(val)
 
     def pop(self):
-        val = self.s1.pop()
-        if self.s2 and val == self.s2[-1]:
-            self.s2.pop()
+        val = self.stack.pop()
+        if self.stack_min and val == self.stack_min[-1]:
+            self.stack_min.pop()
         return val
 
     def min(self):
-        return self.s2[-1]
+        return self.stack_min[-1]
 
 
-# 2. 使用变量保存当前最小值，栈中保存元素与最小值的差值 diff
-# 空间复杂度 O(1)
 class MinStack2:
+    """
+    Use a variable to keep track of the minimum value, and only store diffs in the stack.
+
+    Time: O(1)
+    Space: O(1)
+    """
+
     def __init__(self):
         self.s = []
         self.min_val = 0
 
     def push(self, val: int) -> None:
-        # 注意这里不要根据 min_val is None 来做判断条件
-        # 因为过程中 min_val 可能会被置为非空值，即使栈中已经没有元素
+        # NOTE: here don't check with min_val
         if not self.s:
             self.s.append(0)
             self.min_val = val

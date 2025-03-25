@@ -1,4 +1,5 @@
-# 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+# Valid Parentheses
+# https://leetcode.com/problems/valid-parentheses/description/
 
 
 def is_valid(s: str) -> bool:

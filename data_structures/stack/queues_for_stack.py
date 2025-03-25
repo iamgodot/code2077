@@ -1,9 +1,5 @@
-# 请你仅使用两个队列实现一个后入先出（LIFO）的栈，并支持普通栈的全部四种操作（push、top、pop 和 empty）
-# 进阶：你能否实现每种操作的均摊时间复杂度为 O(1) 的栈？
-# 换句话说，执行 n 个操作的总时间复杂度 O(n) ，尽管其中某个操作可能需要比其他操作更长的时间。你可以使用两个以上的队列。
-
-# push 操作耗时 O(n)，其他都是 O(1)
-# 感觉做不到所有操作都保证 O(1)
+# Implement Stack using Queues
+# https://leetcode.com/problems/implement-stack-using-queues/
 
 
 class MyStack:
@@ -28,7 +24,6 @@ class MyStack:
         return self.q1.pop()
 
     def top(self) -> int:
-        '''相当于调用了队列的 peek 方法'''
         if self.empty():
             return None
 
@@ -62,7 +57,7 @@ class MyStackV2:
         return self.q[-1]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     for stack_cls in [MyStack, MyStackV2]:
         stack = stack_cls()
         stack.push(1)

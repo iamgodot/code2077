@@ -1,21 +1,24 @@
-# 根据 逆波兰表示法，求表达式的值。
-# 有效的算符包括 +、-、*、/ 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。
-# 整数除法只保留整数部分。
-# 给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。
+# Evaluate Reverse Polish Notation
+# https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
 
 
-# 思路简单，细节比较多
-# 1. str 和 int 之间的类型转换
-# 2. 除法的处理上面，需要保留整数部分
-# 3. 最好确认参数为空的话要返回什么，None 还是 0
 def eval_rpn(tokens: list) -> int:
+    """
+    Use a stack, but watch out for some details:
+    1. Convert str to int
+    2. Keep the floor value of the division result
+    3. Check what to return when the stack is empty
+
+    Time: O(n)
+    Space: O(n)
+    """
     stack = []
 
     for token in tokens:
         if token in "+-*/":
             num2 = stack.pop()
             num1 = stack.pop()
-            # 注意除法的处理，// 对于负数的情况是不正确的，比如 6//-132
+            # NOTE: we need to use int() to truncate toward zero
             stack.append(int(eval(f"{num1}{token}{num2}")))
         else:
             stack.append(int(token))

@@ -1,25 +1,11 @@
-# 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
-
-# 注意:不允许使用任何将字符串作为数学表达式计算的内置函数，比如 eval() 。
-
-# 提示：
-
-# 1 <= s.length <= 3 * 105
-# s 由数字、'+'、'-'、'('、')'、和 ' ' 组成
-# s 表示一个有效的表达式
-# '+' 不能用作一元运算(例如， "+1" 和 "+(2 + 3)" 无效)
-# '-' 可以用作一元运算(即 "-1" 和 "-(2 + 3)" 是有效的)
-# 输入中不存在两个连续的操作符
-# 每个数字和运行的计算将适合于一个有符号的 32位 整数
+# Basic Calculator
+# https://leetcode.com/problems/basic-calculator/description/
 
 
 def calculate(s: str) -> int:
-    """
-    通过栈来维护当前括号层级的正负状态，初始化为 [1]
-    因为 op 会通过栈顶元素来更新当前的正负操作
-    """
+    """Keep track of previous sign and update result when a new sign is found."""
     res = num = 0
-    sign = 1
+    pre_sign = 1
     stack = []
     for char in s:
         if char == " ":
@@ -27,21 +13,80 @@ def calculate(s: str) -> int:
         if "0" <= char <= "9":
             num = num * 10 + int(char)
         if char in "+-":
-            res += num * sign
+            res += num * pre_sign
             num = 0
-            sign = -1 if char == "-" else 1
+            pre_sign = -1 if char == "-" else 1
         if char == "(":
             stack.append(res)
-            stack.append(sign)
+            stack.append(pre_sign)
+            # NOTE: no need to reset num
             res = 0
-            sign = 1
+            pre_sign = 1
         if char == ")":
-            res += num * sign
+            res += num * pre_sign
             num = res
-            sign = stack.pop()
+            pre_sign = stack.pop()
             res = stack.pop()
-    res += num * sign
+    res += num * pre_sign
     return res
+
+
+# Basic Calculator II
+# https://leetcode.com/problems/basic-calculator-ii/description/
+
+
+def calculate2(s: str) -> int:
+    stack = []
+    num = 0
+    pre_sign = "+"
+    for i, char in enumerate(s):
+        if "0" <= char <= "9":
+            num = num * 10 + int(char)
+        if char in "+-*/" or i == len(s) - 1:
+            match (pre_sign):
+                case "+":
+                    stack.append(num)
+                case "-":
+                    stack.append(-num)
+                case "*":
+                    stack.append(stack.pop() * num)
+                case "/":
+                    stack.append(int(stack.pop() / num))
+            num = 0
+            pre_sign = char
+    return sum(stack)
+
+
+# Basic Calculator III
+# https://leetcode.com/problems/basic-calculator-iii/description/
+def calculate3(s: str) -> int:
+    stack = []
+    num = 0
+    pre_sign = "+"
+    s = s + " "
+    for i, char in enumerate(s):
+        if "0" <= char <= "9":
+            num = num * 10 + int(char)
+        if char in "+-*/)" or i == len(s) - 1:
+            match (pre_sign):
+                case "+":
+                    stack.append(num)
+                case "-":
+                    stack.append(-num)
+                case "*":
+                    stack.append(stack.pop() * num)
+                case "/":
+                    stack.append(int(stack.pop() / num))
+            num = 0
+            pre_sign = char
+            if char == ")":
+                while isinstance(stack[-1], int):
+                    num += stack.pop()
+                pre_sign = stack.pop()
+        if char == "(":
+            stack.append(pre_sign)
+            pre_sign = "+"
+    return sum(stack)
 
 
 if __name__ == "__main__":
