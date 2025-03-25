@@ -1,55 +1,71 @@
-# 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+# Longest Substring Without Repeating Characters
+# https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 
-# 1. BruteForce: 两层遍历，时间复杂度 O(n^2)
-# 2. 应用滑动窗口，不含有重复字符则右指针右移，否则左指针右移，使用集合来判断是否含有重复字符
-# 时间复杂度 O(n) 空间复杂度 O(m) 其中 m 为所有字符的数量
+
 def longest_substr(s: str) -> int:
-    chars = set()
+    """
+    Use a sliding window which maintains non-repeating characters.
+
+    Time: O(n)
+    Space: O(m) where m is the number of distinct characters
+    """
+    from collections import defaultdict
+
+    hash_table = defaultdict(int)
     res = left = 0
     for right, char in enumerate(s):
-        while char in chars:
-            chars.remove(s[left])
+        hash_table[char] += 1
+        while hash_table[char] > 1:
+            # NOTE: here we need to get the left char before moving the pointer
+            hash_table[s[left]] -= 1
             left += 1
-        chars.add(char)
         res = max(res, right - left + 1)
     return res
 
 
-# 给定一个字符串，找到最多包括 2 个不同字符的子串的长度。
+# Longest Substring with At Most Two Distinct characters
+# https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/
 
 
 def longest_substr_two_distinct(s: str) -> int:
+    """
+    Here we need to check the length of hash table's keys rather than values.
+
+    Time: O(n)
+    Space: O(m)
+    """
     from collections import defaultdict
 
-    hashtable = defaultdict(int)
+    hash_table = defaultdict(int)
     res = left = 0
     for right, char in enumerate(s):
-        hashtable[char] += 1
-        while len(hashtable) > 2:
+        hash_table[char] += 1
+        while len(hash_table) > 2:
             char_left = s[left]
-            hashtable[char_left] -= 1
-            if hashtable[char_left] == 0:
-                hashtable.pop(char_left)
+            hash_table[char_left] -= 1
+            if hash_table[char_left] == 0:
+                hash_table.pop(char_left)
             left += 1
         res = max(res, right - left + 1)
     return res
 
 
-# 给定一个字符串，找到最多包括 k 个不同字符的子串的长度。
+# Longest Substring with At Most K Distinct characters
+# https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/description/
 
 
 def longest_substr_k_distinct(s: str, k: int) -> int:
     from collections import defaultdict
 
-    hashtable = defaultdict(int)
+    hash_table = defaultdict(int)
     res = left = 0
     for right, char in enumerate(s):
-        hashtable[char] += 1
-        while len(hashtable) > k:
+        hash_table[char] += 1
+        while len(hash_table) > k:
             char_left = s[left]
-            hashtable[char_left] -= 1
-            if hashtable[char_left] == 0:
-                hashtable.pop(char_left)
+            hash_table[char_left] -= 1
+            if hash_table[char_left] == 0:
+                hash_table.pop(char_left)
             left += 1
         res = max(res, right - left + 1)
     return res

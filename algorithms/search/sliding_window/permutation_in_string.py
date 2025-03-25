@@ -1,11 +1,13 @@
-# 给你两个字符串 s1 和 s2 ，写一个函数来判断 s2 是否包含 s1 的排列。如果是，返回 true ；否则，返回 false 。
-# 换句话说，s1 的排列之一是 s2 的 子串 。
+# Permutation in String
+# https://leetcode.com/problems/permutation-in-string/
 
 
 def check(s1: str, s2: str) -> bool:
     """
+    The same as Find All Anagrams in a String.
+
     Time: O(m+n)
-    Space: O(k) k 为字符集长度
+    Space: O(k)
     """
     m, n = len(s1), len(s2)
     if m > n:

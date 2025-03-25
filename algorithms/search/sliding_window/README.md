@@ -1,29 +1,28 @@
-# 滑动窗口
+# Sliding Window
 
-使用滑动窗口的情况一般是在数组或字符串中，针对连续子序列进行求解。
+For elements in a list or characters in a string, sometimes we can use sliding window technique to reduce time complexity from O(n^2)(Brute force) to O(n).
 
-关键词：连续，最长，最小，子串，子数组。
+The essential condition is we know how to move or streth the window, depending on if it's fixed-size or variable-size.
 
-如果暴力求解中内层循环中出现了重复的计算，而子序列的大小变化又存在固定的判断条件，那么就可以应用滑动窗口将 O(n^2) 的时间复杂度降为 O(n).
+Keywords: Anagrams, Substring
 
-需要注意，如果不存在固定的能让前后指针移动的条件，那么滑动窗口可能不是合适的选择。比如找出和满足一定条件的子数组，但是数组中不一定都是正数，那么窗口是无法合理迁移的。
+Caveats:
 
-基于窗口大小，可以分为两大种情况：
+1. Check if it goes for maximum(longest) or minimum
+2. If using a hash table, only characters we care matter
+3. Check if it needs to return the substring or the length
 
-1. 固定窗口
-   1. [找到字符串中所有字母异位词](find_anagrams.py)
-   2. [字符串的排列](permutation_in_string.py)
-   3. [滑动窗口最大值](sliding_window_maximum.py)
-2. 变化窗口
-   1. [无重复字符的最长子串](longest_substring.py)
-     1. [最多存在两个重复字符的最长子串](longest_substring.py)
-     2. [最多存在 k 个重复字符的最长子串](longest_substring.py)
-   2. [最小覆盖子串](min_window.py)
-   3. [替换后的最长重复字符](longest_repeat_char_replacement.py)
-   4. [长度最小的子数组](min_subarray.py)
-   5. [水果成篮](total_fruits.py)
+## Questions
 
-解题时注意：
-
-1. 移动条件：左右指针何时移动，条件一般用 hashtable/set 辅助判断。
-2. 返回值：是长度还是字符串结果，如果是后者则需要记录指针位置。
+1. Fixed-size window
+   1. [Find All Anagrams in a String](find_anagrams.py)
+   2. [Permutation in String](permutation_in_string.py)
+   3. [Sliding Window Maximum](sliding_window_maximum.py)
+2. Variable-size window
+   1. [Longest Substring Without Repeating Characters](longest_substring.py)
+      1. [Longest Substring with At Most Two Distinct Characters](longest_substring.py)
+      1. [Longest Substring with At Most K Distinct Characters](longest_substring.py)
+   1. [Longest Repeating Character Replacement](longest_repeat_char_replacement.py)
+   1. [Minimum Window Substring](min_window.py)
+   1. [长度最小的子数组](min_subarray.py)
+   1. [水果成篮](total_fruits.py)

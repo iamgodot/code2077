@@ -1,47 +1,41 @@
-# 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
-# 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。
+# Find All Anagrams in a String
+# https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
 
 
-def find_anagrams(s: str, p: str) -> list:
+def find_anagrams(s, p):
     """
+    Use a sliding window, we only store and update chars
+    from string p in the hash table, just like Minimum window substring.
+
     Time: O(m+n)
-    Space: O(k) k 为字符集长度
+    Space: O(1)
     """
-    m, n = len(s), len(p)
-    if m < n:
+    len_s, len_p = len(s), len(p)
+    if len_s < len_p:
         return []
-
     res = []
     from collections import Counter
 
-    hashtable = Counter(p)
-    diff = n
-
-    for char in s[:n]:
-        if char in hashtable:
-            if hashtable[char] > 0:
-                diff -= 1
-            hashtable[char] -= 1
-
+    counter = Counter(p)
+    diff = len_p
+    for i in range(len_p):
+        if counter[s[i]] > 0:
+            diff -= 1
+        counter[s[i]] -= 1
     if diff == 0:
         res.append(0)
-
-    for i in range(m - n):
-        char_del, char_add = s[i], s[i + n]
-
-        if char_del in hashtable:
-            hashtable[char_del] += 1
-            if hashtable[char_del] > 0:
+    for i in range(len_s - len_p):
+        c1, c2 = s[i], s[i + len_p]
+        if c1 in counter:
+            counter[c1] += 1
+            if counter[c1] > 0:
                 diff += 1
-
-        if char_add in hashtable:
-            if hashtable[char_add] > 0:
+        if c2 in counter:
+            if counter[c2] > 0:
                 diff -= 1
-            hashtable[char_add] -= 1
-
+            counter[c2] -= 1
         if diff == 0:
             res.append(i + 1)
-
     return res
 
 

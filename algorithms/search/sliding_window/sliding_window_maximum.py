@@ -1,18 +1,17 @@
-# 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。
-# 你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
-# 返回滑动窗口中的最大值。
-# 本题其实期望的是达到线性的时间复杂度
+# Sliding Window Maximum
+# https://leetcode.com/problems/sliding-window-maximum/description/
 
 
 # 1. Brute force 直接暴力解法时间复杂度会达到 O(n*k)
 # 2. 使用最大堆，这样每次直接取堆顶元素就可以得到最大值，遍历过程中先看滑走的是不是堆顶元素，再把新元素加入
 # 到堆中，这样每次插入堆需要 O(logn) 的时间，最坏情况下的时间复杂就是 O(n*logn)，而空间复杂度显然是 O(n)
 def max_sliding_window_with_heap(nums: list, k: int) -> list:
-    '''
+    """
     因为需要确定滑出元素，所以保存在堆中的结构是 <value, index>.
     另外 Python 默认的是最小堆，所以需要保存 value 的负值
-    '''
+    """
     import heapq
+
     heap = [(-nums[i], i) for i in range(k)]
     heapq.heapify(heap)
     res = [-heap[0][0]]
@@ -44,22 +43,23 @@ def max_sliding_window_with_deque(nums: list, k: int) -> list:
 
     res.append(dq[0])
 
-    for i in range(k, len(nums)):
-        if dq[0] == nums[i - k]:
+    for i in range(len(nums) - k):
+        if dq[0] == nums[i]:
             dq.popleft()
 
-        while dq and dq[-1] < nums[i]:
+        while dq and dq[-1] < nums[i + k]:
             dq.pop()
-        dq.append(nums[i])
+        dq.append(nums[i + k])
         res.append(dq[0])
 
     return res
 
 
-if __name__ == '__main__':
-    for nums, k, res in ([1, 3, -1, -3, 5, 3, 6,
-                          7], 3, [3, 3, 5, 5, 6,
-                                  7]), ([-7, -8, 7, 5, 7, 1, 6,
-                                         0], 4, [7, 7, 7, 7, 7]):
+if __name__ == "__main__":
+    for nums, k, res in ([1, 3, -1, -3, 5, 3, 6, 7], 3, [3, 3, 5, 5, 6, 7]), (
+        [-7, -8, 7, 5, 7, 1, 6, 0],
+        4,
+        [7, 7, 7, 7, 7],
+    ):
         assert max_sliding_window_with_deque(nums, k) == res
         assert max_sliding_window_with_heap(nums, k) == res
