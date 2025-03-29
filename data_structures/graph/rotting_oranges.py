@@ -1,44 +1,41 @@
-# 在给定的 m x n 网格 grid 中，每个单元格可以有以下三个值之一：
-
-# 值 0 代表空单元格；
-# 值 1 代表新鲜橘子；
-# 值 2 代表腐烂的橘子。
-# 每分钟，腐烂的橘子 周围 4 个方向上相邻 的新鲜橘子都会腐烂。
-
-# 返回 直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1 。
-
-from typing import List
+# Rotting Oranges
+# https://leetcode.com/problems/rotting-oranges/description/
 
 
-def oranges_rotting(grid: List[List[int]]) -> int:
+def oranges_rotting(grid: list[list[int]]) -> int:
     """
-    注意要一开始就把所有的腐烂橘子添加进队列，这样保证同时进行扩散。
+    Multi-source BFS.
+
+    Corner cases:
+    1. If there's no rotting oranges, return 0.
+    2. If there's fresh oranges left, return -1.
 
     Time: O(mn)
     Space: O(mn)
     """
-    m, n = len(grid), len(grid[0])
+    rows, cols = len(grid), len(grid[0])
     from collections import deque
 
-    dq = deque()
-    for i in range(m):
-        for j in range(n):
+    queue = deque()
+    for i in range(rows):
+        for j in range(cols):
             if grid[i][j] == 2:
-                dq.append((i, j, 0))
-    res = 0
-    while dq:
-        for _ in range(len(dq)):
-            i, j, res = dq.pop()
-            for x, y in (i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1):
-                if 0 <= x < m and 0 <= y < n and grid[x][y] == 1:
-                    dq.appendleft((x, y, res + 1))
-                    grid[x][y] = 2
-    from itertools import chain
+                queue.append((i, j, 0))
 
-    if any(i == 1 for i in chain(*grid)):
-        return -1
-    else:
-        return res
+    minutes = 0
+    while queue:
+        i, j, minutes = queue.pop()
+        for x, y in (i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1):
+            if 0 <= x < rows and 0 <= y < cols and grid[x][y] == 1:
+                queue.appendleft((x, y, minutes + 1))
+                grid[x][y] = 2
+
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == 1:
+                return -1
+
+    return minutes
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
-# 给你无向 连通 图中一个节点的引用，请你返回该图的 深拷贝（克隆）。
+# Clone Graph
+# https://leetcode.com/problems/clone-graph/description/
 
 
 class Node:
