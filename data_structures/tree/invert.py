@@ -1,17 +1,11 @@
-# 翻转一棵二叉树。
+# Invert Binary Tree
+# https://leetcode.com/problems/invert-binary-tree/description/
 from data_structures.tree import TreeNode, levelorder
 
 
-# 注意需要返回 root 节点
-# 不管是递归还是迭代都要考虑好使用何种遍历，
-# 比如这里用的是前序遍历
 def invert(root: TreeNode):
-    if not root:
-        return root
-    root.left, root.right = root.right, root.left
-    invert(root.left)
-    invert(root.right)
-
+    if root:
+        root.left, root.right = invert(root.right), invert(root.left)
     return root
 
 

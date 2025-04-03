@@ -13,7 +13,7 @@ from typing import List, Optional
 from data_structures.tree import TreeNode
 
 
-def preorder(root: TreeNode, values: list):
+def preorder(root: TreeNode | None, values: list):
     if not root:
         return
     values.append(root.val)
@@ -21,7 +21,7 @@ def preorder(root: TreeNode, values: list):
     preorder(root.right, values)
 
 
-def inorder(root: TreeNode, values: list):
+def inorder(root: TreeNode | None, values: list):
     if not root:
         return
     inorder(root.left, values)
@@ -29,7 +29,7 @@ def inorder(root: TreeNode, values: list):
     inorder(root.right, values)
 
 
-def postorder(root: TreeNode, values: list):
+def postorder(root: TreeNode | None, values: list):
     if not root:
         return
     postorder(root.left, values)

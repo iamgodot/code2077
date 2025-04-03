@@ -1,68 +1,77 @@
-# 给定两个整数数组 preorder 和 inorder ，其中 preorder 是二叉树的先序遍历， inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
-
-from typing import List
+# Construct Binary Tree from Preorder and Inorder Traversal
+# https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
 
 from data_structures.tree import TreeNode
 
 
-# 1. preorder 确认根节点和左子节点 -> 2. inorder 确认根节点左右的子树长度 -> 3. preorder 确认两个子树的根节点位置，其实主要是右子节点的位置
-# 时间复杂度 O(n)
-# 空间复杂度 O(h)
-def build_tree(preorder: List[int], inorder: List[int]) -> TreeNode:
-    def _build(index, left, right) -> TreeNode:
-        if left > right:
+def build_tree(preorder: list[int], inorder: list[int]) -> TreeNode | None:
+    """
+    Use the preorder array to find root node and inorder array to split for subtrees.
+
+    Time: O(n)
+    Space: O(h), in the worst case O(n)
+    """
+
+    def _build(pre_l, in_l, in_r) -> TreeNode | None:
+        if in_l > in_r:
             return None
-        val = preorder[index]
+        val = preorder[pre_l]
         root = TreeNode(val)
-        i = inorder.index(val)
-        root.left = _build(index + 1, left, i - 1)
-        # 左子节点的位置 index+1 加上左子树的长度 i-1-left+1
-        root.right = _build(index + 1 + i - left, i + 1, right)
+        i = index[val]
+        root.left = _build(pre_l + 1, in_l, i - 1)
+        # NOTE: the index of left child(pre_l + 1) plus the size of left subtree(i - in_l)
+        root.right = _build(pre_l + 1 + i - in_l, i + 1, in_r)
         return root
 
+    index = {v: i for i, v in enumerate(inorder)}
     return _build(0, 0, len(inorder) - 1)
 
 
-# 给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder 是同一棵树的后序遍历，请你构造并返回这颗 二叉树 。
+# Construct Binary Tree from Inorder and Postorder Traversal
+# https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/
 
 
-# 时间复杂度 O(n)
-# 空间复杂度 O(n) 其中哈希表占用 O(n) 递归占用 O(h)
-def build_tree(inorder: List[int], postorder: List[int]) -> TreeNode:
-    def build(index, left, right) -> TreeNode:
-        if left > right:
+def build_tree2(inorder: list[int], postorder: list[int]) -> TreeNode | None:
+    """Same as above, just use postorder array from the end."""
+
+    def build(post_r, in_l, in_r) -> TreeNode | None:
+        if in_l > in_r:
             return None
-        val = postorder[index]
+        val = postorder[post_r]
         root = TreeNode(val)
-        i = inorder.index(val)
-        root.left = build(index - 1 - (right - i), left, i - 1)
-        root.right = build(index - 1, i + 1, right)
+        i = index[val]
+        # NOTE: the index of right child(post_r - 1) minus the size of right subtree(in_r - i)
+        root.left = build(post_r - 1 - (in_r - i), in_l, i - 1)
+        root.right = build(post_r - 1, i + 1, in_r)
         return root
 
+    index = {v: i for i, v in enumerate(inorder)}
     return build(len(postorder) - 1, 0, len(inorder) - 1)
 
 
-# 给定两个整数数组，preorder 和 postorder ，其中 preorder 是一个具有 无重复 值的二叉树的前序遍历，postorder 是同一棵树的后序遍历，重构并返回二叉树。
-# 如果存在多个答案，您可以返回其中 任何 一个。
+# Construct Binary Tree from Preorder and Postorder Traversal
+# https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/description/
 
 
-def build_tree(preorder: List[int], postorder: List[int]) -> TreeNode:
+def build_tree3(preorder: list[int], postorder: list[int]) -> TreeNode | None:
     """
-    前序遍历的第一个元素为 root，第二个元素为 root.left，
-    根据 left 找出其在后序遍历中的位置，从而区分左右子树两部分。
+    From preorder array, find root node and left child node for left subtree,
+    then index postorder array to get the size of left subtree.
+
+    Time: O(n) with a hash map index
+    Space: O(h), in the worst case O(n)
     """
 
-    def build(index, left, right) -> TreeNode:
-        if index > len(preorder) - 1 or left > right:
+    def _build(pre_l, pre_r, post_l) -> TreeNode | None:
+        if pre_l > pre_r:
             return None
-        val = preorder[index]
-        root = TreeNode(val)
-        # 注意这里要再次判断，防止 index 越界或者 left, right 没有及时收敛
-        if index == len(preorder) - 1 or left == right:
+        root = TreeNode(preorder[pre_l])
+        if pre_l == pre_r:
             return root
-        i = postorder.index(preorder[index + 1])
-        root.left = build(index + 1, left, i)
-        root.right = build(index + 1 + i - left + 1, i + 1, right - 1)
+        left_size = index[preorder[pre_l + 1]] - post_l + 1
+        root.left = _build(pre_l + 1, pre_l + left_size, post_l)
+        root.right = _build(pre_l + left_size + 1, pre_r, post_l + left_size)
         return root
 
-    return build(0, 0, len(postorder) - 1)
+    index = {v: i for i, v in enumerate(postorder)}
+    return _build(0, len(preorder) - 1, 0)

@@ -1,26 +1,33 @@
-# 给定一个二叉树，判断它是否是高度平衡的二叉树。
-# 本题中，一棵高度平衡二叉树定义为：
-# 一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1 。
+# Balanced Binary Tree
+# https://leetcode.com/problems/balanced-binary-tree/description/
 
 from data_structures.tree import TreeNode
 
 
 # 后序遍历
 def is_balanced(root: TreeNode) -> bool:
+    """
+    Bottom-up approach.
+    Could do top-down as well, which requires O(nlogn) time.
+
+    Time: O(n)
+    Space: O(n)
+    """
+
     def get_depth(root: TreeNode) -> int:
         if not root:
-            return 0
+            return -1
         depth_left = get_depth(root.left)
-        if depth_left == -1:
-            return -1
+        if depth_left == -2:
+            return -2
         depth_right = get_depth(root.right)
-        if depth_right == -1:
-            return -1
+        if depth_right == -2:
+            return -2
         if abs(depth_left - depth_right) > 1:
-            return -1
+            return -2
         return max(depth_left, depth_right) + 1
 
-    return get_depth(root) != -1
+    return get_depth(root) != -2
 
 
 if __name__ == "__main__":

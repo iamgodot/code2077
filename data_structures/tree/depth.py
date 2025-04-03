@@ -1,6 +1,5 @@
-# 给定一个二叉树，找出其最大深度。
-# 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
-# 说明: 叶子节点是指没有子节点的节点。
+# Maximum Depth of Binary Tree
+# https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
 
 from data_structures.tree import TreeNode
 
@@ -30,14 +29,10 @@ def max_depth_it(root: TreeNode) -> int:
     return depth
 
 
-# 给定一个二叉树，找出其最小深度。
-# 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
-# 说明：叶子节点是指没有子节点的节点。
+# Minumum Depth of Binary Tree
+# https://leetcode.com/problems/minimum-depth-of-binary-tree/description/
 
 
-# 后序遍历
-# 注意左右子节点都为空的节点才是叶子节点
-# 和求最大深度的区别在于处理左子节点或右子节点为空的情况
 def min_depth(root: TreeNode) -> int:
     if not root:
         return 0

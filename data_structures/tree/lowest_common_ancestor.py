@@ -1,38 +1,37 @@
-# 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+# Lowest Common Ancestor of a Binary Tree
+# https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
 
 from data_structures.tree import TreeNode
 
 
-# 需要自底向上回溯，因此通过递归调用的时候获取返回值，再对其进行判断
-# 时间复杂度 O(n)，空间复杂度最坏情况下 O(n)
 def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-    if not root or root.val == p.val or root.val == q.val:
+    """
+    Time: O(n)
+    Space: O(h)
+    """
+    if not root or root is p or root is q:
         return root
 
-    # 这里递归的含义要明确：
-    # 1. 若树里面存在p，也存在q，则返回他们的公共祖先。
-    # 2. 若树里面只存在p，或只存在q，则返回存在的那一个。
-    # 3. 若树里面既不存在p，也不存在q，则返回null。
     ancestor_left = lowest_common_ancestor(root.left, p, q)
     ancestor_right = lowest_common_ancestor(root.right, p, q)
 
     if ancestor_left and ancestor_right:
         return root
-    elif ancestor_left:
-        return ancestor_left
-    elif ancestor_right:
-        return ancestor_right
     else:
-        return None
+        return ancestor_left or ancestor_right
 
 
-# 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
+# Lowest Common Ancestor of a Binary Search Tree
+# https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
 
 
-# 前序遍历，从上到下即可
-# 时间复杂度 O(logn) 最坏情况下 O(n)
-# 空间复杂度 O(1)
 def lowest_common_ancestor2(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    """
+    We can use while loop to reduce the space complexity to O(1).
+
+    Time: O(h), O(n) in the worst case
+    Space: O(1)
+    """
     ancestor = root
     while ancestor:
         if p.val < ancestor.val and q.val < ancestor.val:
