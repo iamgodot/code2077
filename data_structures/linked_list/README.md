@@ -1,43 +1,53 @@
 # Linked List
 
-相对于数组，链表是另外一种常用的基础数据结构，在内存中分散存储，所以对于插入和删除操作来说效率很高，但是查询会比较慢，这点和数组正好相反。
+## Techniques
 
-对单链表来说，节点一般只保存两种数据，存储值和指向下一个节点的指针，而双链表还需要增加额外的指向前一个节点的指针。如果是实现一个链表，还可能需要保存整个链表的长度，便于遍历查找辅助判断。
+### Reverse list
 
-## 技巧
+Can also be used to reverse k nodes, just remember to include k in the while loop.
 
-- 虚拟头部（尾部）节点
-  - 虚拟头是一种常用的链表技巧，可以用来合并删除或插入操作在头部和中部的不同处理，因为不用单独考虑节点为空的情况。
-  - 双链表时也可以使用头尾的伪节点来优化，比如 LRU 缓存的实现。
-- 快慢指针
-  - 可以用来寻找链表的中点、倒数第 K 个节点，还可以判断链表中是否存在环。
-  - 注意如果两个指针都初始化为 head，找到的中点是靠右半部分的，想要靠左的话需要设置 slow, fast = head, head.next，这在切割时很有用，比如链表的归并排序。
+### 2 pointers
 
-## 题目
+Can be used to locate any point with a slow and a fast pointer.
 
-对于链表的插入和删除的实现，一定要考虑到在头部、中部和尾部的特殊情况。另外，如果参数中的索引超出了链表的长度或者干脆是一个负值，要保证方法返回的是特殊值而不是正常数据。
+If both pointers are initialized to head, the middle point might be on the right half of the list. So for it to be on the left half, you need to set `slow, fast = head, head.next`.
 
-还有就是对于比较复杂的处理最好先画图模拟好每一步的过程，确认步骤的逻辑之后再进行代码实现，比如经典的反转链表。
+### Dummy node
 
-1. 基础
+A dummy node can be used to handle possible empty lists. Sometimes it's not necessary, such as [Reorder List](reorder.py).
+
+### Clean cut
+
+When linking nodes together, remember to clean cut to avoid cycles, such as [Partition List](partition.py) and [Odd Even Linked List](odd_even.py).
+
+### Other
+
+Sometimes a doubly linked list or hash map comes in handy.
+
+## Questions
+
+1. Basic operations
    1. [链表的基本操作](linked_list.design.py)
-   1. [移除链表元素](remove_elements.py)
-2. 反转
-   1. [反转链表](reverse_list.py)
-   1. [两两交换节点](swap_pairs.py)
-   1. [K 个一组翻转链表](reverse_k_group.py)
-3. 快慢指针
-   1. [删除倒数第 N 个节点](remove_from_end.py)
-   1. [链表相交](intersection_node.py)
-   1. [环形链表](cycle.py)
-4. 合并
-   1. [链表加法](add_two_numbers.py)
-   1. [K 路归并](merge_k_lists.py)
-   1. [链表排序](sort_list.py)
-5. 重组
-   1. [重排链表](reorder.py)
-   1. [分隔链表](partition.py)
-   1. [奇偶链表](odd_even.py)
-6. 其他
-   1. [复制带随机指针的链表](copy_random_list.py)
-   1. [LRU 缓存](lru.py)
+   2. [Remove Linked List Elements](remove_elements.py)
+   3. [Remove Duplicates from Sorted List I && II](remove_elements.py)
+   4. [Remove Nth Node From End of List](remove_from_end.py)
+2. Cycle
+   1. [Linked List Cycle I && II](cycle.py)
+   2. [链表相交](intersection_node.py)
+3. Reverse
+   1. [Reverse Linked List I && II](reverse_list.py)
+   2. [Swap Nodes in Pairs](swap_pairs.py)
+   3. [Reverse Nodes in k-Group](reverse_k_group.py)
+4. Restructure
+   1. [Sort List](sort.py)
+   2. [Merge Two Sorted Lists](sort.py)
+   3. [Merge k Sorted Lists](sort.py)
+   4. [Add Two Numbers I && II](add_two_numbers.py)
+   5. [Rotate List](rotate.py)
+   6. [Reorder List](reorder.py)
+   7. [Partition List](partition.py)
+   8. [Odd Even Linked List](odd_even.py)
+5. Hash map
+   1. [Copy List with Random Pointer](copy_random_list.py)
+   2. [LRU Cache](lru.py)
+   3. [LFU]()

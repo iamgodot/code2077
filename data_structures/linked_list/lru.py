@@ -1,15 +1,8 @@
-# 运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制 。
-# 实现 LRUCache 类：
-
-# LRUCache(int capacity) 以正整数作为容量 capacity 初始化 LRU 缓存
-# int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。
-# void put(int key, int value) 如果关键字已经存在，则变更其数据值；如果关键字不存在，则插入该组「关键字-值」。当缓存容量达到上限时，它应该在写入新数据之前删除最久未使用的数据值，从而为新的数据值留出空间。
-
-# 进阶：你是否可以在 O(1) 时间复杂度内完成这两种操作？
-from collections import OrderedDict
+# LRU Cache
+# https://leetcode.com/problems/lru-cache/description/
 
 
-class DoubleLinkedListNode:
+class Node:
     def __init__(self, key=None, value=None, previous=None, next=None):
         self.key = key
         self.value = value
@@ -17,41 +10,47 @@ class DoubleLinkedListNode:
         self.next = next
 
 
-# most recently used item: head
-# least recently used item: tail
-# hashtable: key -> node(key, value)
 class LRUCache:
+    """Use a combination of hash map and doubly linked list.
+
+    The most recently used item: head
+    The least recently used item: tail
+    Hash map: key -> node(key, value)
+
+    Time: O(1) for both get and put
+    """
+
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.hashtable = {}
-        self.head = DoubleLinkedListNode()
-        self.tail = DoubleLinkedListNode()
+        self.head = Node()
+        self.tail = Node()
         self.head.next = self.tail
         self.tail.previous = self.head
 
-    def add_to_head(self, node) -> None:
+    def _move_to_head(self, node) -> None:
+        self._remove_node(node)
+        self._add_to_head(node)
+
+    def _remove_from_tail(self) -> Node:
+        return self._remove_node(self.tail.previous)
+
+    def _add_to_head(self, node) -> None:
         node.previous = self.head
         node.next = self.head.next
         self.head.next.previous = node
         self.head.next = node
 
-    def remove_node(self, node) -> None:
+    def _remove_node(self, node) -> Node:
         node.previous.next = node.next
         node.next.previous = node.previous
-
-    def move_to_head(self, node) -> None:
-        self.remove_node(node)
-        self.add_to_head(node)
-
-    def remove_from_tail(self) -> DoubleLinkedListNode:
-        node = self.tail.previous
-        self.remove_node(node)
+        node.previous = node.next = None
         return node
 
     def get(self, key: int) -> int:
         if key in self.hashtable:
             node = self.hashtable[key]
-            self.move_to_head(node)
+            self._move_to_head(node)
             return node.value
 
         return -1
@@ -60,18 +59,20 @@ class LRUCache:
         if key in self.hashtable:
             node = self.hashtable[key]
             node.value = value
-            self.move_to_head(node)
+            self._move_to_head(node)
         else:
-            node = DoubleLinkedListNode(key, value)
+            node = Node(key, value)
             self.hashtable[key] = node
-            self.add_to_head(node)
+            self._add_to_head(node)
             if len(self.hashtable) > self.capacity:
-                node_least_used = self.remove_from_tail()
+                node_least_used = self._remove_from_tail()
                 self.hashtable.pop(node_least_used.key)
 
 
-class LRUCache:
+class LRUCache2:
     def __init__(self, capacity):
+        from collections import OrderedDict
+
         self.capacity = capacity
         self.hashtable = OrderedDict()
 

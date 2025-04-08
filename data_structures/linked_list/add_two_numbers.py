@@ -1,12 +1,14 @@
-# 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
-# 请你将两个数相加，并以相同形式返回一个表示和的链表。
-# 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+# Add Two Numbers
+# https://leetcode.com/problems/add-two-numbers/description/
 
-from data_structures.linked_list import (ListNode, make_linked_list,
-                                         traverse_linked_list)
+from data_structures.linked_list import ListNode, make_linked_list, traverse_linked_list
 
 
-def add_two_numbers(l1: ListNode, l2: ListNode) -> ListNode:
+def add_two_numbers(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:
+    """
+    Time: O(max(m,n))
+    Space: O(1)
+    """
     dummy = ListNode()
     cur, cur1, cur2 = dummy, l1, l2
     carry = 0
@@ -26,11 +28,15 @@ def add_two_numbers(l1: ListNode, l2: ListNode) -> ListNode:
     return dummy.next
 
 
-# 给你两个 非空 链表来代表两个非负整数。数字最高位位于链表开始位置。
-# 它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。
-# 你可以假设除了数字 0 之外，这两个数字都不会以零开头。
-# 除了翻转链表之外，可以想到利用栈结构来实现，另外因为返回的链表头部在最高位，所以不需要 dummy node
-def add_two_numbers_rev(l1: ListNode, l2: ListNode) -> ListNode:
+# Add Two Numbers II
+# https://leetcode.com/problems/add-two-numbers-ii/description/
+def add_two_numbers_rev(l1: ListNode | None, l2: ListNode | None) -> ListNode | None:
+    """
+    We can either reverse the lists or use stacks.
+
+    Time: O(m+n)
+    Space: O(m+n)
+    """
     s1, s2 = [], []
     while l1 or l2:
         if l1:

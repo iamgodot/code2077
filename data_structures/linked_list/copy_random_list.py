@@ -1,28 +1,55 @@
-# 给你一个长度为 n 的链表，每个节点包含一个额外增加的随机指针 random ，该指针可以指向链表中的任何节点或空节点。
-# 构造这个链表的 深拷贝。 深拷贝应该正好由 n 个 全新 节点组成，其中每个新节点的值都设为其对应的原节点的值。新节点的 next 指针和 random 指针也都应指向复制链表中的新节点，并使原链表和复制链表中的这些指针能够表示相同的链表状态。复制链表中的指针都不应指向原链表中的节点 。
+# Copy List with Random Pointer
+# https://leetcode.com/problems/copy-list-with-random-pointer/description/
 
 
-from data_structures.linked_list import ListNode
+class Node:
+    def __init__(self, x: int, next: "Node|None" = None, random: "Node|None" = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
 
 
-# 1. 结合链表和哈希表，第一次迭代创建新节点并建立新旧节点的映射关系，第二次补全新节点的互联关系
-# 这样时间复杂度为 O(n) 空间复杂度也是 O(n)
-# 2. 还可以在原链表的基础上复制新链表，新旧节点相邻，这样第二遍遍历时就可以通过旧的 random.next 找到新的 random node，最后再拆分链表为两个
-# 时间复杂度 O(n) 空间复杂度 O(1)
-def copy_random_list(head: ListNode) -> ListNode:
+def copy_random_list(head: Node | None) -> Node | None:
+    """
+    Time: O(n)
+    Space: O(n)
+    """
+    hash_map = {}
+    cur = head
+    while cur:
+        hash_map[cur] = Node(cur.val)
+        cur = cur.next
+
+    cur = head
+    while cur:
+        hash_map[cur].next = hash_map.get(cur.next)
+        hash_map[cur].random = hash_map.get(cur.random)
+        cur = cur.next
+
+    return hash_map.get(head)
+
+
+def copy_random_list2(head: Node | None) -> Node | None:
+    """
+    Time: O(n)
+    Space: O(1)
+    """
     if not head:
-        return head
-
-    mappings = {}
+        return None
     cur = head
     while cur:
-        mappings[cur] = ListNode(cur.val)
-        cur = cur.next
-
+        cur.next = Node(cur.val, next=cur.next)
+        cur = cur.next.next
     cur = head
     while cur:
-        mappings[cur].next = mappings.get(cur.next)
-        mappings[cur].random = mappings.get(cur.random)
-        cur = cur.next
-
-    return mappings[head]
+        if cur.random:
+            cur.next.random = cur.random.next
+        cur = cur.next.next
+    pre, cur = head, head.next
+    res = head.next
+    while cur.next:
+        pre.next = pre.next.next
+        cur.next = cur.next.next
+        pre, cur = pre.next, cur.next
+    pre.next = None
+    return res

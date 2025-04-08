@@ -1,7 +1,7 @@
-# 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+# Reverse Linked List
+# https://leetcode.com/problems/reverse-linked-list/
 
-from data_structures.linked_list import (ListNode, make_linked_list,
-                                         traverse_linked_list)
+from data_structures.linked_list import ListNode, make_linked_list, traverse_linked_list
 
 
 # 1. 循环法，时间复杂度 O(n)，空间复杂度 O(1)
@@ -28,7 +28,8 @@ def reverse_list_by_recursion(head: ListNode) -> ListNode:
     return new_head
 
 
-# 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+# Reverse Linked List II
+# https://leetcode.com/problems/reverse-linked-list-ii/
 
 
 # 1. 直接找到区间边界的两个元素，反转区间子链表，最后调整边界指针

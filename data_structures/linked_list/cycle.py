@@ -1,5 +1,5 @@
-# 给定一个链表，判断链表中是否有环。
-# 如果链表中存在环，则返回 true 。 否则，返回 false 。
+# Linked List Cycle
+# https://leetcode.com/problems/linked-list-cycle/
 
 from data_structures.linked_list import ListNode
 
@@ -15,7 +15,17 @@ def has_cycle(head: ListNode) -> bool:
     return False
 
 
-def detect_cycle(head: ListNode) -> ListNode:
+# Linked List Cycle II
+# https://leetcode.com/problems/linked-list-cycle-ii/
+
+
+def detect_cycle(head: ListNode | None) -> ListNode | None:
+    """
+    1. Use a hash set, time: O(n), space: O(n)
+    2. Floyd's Tortoise and Hare Algorithm
+    2(a + b) = a + 2b + c -> a = c
+    Time: O(n), space: O(1)
+    """
     slow = fast = head
 
     while fast and fast.next:
@@ -27,3 +37,4 @@ def detect_cycle(head: ListNode) -> ListNode:
             while slow != fast:
                 slow, fast = slow.next, fast.next
             return slow
+    return None

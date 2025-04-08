@@ -1,10 +1,10 @@
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val: int = 0, next: "ListNode | None" = None):
         self.val = val
         self.next = next
 
 
-def make_linked_list(vals: list) -> ListNode:
+def make_linked_list(vals: list) -> ListNode | None:
     dummy = ListNode()
     cur = dummy
 
@@ -15,7 +15,7 @@ def make_linked_list(vals: list) -> ListNode:
     return dummy.next
 
 
-def traverse_linked_list(head: ListNode) -> list:
+def traverse_linked_list(head: ListNode | None) -> list:
     res = []
 
     while head:
@@ -25,4 +25,4 @@ def traverse_linked_list(head: ListNode) -> list:
     return res
 
 
-__all__ = [ListNode, make_linked_list, traverse_linked_list]
+__all__ = ["ListNode", "make_linked_list", "traverse_linked_list"]

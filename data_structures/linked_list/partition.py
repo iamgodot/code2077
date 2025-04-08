@@ -1,11 +1,14 @@
-# 给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。
-# 你应当 保留 两个分区中每个节点的初始相对位置。
+# Partition List
+# https://leetcode.com/problems/partition-list/description/
 
-from data_structures.linked_list import (ListNode, make_linked_list,
-                                         traverse_linked_list)
+from data_structures.linked_list import ListNode, make_linked_list, traverse_linked_list
 
 
-def partition(head: ListNode, x: int) -> ListNode:
+def partition(head: ListNode | None, x: int) -> ListNode | None:
+    """
+    Time: O(n)
+    Space: O(1)
+    """
     h1, h2 = ListNode(), ListNode()
     cur1, cur2 = h1, h2
     cur = head
@@ -18,8 +21,8 @@ def partition(head: ListNode, x: int) -> ListNode:
             cur2 = cur2.next
         cur = cur.next
 
-    cur2.next = None
     cur1.next = h2.next
+    cur2.next = None  # NOTE: clean cut
 
     return h1.next
 
