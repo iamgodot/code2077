@@ -3,10 +3,16 @@
 
 
 class Node:
-    def __init__(self, key=None, value=None, previous=None, next=None):
+    def __init__(
+        self,
+        key: int = 0,
+        value: int = 0,
+        prev: "Node|None" = None,
+        next: "Node|None" = None,
+    ):
         self.key = key
         self.value = value
-        self.previous = previous
+        self.prev = prev
         self.next = next
 
 
@@ -26,25 +32,24 @@ class LRUCache:
         self.head = Node()
         self.tail = Node()
         self.head.next = self.tail
-        self.tail.previous = self.head
+        self.tail.prev = self.head
 
     def _move_to_head(self, node) -> None:
         self._remove_node(node)
         self._add_to_head(node)
 
     def _remove_from_tail(self) -> Node:
-        return self._remove_node(self.tail.previous)
+        return self._remove_node(self.tail.prev)
 
     def _add_to_head(self, node) -> None:
-        node.previous = self.head
+        node.prev = self.head
         node.next = self.head.next
-        self.head.next.previous = node
-        self.head.next = node
+        node.prev.next = node.next.prev = node
 
     def _remove_node(self, node) -> Node:
-        node.previous.next = node.next
-        node.next.previous = node.previous
-        node.previous = node.next = None
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        # node.prev = node.next = None
         return node
 
     def get(self, key: int) -> int:

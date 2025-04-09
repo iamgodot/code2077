@@ -50,4 +50,4 @@ Sometimes a doubly linked list or hash map comes in handy.
 5. Hash map
    1. [Copy List with Random Pointer](copy_random_list.py)
    2. [LRU Cache](lru.py)
-   3. [LFU]()
+   3. [LFU Cache](lfu.py)
