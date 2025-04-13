@@ -1,27 +1,31 @@
-# 给定一个无重复元素的正整数数组 candidates 和一个正整数 target ，找出 candidates 中所有可以使数字和为目标数 target 的唯一组合。
-# candidates 中的数字可以无限制重复被选取。如果至少一个所选数字数量不同，则两种组合是唯一的。
-# 对于给定的输入，保证和为 target 的唯一组合数少于 150 个。
+# Combination Sum
+# https://leetcode.com/problems/combination-sum/description/
 
 
-# 时间复杂度：O(n*2^n) 其中 n 作为 candidates 的长度，对每个元素来说，都面临 n 次选或不选的判断，所以这是一个比较宽松的上界
-# 空间复杂度：O(n)
 def combination_sum1(candidates: list, target: int) -> list:
+    """
+    Time: O(n*2^n)
+    Space: O(n)
+    """
+
+    length = len(candidates)
+    res, path = [], []
+
     def bt(start) -> None:
         sum_ = sum(path)
         if sum_ == target:
             res.append(path.copy())
             return
-        for i in range(start, len(candidates)):
+        for i in range(start, length):
             num = candidates[i]
             if num > target - sum_:
                 return
             path.append(num)
-            bt(i)  # 因为可以重复选取，所以这里递归时仍然用 i 而不是 i+1
+            bt(i)  # NOTE: use i instead of i+1 since we can reuse elements
             path.pop()
 
-    # 这里必须排序，因为如果值小的元素在后面，会造成答案丢失，因为遍历时只会考虑当前元素及后面的元素
+    # NOTE: if smaller elements are after larger ones, we might miss some combinations
     candidates.sort()
-    res, path = [], []
     bt(0)
     return res
 

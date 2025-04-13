@@ -1,22 +1,24 @@
-# 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
-# 你可以按 任何顺序 返回答案。
+# Combinations
+# https://leetcode.com/problems/combinations/description/
 
 
-# 时间复杂度：O(C(n, k)*k)
-# 空间复杂度：O(n) 其中递归栈空间为 O(k)
 def combine(n: int, k: int) -> list:
-    def bt(n, k, start) -> None:
-        length = len(path)
-        if length == k:
-            res.append(path[:])
+    """
+    Time: O(C(n, k)*k)
+    Space: O(n) and O(k) for the recursive stack
+    """
+    res, path = [], []
+
+    def bt(index) -> None:
+        if len(path) == k:
+            res.append(path.copy())
             return
-        for i in range(start, n - (k - length) + 1):
-            path.append(i + 1)
-            bt(n, k, i + 1)
+        for index in range(index, n):
+            path.append(index + 1)
+            bt(index + 1)
             path.pop()
 
-    res, path = [], []
-    bt(n, k, 0)
+    bt(0)
     return res
 
 

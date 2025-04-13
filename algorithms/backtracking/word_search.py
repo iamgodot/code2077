@@ -1,22 +1,18 @@
-# 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。
-# 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
-
-
-from typing import List
+# Word Search
+# https://leetcode.com/problems/word-search/description/
 
 
 def exist(board: list, word: str) -> bool:
     """
-    Time: O(3^k*m*n) 最差情况下需要遍历整个矩阵，每次都存在 3^k 次可能
-    Space: O(k) 递归深度为 word 长度，最差情况下 k=m*n
+    Time: O(3^k*m*n)
+    Space: O(k)
     """
 
     def dfs(i, j, k) -> bool:
-        # 不需要判断 k > len(word) - 1 因为每次都会比较 word[k]
+        if k == len(word):
+            return True
         if not 0 <= i < m or not 0 <= j < n or board[i][j] != word[k]:
             return False
-        if k == len(word) - 1:
-            return True
         board[i][j] = ""
         res = (
             dfs(i - 1, j, k + 1)
@@ -53,7 +49,7 @@ class Trie:
         cur.word = word
 
 
-def find_words(board: List[List[str]], words: List[str]) -> List[str]:
+def find_words(board: list[list[str]], words: list[str]) -> list[str]:
     """
     Time: O(3^k*m*n) k 为单词的长度
     Space: O(k*l) l 为单词的个数，用于存储前缀树，此外还有递归的开销 O(k)
@@ -91,27 +87,21 @@ if __name__ == "__main__":
         )
         is True
     )
-    assert (
-        find_words(
-            [
-                ["o", "a", "a", "n"],
-                ["e", "t", "a", "e"],
-                ["i", "h", "k", "r"],
-                ["i", "f", "l", "v"],
-            ],
-            ["oath", "pea", "eat", "rain"],
-        )
-        == ["oath", "eat"]
-    )
-    assert (
-        find_words(
-            [
-                ["o", "a", "b", "n"],
-                ["o", "t", "a", "e"],
-                ["a", "h", "k", "r"],
-                ["a", "f", "l", "v"],
-            ],
-            ["oa", "oaa"],
-        )
-        == ["oa", "oaa"]
-    )
+    assert find_words(
+        [
+            ["o", "a", "a", "n"],
+            ["e", "t", "a", "e"],
+            ["i", "h", "k", "r"],
+            ["i", "f", "l", "v"],
+        ],
+        ["oath", "pea", "eat", "rain"],
+    ) == ["oath", "eat"]
+    assert find_words(
+        [
+            ["o", "a", "b", "n"],
+            ["o", "t", "a", "e"],
+            ["a", "h", "k", "r"],
+            ["a", "f", "l", "v"],
+        ],
+        ["oa", "oaa"],
+    ) == ["oa", "oaa"]
