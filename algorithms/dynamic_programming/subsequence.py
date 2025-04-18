@@ -2,10 +2,8 @@
 
 # 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
 
-from typing import List
 
-
-def longest_increasing_subsequence(nums: List[int]) -> int:
+def longest_increasing_subsequence(nums: list[int]) -> int:
     """
     dp[i] 表示以 i 为最后一个元素的数组，它的最长递增子序列的值
     dp[i] = max(dp[i], dp[j] + 1) 的意思是这个最长递增子序列的值
@@ -71,7 +69,7 @@ def longest_common_sequence(text1: str, text2: str) -> int:
 # 连续递增的子序列 可以由两个下标 l 和 r（l < r）确定，如果对于每个 l <= i < r，都有 nums[i] < nums[i + 1] ，那么子序列 [nums[l], nums[l + 1], ..., nums[r - 1], nums[r]] 就是连续递增子序列。
 
 
-def longest_continuous_increasing_subsequence(nums: List[int]) -> int:
+def longest_continuous_increasing_subsequence(nums: list[int]) -> int:
     pre = res = 1
     for i in range(1, len(nums)):
         if nums[i] > nums[i - 1]:
@@ -85,7 +83,7 @@ def longest_continuous_increasing_subsequence(nums: List[int]) -> int:
 # 给两个整数数组 nums1 和 nums2 ，返回 两个数组中 公共的 、长度最长的子数组的长度 。
 
 
-def find_length(nums1: List[int], nums2: List[int]) -> int:
+def find_length(nums1: list[int], nums2: list[int]) -> int:
     """
     注意这里的子数组是连续的子序列。
 

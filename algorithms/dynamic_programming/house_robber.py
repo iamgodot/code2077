@@ -1,18 +1,16 @@
-from typing import List
-
 from data_structures.tree import TreeNode
 
-# 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
 
-# 给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
+# House Robber
+# https://leetcode.com/problems/house-robber/
 
 
-def rob(nums: List[int]) -> int:
+def rob(nums: list[int]) -> int:
     """
-    dp[i] 定义为 i 位置偷窃到的最高金额。
+    dp[i] = max(dp[i-1], dp[i-2] + nums[i])
 
-    每个位置（房屋）都存在偷或者不偷两种情况，所以：
-        dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+    Time: O(n)
+    Space: O(1)
     """
     pre, cur = 0, nums[0]
     for i in range(1, len(nums)):
@@ -20,17 +18,16 @@ def rob(nums: List[int]) -> int:
     return cur
 
 
-# 你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警 。
+# House Robber II
+# https://leetcode.com/problems/house-robber-ii/
 
-# 给定一个代表每个房屋存放金额的非负整数数组，计算你 在不触动警报装置的情况下 ，今晚能够偷窃到的最高金额。
 
-
-def rob(nums: List[int]) -> int:
+def rob(nums: list[int]) -> int:
     """
-    思路和上面类似，只是要单独考虑首尾节点的情况。
+    Consider 2 cases, choosing either the first or the last house.
 
-    1. 考虑（注意是考虑不是选择）首节点 + 不考虑尾节点
-    2. 考虑尾节点 + 不考虑首节点
+    Time: O(n)
+    Space: O(1)
     """
 
     def _rob(nums) -> int:
@@ -60,7 +57,7 @@ def rob(root: TreeNode) -> int:
         如果不抢：则左右子节点（分别）可以抢或者不抢
     """
 
-    def rob_node(node: TreeNode) -> List[int]:
+    def rob_node(node: TreeNode) -> list[int]:
         if not node:
             return [0, 0]
 
