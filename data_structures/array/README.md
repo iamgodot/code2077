@@ -1,41 +1,15 @@
 # Array
 
-数组是最常见的一种数据结构，是由相同类型元素所组成的有序集合。
+## Questions
 
-由于数组在内存中都是以顺序紧密排列，所以能够轻松地访问每一个位置的元素，即 random access.
-
-对于读取和更新操作，数组都可以做到 O(1) 的时间复杂度；但是插入和删除，因为会导致大量元素的移动（还可能需要扩容），所以效率会比较低。总体上讲，数组更适合读操作多、写操作少的场景。
-
-在 Python 里面，数组被实现成了 list 和 tuple 两种类型。前者是动态可扩展的数组，支持任意地添加、修改和删除元素；后者是不可变集合，创建之后就不可以再改动。
-
-## 二分法
-
-二分查找是数组的一种典型应用，在有序的数列里通过折半可以把线性查找优化到 O(logn) 的复杂度。
-
-实现过程中要注意边界的问题，左右都不能超过界限，同时还要保证覆盖到所有的元素。假设实现中涉及到的所有的区间都是闭合的，即 `[a, b]`，那么就应当保留 `left=right` 的情况。
-
-见: [二分查找](/algorithms/search/binary_search/README.md)
-
-## 双指针法
-
-通过两个指针遍历，一般能达到 O(n) 的时间复杂度。
-
-一般来说需要满足一定的规则才适合使用，比如数组已排序。另外双指针有很多变式，如首尾、快慢等。
-
-见: [双指针](/algorithms/search/two_pointers/README.md)
-
-## 滑动窗口
-
-也可以看成是双指针法的一种。
-
-> 滑动窗口的精妙之处在于根据当前子序列和大小的情况，不断调节子序列的起始位置。从而将O(n^2)的暴力解法降为O(n)。
-
-见: [滑动窗口](/algorithms/search/sliding_window/README.md)
-
-## 模拟行为
-
-主要考察对流程逻辑的掌握，比如循环的使用、边界条件的判定。如果实现得杂乱无章，那么很可能没有发现真正的规律，好的解决方案是可以写出符合原则的简洁代码的。
-
-1. [螺旋矩阵](/data_structures/array/matrix/spiral_order.py)
-2. [螺旋矩阵II](/data_structures/array/matrix/generate_matrix.py)
-3. [旋转矩阵](/data_structures/array/matrix/rotate_matrix.py)
+1. String
+   1. [Group Anagrams](data_structures/hashtable/group_anagrams.py)
+   2. [Encode and Decode Strings](data_structures/string/encode_and_decode_strings.py)
+2. 1-dimension
+   1. [Next Permutation](one_dimension/next_permutation.py)
+   2. [Longest Consecutive Sequence](data_structures/hashtable//longest_consecutive_sequence.py)
+3. 2-dimension
+   1. [Valid Sudoku](matrix/valid_sudoku.py)
+   2. [Spiral Order](matrix/spiral_order.py)
+   3. [Generate Matrix](matrix/generate_matrix.py)
+   4. [Rotate Matrix](matrix/rotate_matrix.py)

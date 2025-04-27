@@ -1,10 +1,12 @@
-# 给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
-# 你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
+# Rotate Image
+# https://leetcode.com/problems/rotate-image/
 
 
-# 时间复杂度：O(n^2)
-# 空间复杂度：O(1)
 def rotate(matrix) -> None:
+    """
+    Time: O(n^2)
+    Space: O(1)
+    """
     if not matrix:
         return
 
