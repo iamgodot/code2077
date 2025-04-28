@@ -8,6 +8,7 @@
 2. 1-dimension
    1. [Next Permutation](one_dimension/next_permutation.py)
    2. [Longest Consecutive Sequence](data_structures/hashtable//longest_consecutive_sequence.py)
+   3. [Sort Colors](algorithms/search/two_pointers/sort_colors.py)
 3. 2-dimension
    1. [Valid Sudoku](matrix/valid_sudoku.py)
    2. [Spiral Order](matrix/spiral_order.py)

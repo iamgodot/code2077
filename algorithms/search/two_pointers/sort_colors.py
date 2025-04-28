@@ -1,15 +1,10 @@
-# 给定一个包含红色、白色和蓝色、共 n 个元素的数组 nums ，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。
-# 我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。
-# 必须在不使用库的sort函数的情况下解决这个问题。
-
-from typing import List
+# Sort Colors
+# https://leetcode.com/problems/sort-colors/
 
 
-def sort(nums: List[int]) -> None:
+def sort(nums: list[int]) -> None:
     """
     Do not return anything, modify nums in-place instead.
-
-    两次遍历，第一次把所有的 0 放到头部，第二次把 1 放到头部。
 
     Time: O(n)
     Space: O(1)
@@ -25,11 +20,9 @@ def sort(nums: List[int]) -> None:
             p += 1
 
 
-def sort2(nums: List[int]) -> None:
+def sort2(nums: list[int]) -> None:
     """
     Do not return anything, modify nums in-place instead.
-
-    一次遍历。
 
     Time: O(n)
     Space: O(1)
