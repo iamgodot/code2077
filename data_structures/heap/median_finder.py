@@ -1,47 +1,46 @@
-# 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
+""" 
+There are many ways to find the median:
 
-# 例如，
+1. Keep a list and sort it every time to get the median
+2. Keep a sorted list by inserting in the right position(located via binary search)
+3. Use 2 heaps
+4. Couting sort
 
-# [2,3,4] 的中位数是 3
+Try to reason with the given requirements for time complexity of each operation.
 
-# [2,3] 的中位数是 (2 + 3) / 2 = 2.5
+"""
 
-# 设计一个支持以下两种操作的数据结构：
+# Find Median from Data Stream
+# https://leetcode.com/problems/find-median-from-data-stream/
 
-# void addNum(int num) - 从数据流中添加一个整数到数据结构中。
-# double findMedian() - 返回目前所有元素的中位数。
-
-
-import heapq
+from heapq import heappush, heappushpop
 
 
-# 利用两个堆来维护中位数，注意大顶堆要取负数
-# 时间复杂度 add 操作 O(logn) find 操作 O(1)
-# 空间复杂度 O(n)
 class MedianFinder:
+    """
+    Use two heaps to maintain the median.
+    One should use negative numbers to simulate a max heap in Python.
+
+    Time: O(logn) for add, O(1) for find
+    Space: O(n)
+    """
+
     def __init__(self):
         """
         initialize your data structure here.
         """
-        self.hq1 = []  # 较大的一半，小顶堆
-        self.hq2 = []  # 较小的一半，大顶堆
+        self.low_heap = []  # For the larger half of the numbers
+        self.high_heap = []  # For the smaller half of the numbers
 
     def addNum(self, num: int) -> None:
-        if len(self.hq1) == len(self.hq2):
-            heapq.heappush(self.hq1, -heapq.heappushpop(self.hq2, -num))
+        if len(self.low_heap) == len(self.high_heap):
+            heappush(self.low_heap, -heappushpop(self.high_heap, -num))
         else:
-            heapq.heappush(self.hq2, -heapq.heappushpop(self.hq1, num))
+            heappush(self.high_heap, -heappushpop(self.low_heap, num))
 
     def findMedian(self) -> float:
         return (
-            self.hq1[0]
-            if len(self.hq1) > len(self.hq2)
-            else (self.hq1[0] - self.hq2[0]) / 2
+            self.low_heap[0]
+            if len(self.low_heap) > len(self.high_heap)
+            else (self.low_heap[0] + (-self.high_heap[0])) / 2
         )
-
-
-# 进阶 1
-# 如果数据流中所有整数都在 00 到 100100 范围内，那么我们可以利用计数排序统计每一类数的数量，并使用双指针维护中位数。
-
-# 进阶 2
-# 如果数据流中 99\%99% 的整数都在 00 到 100100 范围内，那么我们依然利用计数排序统计每一类数的数量，并使用双指针维护中位数。对于超出范围的数，我们可以单独进行处理，建立两个数组，分别记录小于 00 的部分的数的数量和大于 100100 的部分的数的数量即可。当小部分时间，中位数不落在区间 [0,100][0,100] 中时，我们在对应的数组中暴力检查即可。
