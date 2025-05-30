@@ -1,15 +1,12 @@
-# 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+# Trapping Rain Water
+# https://leetcode.com/problems/trapping-rain-water/description/
+
+# NOTE: for every position, the units of water is the minimum of its left and right maximum minus its own height
 
 
-from typing import List
-
-
-def trap(height: List[int]) -> int:
+def trap(height: list[int]) -> int:
     """
-    动态规划：
-    1. 对于每个元素来说，雨水增量等于左右最大高度的最小值减去当前高度。
-    2. 如果在每个位置都重新扫描左右两边的话总体复杂度为 O(n^2)。
-    3. 可以用两个数组记录每个位置的左右最大高度集合。
+    For every position, the most possibile water is the minimum of both left and right maximum height minus its own height.
 
     Time: O(n)
     Space: O(n)
@@ -32,16 +29,8 @@ def trap(height: List[int]) -> int:
     return res
 
 
-def trap2(height: List[int]) -> int:
+def trap2(height: list[int]) -> int:
     """
-    双指针：
-    1. 在扫描过程中，用两个变量维护每个位置的左右最大值集合。
-    2. 如果 max_left 小于 max_right，那么左右两边最大值的较小者一定是 max_left
-        所以左指针右移，然后比较 max_left 与 height[i] 决定 res 的增量。
-    3. 反之则可以确定 max_right 的值。
-
-    注意对于 height 为空的情况要单独判断。
-
     Time: O(n)
     Space: O(1)
     """
@@ -55,6 +44,7 @@ def trap2(height: List[int]) -> int:
         if max_left < max_right:
             i += 1
             max_left = max(max_left, height[i])
+            # NOTE: if we don't update max_left first, here the subtraction needs to be checked as positive
             res += max_left - height[i]
         else:
             j -= 1
