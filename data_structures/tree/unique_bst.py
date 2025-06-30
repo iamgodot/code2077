@@ -1,7 +1,5 @@
-# 给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。
-
-
-from typing import List
+# Unique Binary Search Trees
+# https://leetcode.com/problems/unique-binary-search-trees/description/
 
 from data_structures.tree import TreeNode
 from data_structures.tree.traversal import levelorder
@@ -31,8 +29,8 @@ def num_of_bst(n: int) -> int:
 # 给你一个整数 n ，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同 二叉搜索树 。可以按 任意顺序 返回答案。
 
 
-def generate_trees(n: int) -> List[TreeNode]:
-    def build(left, right) -> List[TreeNode]:
+def generate_trees(n: int) -> list[TreeNode]:
+    def build(left, right) -> list[TreeNode]:
         if left > right:
             return [None]
         res = []

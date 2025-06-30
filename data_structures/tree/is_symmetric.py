@@ -1,13 +1,14 @@
-# 给定一个二叉树，检查它是否是镜像对称的。
+# Symmetric Tree
+# https://leetcode.com/problems/symmetric-tree/description/
+
 from data_structures.tree import TreeNode
 
 
-# 两种实现的时间和空间复杂度都是 O(n)
-def check(root: TreeNode) -> bool:
+def check(root: TreeNode | None) -> bool:
     if not root:
         return True
 
-    def _check(left: TreeNode, right: TreeNode):
+    def _check(left: TreeNode | None, right: TreeNode | None):
         if not left or not right:
             return left is right
         return (
@@ -19,9 +20,7 @@ def check(root: TreeNode) -> bool:
     return _check(root.left, root.right)
 
 
-# 其实不一定要用队列，只要保证需要检查的元素一对一对进入容器，栈也可以实现
-# 层序遍历也可以实现，先全部遍历出来然后对半检查即可
-def check_it(root: TreeNode) -> bool:
+def check_it(root: TreeNode | None) -> bool:
     if not root:
         return True
     from collections import deque

@@ -1,10 +1,5 @@
-# 给定一个 完美二叉树 ，其所有叶子节点都在同一层，每个父节点都有两个子节点。
-# 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。
-
-# 初始状态下，所有 next 指针都被设置为 NULL。
-
-
-from typing import Optional
+# Populating Next Right Pointers in Each Node
+# https://leetcode.com/problems/populating-next-right-pointers-in-each-node/description/
 
 
 class Node:
@@ -21,7 +16,7 @@ class Node:
         self.next = next
 
 
-def connect(root: Optional[Node]) -> Optional[Node]:
+def connect(root: Node | None) -> Node | None:
     """
     通用解法，不论是二叉树是否完美。
     Time: O(n)
@@ -45,7 +40,7 @@ def connect(root: Optional[Node]) -> Optional[Node]:
     return root
 
 
-def connect(root: Optional[Node]) -> Optional[Node]:
+def connect2(root: Node | None) -> Node | None:
     """
     外层循环遍历每一层，内层循环遍历每层的所有节点。
     Time: O(n)
@@ -68,7 +63,7 @@ def connect(root: Optional[Node]) -> Optional[Node]:
 # 给定一个二叉树，其余条件同上
 
 
-def connect(root: Node) -> Node:
+def connect3(root: Node | None) -> Node | None:
     """
     基本思路同上，但因为不是完美二叉树所以在横向遍历时需要虚拟头节点。
     Time: O(n)

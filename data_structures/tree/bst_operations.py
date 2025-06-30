@@ -1,13 +1,11 @@
-# 给定二叉搜索树（BST）的根节点 root 和要插入树中的值 value ，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 输入数据 保证 ，新值和原始二叉搜索树中的任意节点值都不同。
-# 注意，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。 你可以返回 任意有效的结果 。
+# Insert into a Binary Search Tree
+# https://leetcode.com/problems/insert-into-a-binary-search-tree/description/
 
-
-from typing import Optional
 
 from data_structures.tree import TreeNode
 
 
-def insert(root: TreeNode, val: int) -> TreeNode:
+def insert(root: TreeNode | None, val: int) -> TreeNode:
     if not root:
         return TreeNode(val)
     if val < root.val:
@@ -18,11 +16,11 @@ def insert(root: TreeNode, val: int) -> TreeNode:
     return root
 
 
-# 给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。
+# Delete Node in a BST
+# https://leetcode.com/problems/delete-node-in-a-bst/description/
 
 
-# 复杂的地方在于，如果删除的节点的左右子树都不为空，需要把左子树挂到右子树的最左子节点下，然后返回右子树
-def delete_node(root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+def delete_node(root: TreeNode | None, key: int) -> TreeNode | None:
     if not root:
         return None
 

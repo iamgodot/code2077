@@ -1,11 +1,5 @@
-# Trie（发音类似 "try"）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。这一数据结构有相当多的应用情景，例如自动补完和拼写检查。
-
-# 请你实现 Trie 类：
-
-# Trie() 初始化前缀树对象。
-# void insert(String word) 向前缀树中插入字符串 word 。
-# boolean search(String word) 如果字符串 word 在前缀树中，返回 true（即，在检索之前已经插入）；否则，返回 false 。
-# boolean startsWith(String prefix) 如果之前已经插入的字符串 word 的前缀之一为 prefix ，返回 true ；否则，返回 false 。
+# Implement Trie (Prefix Tree)
+# https://leetcode.com/problems/implement-trie-prefix-tree/description/
 
 
 class Node:
@@ -19,20 +13,22 @@ class Node:
     def set_end(self):
         self._is_end = True
 
-    def get_child(self, val: str) -> "Node":
-        return self.children.get(val)
+    def get_child(self, char: str) -> "Node|None":
+        return self.children.get(char)
 
-    def add_child(self, val: str) -> "Node":
-        self.children[val] = Node()
-        return self.children[val]
+    def add_child(self, char: str) -> "Node":
+        if char not in self.children:
+            self.children[char] = Node()
+        return self.children[char]
 
 
 class Trie:
     """
-    映射关系既可以用数组也可以用哈希表，数组相对会占用更多空间，但是查询速度会快一些。
+    We can also use arrays which may take up more space, but with quicker lookups.
+    **Note that a word can also be a prefix.**
 
-    时间复杂度：TrieTrie 树的每次调用时间复杂度取决于入参字符串的长度。复杂度为 O(Len)O(Len)。
-    空间复杂度：结点数量为 nn，字符集大小为 kk。复杂度为 O(nk)O(nk)。
+    Time: O(m) for insertion and search, where m is the length of the string
+    Space: O(m) for insertion, O(1) for search, O(nk) for total space where n is number of nodes
     """
 
     def __init__(self):
@@ -47,7 +43,7 @@ class Trie:
             cur = child
         cur.set_end()
 
-    def _find_node(self, word: str) -> Node:
+    def _find_node(self, word: str) -> Node | None:
         cur = self.root
         for char in word:
             child = cur.get_child(char)
@@ -63,6 +59,7 @@ class Trie:
 
     def startsWith(self, prefix: str) -> bool:
         node = self._find_node(prefix)
+        # NOTE: it's still a prefix even if it's the end
         return node is not None
 
 

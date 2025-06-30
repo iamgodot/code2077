@@ -1,5 +1,5 @@
-# 给定一棵二叉搜索树和其中的一个节点 p ，找到该节点在树中的中序后继。如果节点没有中序后继，请返回 null 。
-# 节点 p 的后继是值比 p.val 大的节点中键值最小的节点。
+# Inorder Successor in BST
+# https://leetcode.com/problems/inorder-successor-in-bst/description/
 
 
 from data_structures.tree import TreeNode
@@ -50,11 +50,11 @@ class TreeNode:
         self.next = next
 
 
-# 给定二叉树其中的一个结点，请找出其中序遍历顺序的下一个结点并且返回。
-# 注意，树中的结点不仅包含左右子结点，而且包含指向父结点的指针。
+# Inorder Successor in BST II
+# https://leetcode.com/problems/inorder-successor-in-bst-ii/description/
 
 
-def find_next(node: TreeNode) -> TreeNode:
+def find_next(node: TreeNode | None) -> TreeNode | None:
     """
     1. 如果右子树存在，那么返回右子树的最小（左）节点
     2. 右子树不存在，向上查找父节点

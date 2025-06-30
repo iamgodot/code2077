@@ -1,15 +1,15 @@
-# 二叉树的所有路径
-# 给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
-# 叶子节点 是指没有子节点的节点。
-
-from typing import List
+# Binary Tree Paths
+# https://leetcode.com/problems/binary-tree-paths/description/
 
 from data_structures.tree import TreeNode
 
 
-# 时间复杂度 O(n^2) 对于 O(n) 条路径每条都会做 O(n) 的 join 操作
-# 空间复杂度 O(n^2) res 需要 O(n^2) 大小，递归深度 O(h) 最坏情况下为 O(n)
-def binary_tree_path(root: TreeNode) -> List[str]:
+def binary_tree_path(root: TreeNode) -> list[str]:
+    """
+    Time: O(n^2)
+    Space: O(n^2)
+    """
+
     def dfs(node) -> None:
         if not node:
             return
@@ -23,96 +23,3 @@ def binary_tree_path(root: TreeNode) -> List[str]:
     path, res = [], []
     dfs(root)
     return res
-
-
-# 路径总和
-# 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 targetSum 。如果存在，返回 true ；否则，返回 false 。
-
-
-# 时间复杂度 O(n)
-# 空间复杂度 O(h) h 为树的高度，最坏情况下 h=n
-def has_path_sum(root: TreeNode, target_sum: int) -> bool:
-    if not root:
-        return False
-    if not root.left and not root.right:
-        return root.val == target_sum
-    return has_path_sum(root.left, target_sum - root.val) or has_path_sum(
-        root.right, target_sum - root.val
-    )
-
-
-# 路径总和 II
-# 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
-
-
-def path_sum(root: TreeNode, target_sum: int) -> List[List[int]]:
-    """
-    Time: O(n^2)
-    Space: O(n)
-    """
-
-    def dfs(node: TreeNode, target: int) -> None:
-        if not node:
-            return
-        path.append(node.val)  # 注意这里是先 append 再下面做判断
-        if not node.left and not node.right and node.val == target:
-            res.append(path[:])
-            # 这里不能 return，否则会缺少一次 pop
-        dfs(node.left, target - node.val)
-        dfs(node.right, target - node.val)
-        path.pop()
-
-    path, res = [], []
-    dfs(root, target_sum)
-    return res
-
-
-# 路径总和 III
-# 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。
-# 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
-
-
-def path_sum2(root: TreeNode, target_sum: int) -> int:
-    """
-    Time: O(n^2)
-    Space: O(n)
-    """
-
-    def dfs(node, target) -> int:
-        if not node:
-            return 0
-        res = 0
-        if node.val == target:
-            res += 1
-        return (
-            res + dfs(node.left, target - node.val) + dfs(node.right, target - node.val)
-        )
-
-    if not root:
-        return 0
-    res = dfs(root, target_sum)
-    return res + path_sum2(root.left, target_sum) + path_sum2(root.right, target_sum)
-
-
-def path_sum3(root: TreeNode, target_sum: int) -> int:
-    """
-    Time: O(n)
-    Space: O(n)
-    """
-
-    def dfs(node, total) -> int:
-        if not node:
-            return 0
-        total += node.val
-        res = prefix_sum[total - target_sum]
-        prefix_sum[total] += 1
-        res += dfs(node.left, total)
-        res += dfs(node.right, total)
-        prefix_sum[total] -= 1
-        return res
-
-    from collections import defaultdict
-
-    prefix_sum = defaultdict(int)
-    prefix_sum[0] = 1
-    return dfs(root, 0)

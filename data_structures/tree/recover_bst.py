@@ -1,19 +1,19 @@
-# 给你二叉搜索树的根节点 root ，该树中的 恰好 两个节点的值被错误地交换。请在不改变其结构的情况下，恢复这棵树 。
-
-from typing import Optional
+# Recover Binary Search Tree
+# https://leetcode.com/problems/recover-binary-search-tree/description/
 
 from data_structures.tree import TreeNode
 from data_structures.tree.traversal import levelorder
 
 
-# 1. 中序遍历 时间复杂度 O(n) 空间复杂度 递归占用 O(h)
-# 2. 要达到 O(1) 的空间复杂度，要使用莫里斯遍历
-def recover_tree(root: Optional[TreeNode]) -> None:
+def recover_tree(root: TreeNode | None) -> None:
     """
     Do not return anything, modify root in-place instead.
+
+    Time: O(n)
+    Space: O(h)
     """
 
-    def recover(node: TreeNode):
+    def recover(node: TreeNode | None):
         nonlocal pre, x, y
         if not node:
             return
@@ -31,7 +31,7 @@ def recover_tree(root: Optional[TreeNode]) -> None:
     x.val, y.val = y.val, x.val
 
 
-def recover_tree2(root: Optional[TreeNode]) -> None:
+def recover_tree2(root: TreeNode | None) -> None:
     """
     使用莫里斯遍历达到 O(1) 的空间复杂度。
     1. 如果存在左子节点：寻找左子树的最右节点，核心是为了增加链接以后跳回来。
@@ -40,6 +40,9 @@ def recover_tree2(root: Optional[TreeNode]) -> None:
     2. 如果不存在左子节点：对当前节点执行逻辑，跳到右子节点。
 
     可以看出来 1.2 和 2 做的事情基本是重复的，除了断开链接的部分。
+
+    Time: O(n)
+    Space: O(1)
     """
     pre = None
     x = y = None

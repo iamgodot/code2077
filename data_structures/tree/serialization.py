@@ -2,14 +2,16 @@ from collections import deque
 
 from data_structures.tree import TreeNode, levelorder
 
-# Q: 二叉树的序列化与反序列化
-
-# 层序遍历，比深度遍历更直观一些
-# 时间复杂度 O(n)
-# 空间复杂度 O(n)
+# Serialize and Deserialize Binary Tree
+# https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
 
 
 class CodecLevelOrder:
+    """
+    Time: O(n)
+    Space: O(n)
+    """
+
     def serialize(self, root):
         dq = deque([root])
         res = []
@@ -44,10 +46,14 @@ class CodecLevelOrder:
         return root
 
 
-# 先序遍历
-# 时间复杂度 O(n)
-# 空间复杂度 O(n)
 class CodecPreOrder:
+    """
+    Preorder traversal
+
+    Time: O(n)
+    Space: O(n)
+    """
+
     def serialize(self, root):
         if not root:
             return "X"
@@ -73,12 +79,18 @@ class CodecPreOrder:
         return _restore(data.split(","))
 
 
-# Q: 二叉搜索树的序列化与反序列化
+# Serialize and Deserialize BST
+# https://leetcode.com/problems/serialize-and-deserialize-bst/
 
-# 先序遍历
-# 时间复杂度 O(n)
-# 空间复杂度 O(n)
+
 class CodecPreOrderBST:
+    """
+    Preorder traversal
+
+    Time: O(n)
+    Space: O(n)
+    """
+
     def serialize(self, root) -> str:
         def dfs(node):
             if not node:
@@ -108,7 +120,10 @@ class CodecPreOrderBST:
         return _restore([int(i) for i in data.split(",")])
 
 
-# Q: N 叉树的序列化与反序列化
+# Serialize and Deserialize N-ary Tree
+# https://leetcode.com/problems/serialize-and-deserialize-n-ary-tree/
+
+
 class Node(object):
     def __init__(self, val=None, children=None):
         self.val = val

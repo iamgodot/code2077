@@ -1,15 +1,3 @@
-# DFS
-# - 前序遍历（递归法、迭代法）：中左右，从上到下，求深度，真正体现回溯
-# - 中序遍历（递归法、迭代法）：左中右，体现了 BST 的排序特点
-# - 后序遍历（递归法、迭代法）：左右中，自底向上，求高度
-# BFS
-# - 层序遍历（迭代法、队列）
-
-# 对于深度优先来说，时间复杂度为 O(n)，而空间复杂度为 O(h)，树的高度可能为 O(n) 也可能为 O(logn)
-# 对于广度优先来说，时间复杂度为 O(n)，递归实现的空间复杂度为 O(h)，而非递归版本空间复杂度为 O(n)
-
-from typing import List, Optional
-
 from data_structures.tree import TreeNode
 
 
@@ -119,9 +107,6 @@ def levelorder_rec(root):
     return res
 
 
-# 给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
-
-
 def zigzag_levelorder(root: TreeNode) -> List[List[int]]:
     res = []
     if not root:
@@ -145,11 +130,7 @@ def zigzag_levelorder(root: TreeNode) -> List[List[int]]:
     return res
 
 
-# 给你一个二叉树的根结点，返回其结点按 垂直方向（从上到下，逐列）遍历的结果。
-# 如果两个结点在同一行和列，那么顺序则为 从左到右。
-
-
-def vertical_order(root: Optional[TreeNode]) -> List[List[int]]:
+def vertical_order(root: TreeNode | None) -> List[List[int]]:
     if not root:
         return []
     res = []

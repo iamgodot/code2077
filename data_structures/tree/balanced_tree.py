@@ -14,20 +14,16 @@ def is_balanced(root: TreeNode) -> bool:
     Space: O(n)
     """
 
-    def get_depth(root: TreeNode) -> int:
-        if not root:
+    def height(node: TreeNode) -> int:
+        if not node:
+            return 0
+        left, right = height(node.left), height(node.right)
+        if left == -1 or right == -1 or abs(left - right) > 1:
             return -1
-        depth_left = get_depth(root.left)
-        if depth_left == -2:
-            return -2
-        depth_right = get_depth(root.right)
-        if depth_right == -2:
-            return -2
-        if abs(depth_left - depth_right) > 1:
-            return -2
-        return max(depth_left, depth_right) + 1
+        else:
+            return max(left, right) + 1
 
-    return get_depth(root) != -2
+    return height(root) != -1
 
 
 if __name__ == "__main__":

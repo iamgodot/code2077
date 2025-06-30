@@ -1,10 +1,5 @@
-# 请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
-
-# 实现词典类 WordDictionary ：
-
-# WordDictionary() 初始化词典对象
-# void addWord(word) 将 word 添加到数据结构中，之后可以对它进行匹配
-# bool search(word) 如果数据结构中存在字符串与 word 匹配，则返回 true ；否则，返回  false 。word 中可能包含一些 '.' ，每个 . 都可以表示任何一个字母。
+# Design Add and Search Words Data Structure
+# https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
 
 
 class Node:
@@ -16,11 +11,19 @@ class Node:
         self.children[val] = Node()
         return self.children[val]
 
-    def get_child(self, val: str) -> "Node":
+    def get_child(self, val: str) -> "Node|None":
         return self.children.get(val)
 
 
 class WordDictionary:
+    """
+    It requires a DFS approach for fuzzy searching.
+    Also remember to check if we reach to the end of the word.
+
+    Time: O(m) for insertion and O(n*26^m) for search where m is the length of the word and n is the number of keys
+    Space: O(m) for both insertion and search(recursion stack)
+    """
+
     def __init__(self):
         self.root = Node()
 
@@ -37,7 +40,7 @@ class WordDictionary:
         if index == len(word):
             return node.is_end
         if word[index] == ".":
-            # 注意是 children.values()
+            # NOTE: remember to use values()
             for child in node.children.values():
                 if self._search(word, index + 1, child):
                     return True

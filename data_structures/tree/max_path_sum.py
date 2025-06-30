@@ -1,8 +1,5 @@
-# 路径 被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。
-# 同一个节点在一条路径序列中 至多出现一次 。
-# 该路径 至少包含一个 节点，且不一定经过根节点。
-# 路径和 是路径中各节点值的总和。
-# 给你一个二叉树的根节点 root ，返回其 最大路径和 。
+# Binary Tree Maximum Path Sum
+# https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
 
 from data_structures.tree import TreeNode
 
@@ -10,6 +7,7 @@ from data_structures.tree import TreeNode
 # 之后就是以根节点开始遍历整棵树，保留最大的（左边 + 节点 + 右边）和
 # 时间复杂度为 O(n)，因为要遍历整棵树
 # 空间复杂度最坏为 O(n)，在树完全失衡的情况下递归
+
 
 # 定义 max_edge 来寻找一个节点带来的最大路径和，这种情况下，返回的路径必然包含此节点本身
 # 那么 max_path_sum 求最大路径和对于一个节点代表的树来说，有四种情况：

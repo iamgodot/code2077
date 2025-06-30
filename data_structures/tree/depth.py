@@ -33,7 +33,7 @@ def max_depth_it(root: TreeNode) -> int:
 # https://leetcode.com/problems/minimum-depth-of-binary-tree/description/
 
 
-def min_depth(root: TreeNode) -> int:
+def min_depth(root: TreeNode | None) -> int:
     if not root:
         return 0
     min_depth_left = min_depth(root.left)
