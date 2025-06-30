@@ -17,12 +17,12 @@ def oranges_rotting(grid: list[list[int]]) -> int:
     from collections import deque
 
     queue = deque()
+    minutes = 0
     for i in range(rows):
         for j in range(cols):
             if grid[i][j] == 2:
-                queue.append((i, j, 0))
+                queue.append((i, j, minutes))
 
-    minutes = 0
     while queue:
         i, j, minutes = queue.pop()
         for x, y in (i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1):

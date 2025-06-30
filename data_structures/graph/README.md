@@ -1,112 +1,150 @@
-# 图
+# Graph
 
-- 遍历
-  - 树的路径类题目 -> dfs
-  - [岛屿数量](num_island.py)
-  - [最大岛屿面积](max_area.py)
-  - [岛屿周长](perimeter.py)
-  - [最大人工岛](largest_island.py)
-  - [被围绕的区域](surrounded_regions.py)
-  - [克隆图](clone_graph.py)
-  - [所有可能的路径](all_paths.py)
-  - BFS
-    - [墙与门](walls_and_gates.py)
-    - [腐烂的橘子](rotting_oranges.py)
-    - [判断二分图](bipartite.py)
-- 拓扑排序
-  - [课程表](courses.py)
+## Representation
 
-## 概念
+- Adjacency matrix: cell values as weights
+  - Pros: quick access
+  - Cons: extra space
+- Adjacency list: every node has a list of tuples (node, weight)
+  - Pros: space-saving, efficient for edge processing
+  - Cons: slow access
+- Hash tables: every node has a hash table of connected nodes and edge weights
+  - Pros: flexible, quick lookups
+  - Cons: slightly more overhead compared to adjacency list
 
-- 顶点 Vertex
-- 边 Edge
+## Searching
 
-1. 有向图 vs 无向图
+**Remember to check if we can modify the graph in-place, otherwise create a copy of it.**
 
-顶点的度：边数，对于有向图来说是入度 + 出度。
+### DFS
 
-2. 环形图 vs 无环图
+```python
+def dfs(matrix):
+    if not matrix:
+        return
 
-一个图中的路径包括环和简单路径。
+    rows, cols = len(matrix), len(matrix[0])
+    visited = set()
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-有向无环图 DAG(Directed Acyclic Graph)
-因为有向无环图拥有为独特的拓扑结构，经常被用于处理动态规划、导航中寻求最短路径、数据压缩等多种算法场景。
+    def traverse(i, j):
+        if (i, j) in visited:
+            return
+        visited.add((i, j))
 
-3. 连通图 vs 非连通图
+        # NOTE: add relevant modifications
 
-4. 带权图
+        for direction in directions:
+            i_next, j_next = i + direction[0], j + direction[1]
+            # NOTE: if checking out-of-boundary, use continue instead of return
+            if 0 <= i_next < rows and 0 <= j_next < cols: # NOTE: add relevant checks
+                traverse(i_next, j_next)
 
-每条边都被赋予一个权值。
+    for i in range(rows):
+        for j in range(cols):
+            traverse(i, j)
+```
 
-带权的连通无向图称为网络。
+If we're updating the cell values, there's no need to use a visited set:
 
-## 存储结构
+```python
+def dfs(matrix):
+    # WARNING: if updated value could be the same as original, add a check here to return early, see flood fill
+    rows, cols = len(matrix), len(matrix[0])
 
-- 顺序
-  - 邻接矩阵：查询快 O(1)，耗费空间大。
-  - 边集数组：按边存储，查询慢，适合对边依次进行处理的运算。
-- 链式
-  - 邻接表：哈希表保存顶点，每个顶点对象里再用哈希表保存到另一个顶点的边。
+    def traverse(i, j):
+        if 0 <= i < rows and 0 <= j < cols: # NOTE: add relevant checks
+            matrix[i][j] = "new value"
+            traverse(i - 1, j)
+            traverse(i + 1, j)
+            traverse(i, j - 1)
+            traverse(i, j + 1)
 
-## 遍历
+    for i in range(rows):
+        for j in range(cols):
+            traverse(i, j)
+```
 
-DFS 和 BFS 的复杂度都和图的大小线性相关：
+Could be multi-source DFS.
+
+### BFS
+
+```python
+def bfs(matrix):
+    if not matrix:
+        return
+
+    rows, cols = len(matrix), len(matrix[0])
+    from collections import deque
+    queue = deque()
+
+    # NOTE: if need multiple starting points, add their coordinates here(maybe step too)
+
+    # for i in range(rows):
+        # for j in range(cols):
+            # queue.appendleft((i, j, 0))
+
+    queue.appendleft((0, 0))
+    visited[node] = True
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    while queue:
+        row, col = queue.pop()
+
+        # NOTE: if need to maintain levels, use a for loop here
+
+        # for i in range(len(queue)):
+             # ...
+        # step += 1
+
+        for direction in directions:
+            row_next, col_next = row + direction[0], col + direction[1]
+            if 0 <= row_next < rows and 0 <= col_next < cols and (row_next, col_next) not in visited:
+                # NOTE: if we update cell values, there's no need to use a visited set, same as dfs
+                queue.appendleft((row_next, col_next))
+                visited.add((row_next, col_next))
+    return matrix
+```
+
+**For multi-source BFS, probably no need to maintain levels.**
+
+### Complexity
 
 - Time: O(n)
 - Space: O(n)
 
-DFS 注意 Stackoverflow，BFS 注意邻节点数量带来的空间占用
+**For recursive DFS, remember the risk of stack overflow.**
 
-### DFS
+### Corner cases
 
-图的节点结构和树很像，但是图可能包含环（除非是 DAG），所以要记录遍历过的节点：
+- Empty graph
+- Graph with one or two nodes
+- Disconnected graphs
+- Graph with cycles
 
-```python
-def dfs(graph, node, visited, path):
-    if visited[node]:
-        return
-    visited[node] = True
-    # 在路径中添加 node
-    path.append(node)
-    # 满足特定条件之后在 res 中记录 path
-    if ...:
-        res.append(path[:])
-    for neighbor in neighbors:
-        dfs(graph, neighbor, visited, path)
-    # 从路径中删除 node
-    # 注意不是在上面每次递归 dfs 之后删除
-    path.pop()
-```
+## Questions
 
-### BFS
+- DFS
+  - [Flood Fill](flood_fill.py)
+  - [Number of Islands](num_island.py)
+  - [Clone Graph](clone_graph.py)
+  - [Max Area of Island](max_area.py)
+  - [Island Perimeter](perimeter.py)
+  - [Making A Large Island](largest_island.py)
+  - [Surrounded Regions](surrounded_regions.py)
+  - [All Paths From Source to Target](all_paths.py)
+  - [Evaluate Division](eval_division.py)
+- BFS
+  - [Walls and Gates](walls_and_gates.py)
+  - [Rotting Oranges](rotting_oranges.py)
+  - [Is Graph Bipartite?](bipartite.py)
+  - [Word Ladder](word_ladder.py)
+- Topological sort
+  - [Course Schedule I && II](courses.py)
+  - [Minimum Height Trees](min_height_trees.py)
 
-可以分为两种类型，非层序和层序遍历，看是否需要计算层数。
+## Tips
 
-```python
-def bfs(node, visited):
-    from collections import deque
-    dq = deque([node])
-    visited[node] = True
-    while dq:
-        item = dq.pop()
-        for nb in item.neighbors:
-            if not visited[nb]:
-                dq.appendleft(nb)
-                visited[nb] = True
-```
-
-```python
-def bfs(node, visited):
-    from collections import deque
-    dq = deque([node])
-    visited[node] = True
-    step = 0
-    while dq:
-        for i in range(len(dq)):
-            item = dq.pop()
-            for nb in item.neighbors:
-                if not visited[nb]:
-                    dq.appendleft(nb)
-                    visited[nb] = True
-        step += 1
-```
+1. Ask if the input grid is modifiable
+2. Check if grid values are integer or string
+3. For using a visited set, remember to add nodes to it

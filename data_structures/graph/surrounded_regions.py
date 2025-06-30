@@ -1,30 +1,28 @@
-# 给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' ，找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+# Surrounded Regions
+# https://leetcode.com/problems/surrounded-regions/
 
 
-def _dfs(board, i, j):
-    if i < 0 or i > len(board) - 1 or j < 0 or j > len(board[0]) - 1:
-        return
-    if board[i][j] != "O":
-        return
-    board[i][j] = "1"
-    _dfs(board, i - 1, j)
-    _dfs(board, i + 1, j)
-    _dfs(board, i, j - 1)
-    _dfs(board, i, j + 1)
-
-
-# DFS
-# 时间复杂度：O(m*n)
-# 空间复杂度：O(m*n)
 def solve(board) -> None:
+    """
+    Time: O(m*n)
+    Space: O(m*n)
+    """
     m, n = len(board), len(board[0])
-    # Iterate the outest round, dfs all Os and mark as 1s
+
+    def dfs(i, j):
+        if 0 <= i < m and 0 <= j < n and board[i][j] == "O":
+            board[i][j] = "1"
+            dfs(i - 1, j)
+            dfs(i + 1, j)
+            dfs(i, j - 1)
+            dfs(i, j + 1)
+
     for column in range(n):
-        _dfs(board, 0, column)
-        _dfs(board, m - 1, column)
+        dfs(0, column)
+        dfs(m - 1, column)
     for row in range(m):
-        _dfs(board, row, 0)
-        _dfs(board, row, n - 1)
+        dfs(row, 0)
+        dfs(row, n - 1)
     # Iterate all cells, mark Os as Xs, mark 1s as Os
     for row in range(m):
         for column in range(n):

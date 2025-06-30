@@ -8,13 +8,13 @@ class Node:
         self.neighbors = neighbors if neighbors is not None else []
 
 
-def clone(node: Node) -> Node:
+def clone(node: Node | None) -> Node | None:
     """
     Time: O(n)
     Space: O(n)
     """
 
-    def dfs(node) -> Node:
+    def dfs(node) -> Node | None:
         if not node:
             return None
         if node in hashtable:
@@ -29,13 +29,13 @@ def clone(node: Node) -> Node:
     return dfs(node)
 
 
-def clone2(node: Node) -> Node:
+def clone2(node: Node | None) -> Node | None:
     """
     Time: O(n)
     Space: O(n)
     """
 
-    def bfs(node) -> Node:
+    def bfs(node) -> Node | None:
         if not node:
             return None
         from collections import deque
@@ -50,6 +50,6 @@ def clone2(node: Node) -> Node:
                     dq.appendleft(nb)
                     hashtable[nb] = Node(node.val, [])
                 hashtable[item].neighbors.append(hashtable[nb])
-        return
+        return cloned
 
     return bfs(node)

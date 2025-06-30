@@ -11,6 +11,7 @@ def floodFill(image: list[list[int]], sr: int, sc: int, color: int) -> list[list
     """
     rows, cols = len(image), len(image[0])
     color_orig = image[sr][sc]
+    # NOTE: if color_orig == color, we'll get infinite recursion
     if color_orig == color:
         return image
 
