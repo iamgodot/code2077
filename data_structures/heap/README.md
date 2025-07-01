@@ -31,4 +31,4 @@ Python uses a min heap by default.
 7. [Top K Frequent Elements](algorithms/search/top_k/top_k.py)
 8. [Merge k Sorted Lists](data_structures/linked_list/merge.py)
 9. [Design Twitter](design_twitter.py)
-10. [Meeting Rooms](algorithms/greedy/meeting_rooms.py)
+10. [Meeting Rooms II](meeting_rooms.py)

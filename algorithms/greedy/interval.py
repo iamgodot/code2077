@@ -1,13 +1,13 @@
-# 给你一个 无重叠的 ，按照区间起始端点排序的区间列表。
-# 在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。
-
-from typing import List
+# Insert Interval
+# https://leetcode.com/problems/insert-interval/
 
 
-def insert(intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+def insert(intervals: list[list[int]], newInterval: list[int]) -> list[list[int]]:
     """
-    对于重叠的区间，更新两端的范围，
-    在第一个右侧不重叠区间出现后，先插入合并的区间。
+    Traverse all the intervals:
+        1. If the current interval ends before the new interval begins, or if it begins after new interval ends, then they do not overlap and we can append the current interval to merged.
+        2. Otherwise, they do overlap, and we merge them by updating the start of the previous interval if it is greater than the start of the current interval.
+        3. If there's no intervals put after the new interval, we need to append the new interval after the loop.
 
     Time: O(n)
     Space: O(1)
@@ -25,18 +25,22 @@ def insert(intervals: List[List[int]], newInterval: List[int]) -> List[List[int]
             res.append([i, j])
         else:
             left = min(left, i)
-            right = min(right, j)
+            right = max(right, j)
     if not insert_merge:
         res.append([left, right])
     return res
 
 
-# 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
+# Merge Intervals
+# https://leetcode.com/problems/merge-intervals/
 
 
-def merge(intervals: List[List[int]]) -> List[List[int]]:
+def merge(intervals: list[list[int]]) -> list[list[int]]:
     """
-    一开始要先排序，默认会按照先左后右的顺序。
+    First, we sort the list by their start values.
+    Then, we insert the first interval into our merged list and continue considering each interval in turn as follows:
+        1. If the current interval begins after the previous interval ends, then they do not overlap and we can append the current interval to merged.
+        2. Otherwise, they do overlap, and we merge them by updating the end of the previous interval if it is less than the end of the current interval.
 
     Time: O(nlogn)
     Space: O(logn)
@@ -51,10 +55,11 @@ def merge(intervals: List[List[int]]) -> List[List[int]]:
     return res
 
 
-# 给定一个区间的集合 intervals ，其中 intervals[i] = [starti, endi] 。返回 需要移除区间的最小数量，使剩余区间互不重叠 。
+# Non-overlapping Intervals
+# https://leetcode.com/problems/non-overlapping-intervals/
 
 
-def erase(intervals: List[List[int]]) -> int:
+def erase(intervals: list[list[int]]) -> int:
     """
     转化为求非重叠区间的最大数量，然后用区间总数减去即可得到结果。
     首先排序区间，以右边界为准，从小到大；
