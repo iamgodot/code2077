@@ -1,21 +1,7 @@
-# 给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。
-# 提示：
-# 1 <= nums.length <= 105
-# k 的取值范围是 [1, 数组中不相同的元素的个数]
-# 题目数据保证答案唯一，换句话说，数组中前 k 个高频元素的集合是唯一的
-# 进阶：你所设计算法的时间复杂度 必须 优于 O(n log n) ，其中 n 是数组大小。
-
-# 2. 使用优化版快排，每次把数据一分为二，如果前半数量多于 k 就继续处理前半，否则处理后半，这样耗费的时间为
-# N + N/2 + N/4 + ... -> 2N 即 O(n). 整体时间 O(n) 空间 O(n)
-from typing import List
-
-
-def top_k_frequent(nums: List[int], k: int) -> List[int]:
+def top_k_frequent(nums: list[int], k: int) -> list[int]:
     """
-    借助最小堆得到前 k 的元素，注意题目里说的是可以按任意顺序返回，所以使用堆是符合要求的。
-    如果需要排序，则最后再次全部 pop 出来。
     Time: O(nlogk)
-    Space: O(n) 其中堆占用 O(k)
+    Space: O(n)
     """
     import heapq
     from collections import Counter
@@ -32,10 +18,10 @@ def top_k_frequent(nums: List[int], k: int) -> List[int]:
     return [item[1] for item in res]
 
 
-def top_k_frequent2(nums: List[int], k: int) -> List[int]:
+def top_k_frequent2(nums: list[int], k: int) -> list[int]:
     """
-    Time: O(n) 最坏情况下快速选择会达到 O(n^2)
-    Space: O(n) 哈希表占用 O(n) 快速选择最坏情况下为 O(n) 平均 O(logn)
+    Time: O(n) in worst case O(n^2)
+    Space: O(logn) in worst case O(n)
     """
     from collections import Counter
 

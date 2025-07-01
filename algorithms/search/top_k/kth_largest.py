@@ -1,13 +1,10 @@
-# 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
-# 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
 from random import randint
 
 
-def quick_sort(nums: list, left: int, right: int, k: int) -> int:
+def quick_select(nums: list, left: int, right: int, k: int) -> int:
     """
-    使用快速排序的思路来实现快速选择。
-    Time: O(n) 最坏情况下为 O(n^2)
-    Space: O(logn) 最坏情况下为 O(n)
+    Time: O(n) in worst case O(n^2)
+    Space: O(logn) in worst case O(n)
     """
     if left >= right:
         return nums[left]
@@ -30,9 +27,9 @@ def quick_sort(nums: list, left: int, right: int, k: int) -> int:
     if i == index:
         return nums[i]
     elif i > index:
-        return quick_sort(nums, 0, i - 1, k)
+        return quick_select(nums, 0, i - 1, k)
     else:
-        return quick_sort(nums, i + 1, right, k)
+        return quick_select(nums, i + 1, right, k)
 
 
 def find_kth_largest(nums: list, k: int) -> int:

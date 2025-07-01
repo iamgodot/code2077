@@ -1,13 +1,7 @@
-# 输入整数数组 arr ，找出其中最小的 k 个数。例如，输入4、5、1、6、2、7、3、8这8个数字，则最小的4个数字是1、2、3、4。
-
-
 import heapq
-from typing import List
 
 
-# 因为求最小的 k 个数，所以要用最大堆
-# Python 的 heapq 默认为最小堆，所以要取负数
-def get_least_nums(arr: List[int], k: int) -> List[int]:
+def get_least_nums(arr: list[int], k: int) -> list[int]:
     heap = []
     for num in arr:
         if len(heap) < k:
@@ -18,9 +12,7 @@ def get_least_nums(arr: List[int], k: int) -> List[int]:
     return [-i for i in heap]
 
 
-# 快速排序，迭代到前半部分满足 k 个元素之后即可以停止
-# 时间复杂度 O(n) 空间复杂度 O(logn) 递归占用
-def get_least_nums2(arr: List[int], k: int) -> List[int]:
+def get_least_nums2(arr: list[int], k: int) -> list[int]:
     def qs(nums, left, right, k):
         if left >= right:
             return
