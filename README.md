@@ -12,7 +12,6 @@ For physical structure, which reflects the way data is stored in memory, can be 
 
 - Linear
   - [Array](data_structures/array/README.md)
-  - [String](data_structures/string)
   - [Hash set/map](data_structures/hashtable/README.md)
   - [Stack & Queue](data_structures/stack/README.md)
   - [Linked list](data_structures/linked_list/README.md)
@@ -28,12 +27,13 @@ For physical structure, which reflects the way data is stored in memory, can be 
   - [Bit operation](algorithms/bit_operation/README.md)
 - Search
   - [Sorting](algorithms/search/sorting/README.md)
-  - [Binary search](algorithms/search/binary_search/README.md)
   - Linear search
+    - [Binary search](algorithms/search/binary_search/README.md)
     - [Sliding window](algorithms/search/sliding_window/README.md)
     - [Two pointers](algorithms/search/two_pointers/README.md)
     - [Mono stack](data_structures/stack/README.md)
     - [Prefix sum](algorithms/search/prefix_sum/README.md)
+    - [Top k](algorithms/search/top_k)
   - [DFS & BFS](data_structures/graph/README.md)
 - Optimal decision
   - Divide and conquer
