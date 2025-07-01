@@ -7,7 +7,7 @@
    2. [Encode and Decode Strings](data_structures/string/encode_and_decode_strings.py)
 2. 1-dimension
    1. [Next Permutation](one_dimension/next_permutation.py)
-   2. [Longest Consecutive Sequence](data_structures/hashtable//longest_consecutive_sequence.py)
+   2. [Longest Consecutive Sequence](data_structures/hashtable/longest_consecutive_sequence.py)
    3. [Sort Colors](algorithms/search/two_pointers/sort_colors.py)
 3. 2-dimension
    1. [Valid Sudoku](matrix/valid_sudoku.py)
