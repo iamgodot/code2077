@@ -1,12 +1,21 @@
-# 二分查找
+# Binary Search
 
-二分查找的前提是有序序列，可以达到 O(logn) 的时间复杂度。
+Binary seearch is an efficient search algorithm based on the divide-and-conquer strategy.
 
-大体上可以分为两种类型：三分和两分。
+Given a list of elements in sorted order, it can significantly reduce the search times by halving the search range in each iteration, until the target element is found or the search interval becomes empty.
 
-## 三分
+- Time complexity: O(logn)
+- Space complexity: O(1)
 
-也就是最常见的二分实现，三分表示将序列分为左半、中间元素和右半三部分。
+Be careful with the suitable conditions for binary search:
+
+1. Elements need to be sorted
+2. Elements need to be array-based instead of linked-list-based
+3. For smaller datasets, linear search is faster while binary search takes around 4-6 operations per iteration
+
+## Implementation
+
+### With no duplicates
 
 ```python
 def bs(nums: list, target: int) -> int:
@@ -14,39 +23,68 @@ def bs(nums: list, target: int) -> int:
     left, right = 0, len(nums) - 1
 
     while left <= right:
-        # 这里为了防止溢出应当写成 left + (right-left)//2
-        # 但是 Python 会在内存中模拟大数运算所以不用这么做
-        # 对于偶数序列会选择偏左的元素
+        # Don't have to write left + (right-left)//2 in Python
         mid = (left + right) // 2
-
         if nums[mid] == target:
             return mid
         elif nums[mid] > target:
             right = mid - 1
         else:
             left = mid + 1
-
+    # For the insertion index when target is not found, return left
     return res
 ```
 
-这种写法对于重复元素的情况可以找到合法结果，但具体是哪一个是不确定的。
+### With duplicates
 
-## 两分
+When there're duplicates, we usually want to find the leftmost or rightmost index of target.
 
-参考 https://leetcode-cn.com/problems/binary-search/solution/er-fen-cha-zhao-xiang-jie-by-labuladong/
+For the leftmost index:
 
-- bisect left
-  - left 依然取 0，但是 right 要取 len(nums) 而不是 len(nums) - 1。
-  - while 条件没有等于号，因为用的是左闭右开的区间。
-  - left = mid + 1，right = mid，这跟 bisect left 还是 right 没有关系，是由遵循左开右闭决定的。
-  - 因为 bisect left 所以 nums[mid] == target 时要 right = mid 继续往左查看。
-  - 找到的结果 i 是多个 target 最左边那个的下标。[1,1,2] 如果找 1 的话结果为 0，相当于左边的闭边界。
-  - 如果不存在，则找应当插入的位置。[1,1,2] 如果 bisect_left 0 的话结果为 0，3 的话结果为 3。
-- bisect right
-  - nums[mid] == target 时要 left = mid + 1 继续向右查看。
-  - 找到的结果 i 是多个 target 最右边那个的下标 + 1。[1,1,2] 如果找 1 的话结果为 2，相当于右边的开边界。
-  - 如果不存在，也是找应当插入的位置。[1,1,2] 如果找 0 的话结果为 0，3 的话结果为 3。
+```python
+def bs_left(nums, target):
+    left, right = 0, len(nums) - 1
 
-bisect right 的话 python 的实现版本是返回 index + 1，也就是 return left，如果要 index 的话就应当是 return left - 1。
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] >= target:
+            right = mid - 1
+        else:
+            left = mid + 1
 
-重点就是左开右闭，所以 right 取值 + while 条件 + left/right 更新 + return 结果都要对应。
+    if not 0 <= left <= len(nums) - 1:
+        return -1
+    return left if nums[left] == target else -1
+```
+
+For the rightmost index:
+
+```python
+def bs_right(nums, target):
+    left, right = 0, len(nums) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] <= target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    # if not 0 <= left - 1 <= len(nums) - 1:
+    if not 0 <= right <= len(nums) - 1:
+        return -1
+    # return left - 1 if nums[left - 1] == target else -1
+    return right if nums[right] == target else -1
+```
+
+for bisect left or right, if target is larger than the largest, left will be len(nums) and right be len(nums) - 1; if target is smaller than the smallest, left will be 0 and right be -1.
+
+if target doesn't exist, left will be index to insert it.
+
+so after the search, we need to check for the boundary first, then check if the target is equal to the element at the index.
+
+## Questions
+
+1. [Find Minimum in Rotated Sorted Array](./rotated_array.py)
+1. [Search in Rotated Sorted Array](./rotated_array.py)
+1. [Find Peak Element](./find_peak_element.py)

@@ -24,5 +24,5 @@ Caveats:
       1. [Longest Substring with At Most K Distinct Characters](longest_substring.py)
    1. [Longest Repeating Character Replacement](longest_repeat_char_replacement.py)
    1. [Minimum Window Substring](min_window.py)
-   1. [长度最小的子数组](min_subarray.py)
-   1. [水果成篮](total_fruits.py)
+   1. [Minimum Size Subarray Sum](min_subarray.py)
+   1. [Fruit Into Baskets](total_fruits.py)

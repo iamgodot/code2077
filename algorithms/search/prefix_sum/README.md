@@ -1,27 +1,27 @@
-# 前缀和
+# Prefix Sum
 
-- [和为 k 的子数组（整数数组）](subarray_sum.py)
-- [连续的子数组和](continuous_subarray_sum.py)
-- [连续数组](contiguous_array.py)
-- [和可被 k 整除的子数组](subarray_sums_divisible_by_k.py)
-- [长度最小的子数组（正整数数组）](search/sliding_window/min_subarray.py)
-- 参考[前缀和专题](https://lucifer.ren/leetcode/thinkings/prefix.html)
-- [除自身以外数组的乘积](product_of_array.py)：简化版本接雨水
+Using prefix sum allows us to quickly find the sum of any subarray.
 
-前缀和是一种重要的预处理，能大大降低查询的时间复杂度。
+We usually define prefix_sum[i] as the sum of the elements before index i. For example, for array [1, 2, 3, 4], prefix_sum = [0, 1, 3, 6, 10].
 
-关键词：连续、子数组
+Keywords: Subarray, Sum
 
-相关公式：
+When used with a hash map, make sure what to store as the key and value. The key could be prefix sum or its remainder over a number k, while the value could be the element index or the number of subarrays that have the same prefix sum.
 
-- `prefix_sums[i] = prefix_sums[i-1] + nums[i]`
-- `subarray_sums[i-j] = prefix_sums[j] - prefix_sums[i-1]`
+Also remember to set a proper initial value for prefix_sum[0], which could be -1 in regard to index or 1 in regard to number of subarrays.
 
-思路：
+## Questions
 
-- 哈希表中存储的 key 和 value 是什么，前者可能是和或余数，后者可能是数量或下标。
-- 预先在哈希表中设置 0 的初始值。
-- 如果返回值是数量，则 value 一般是数量；如果返回值是长度，则 value 保存下标。
+- [Subarray Sum Equals K](subarray_sum.py)
+- [Subarray Sums Divisible by K](subarray_sums_divisible_by_k.py)
+- [Continuous Subarray Sum](continuous_subarray_sum.py)
+- [Product of Array Except Self](product_of_array.py)
+- [Continuous Subarray Sum](contiguous_array.py)
+- [Minimum Size Subarray Sum](search/sliding_window/min_subarray.py)
+
+## Reference
+
+https://algo.monster/problems/subarray_sum
 
 ---
 
@@ -36,3 +36,10 @@ TODO:
   - Minimum size array sum
 - Monotonic queue
   - Shortest subaaray with sum at least k
+
+Definition: prefix sum array has one more element prefix_sum[0] = 0
+
+Sum equals k:
+
+1. Find index: value is index in hash map
+2. Find total: value is frequency in hash map
