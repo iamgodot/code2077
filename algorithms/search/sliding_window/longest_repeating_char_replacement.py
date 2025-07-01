@@ -9,6 +9,9 @@ def replace(s: str, k: int) -> int:
     res = left = max_repeat = 0
     for right, char in enumerate(s):
         hashtable[char] += 1
+        # NOTE: here max_repeat maintains the max frequency
+        # in the entire history rather than the current window
+        # so we don't update it when moving left
         max_repeat = max(max_repeat, hashtable[char])
         while right - left + 1 > max_repeat + k:
             hashtable[s[left]] -= 1
