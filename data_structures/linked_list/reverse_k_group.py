@@ -22,13 +22,12 @@ def reverse_k_group(head: ListNode | None, k: int) -> ListNode | None:
     dummy = pre = ListNode(next=head)
 
     while pre.next:
-        post = pre.next
+        start = post = pre.next
         for _ in range(k):
             # NOTE: here we need to check post first
             if not post:
                 return dummy.next
             post = post.next
-        start = pre.next
         pre.next = reverse_by_n(start, k)
         start.next = post
         pre = start

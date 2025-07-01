@@ -40,6 +40,7 @@ def mergeKLists(lists: list[ListNode | None]) -> ListNode | None:
     for i in range(len(lists)):
         node = lists[i]
         if node:
+            # NOTE: can't store node unless we create a comparable HeapNode off of it
             heapq.heappush(hq, (node.val, i))
 
     while hq:

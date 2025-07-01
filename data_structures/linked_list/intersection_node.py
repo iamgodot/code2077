@@ -1,4 +1,5 @@
-# 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
+# Intersection of Two Linked Lists
+# https://leetcode.com/problems/intersection-of-two-linked-lists/description/
 
 from data_structures.linked_list import ListNode, make_linked_list
 

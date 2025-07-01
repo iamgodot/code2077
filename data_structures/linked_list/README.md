@@ -27,21 +27,21 @@ Sometimes a doubly linked list or hash map comes in handy.
 ## Questions
 
 1. Basic operations
-   1. [链表的基本操作](linked_list.design.py)
+   1. [Design Linked List](design_linked_list.py)
    2. [Remove Linked List Elements](remove_elements.py)
    3. [Remove Duplicates from Sorted List I && II](remove_elements.py)
    4. [Remove Nth Node From End of List](remove_from_end.py)
 2. Cycle
    1. [Linked List Cycle I && II](cycle.py)
-   2. [链表相交](intersection_node.py)
+   2. [Intersection of Two Linked Lists](intersection_node.py)
 3. Reverse
    1. [Reverse Linked List I && II](reverse_list.py)
    2. [Swap Nodes in Pairs](swap_pairs.py)
    3. [Reverse Nodes in k-Group](reverse_k_group.py)
 4. Restructure
    1. [Sort List](sort.py)
-   2. [Merge Two Sorted Lists](sort.py)
-   3. [Merge k Sorted Lists](sort.py)
+   2. [Merge Two Sorted Lists](merge.py)
+   3. [Merge k Sorted Lists](merge.py)
    4. [Add Two Numbers I && II](add_two_numbers.py)
    5. [Rotate List](rotate.py)
    6. [Reorder List](reorder.py)
